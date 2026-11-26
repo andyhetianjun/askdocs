@@ -1,6 +1,6 @@
 import path from "node:path";
 import { createEmbedder, HashEmbedder } from "./embed";
-import { createGenerator } from "./llm";
+import { createGenerator, createVerifier } from "./llm";
 import { MemoryStore } from "./memory-store";
 import type { Deps } from "./pipeline";
 import { PgStore } from "./pg-store";
@@ -38,6 +38,7 @@ async function build(): Promise<Deps> {
     store,
     embedder,
     generator: createGenerator(),
+    verifier: createVerifier(),
     traces: new JsonlTraceStore(process.env.TRACE_FILE ?? path.join(process.cwd(), "data", "traces.jsonl")),
   };
 }

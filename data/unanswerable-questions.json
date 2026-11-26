@@ -1,0 +1,14 @@
+[
+  { "question": "How do I send an email with smtplib?", "kind": "module not in the docs" },
+  { "question": "How do I parse an XML file with ElementTree?", "kind": "module not in the docs" },
+  { "question": "How do I create a window with a button using tkinter?", "kind": "module not in the docs" },
+  { "question": "How do I parse command line arguments with getopt?", "kind": "module not in the docs" },
+  { "question": "How do I open a TCP connection to a server with a socket?", "kind": "module not in the docs" },
+  { "question": "How do I make an HTTP GET request with urllib?", "kind": "module not in the docs" },
+  { "question": "How do I run coroutines at the same time with asyncio.gather?", "kind": "module not in the docs" },
+  { "question": "How do I set the rounding mode for exact decimal arithmetic?", "kind": "module not in the docs" },
+  { "question": "How do I map a function over a list using a multiprocessing pool?", "kind": "module not in the docs" },
+  { "question": "What is the capital of Australia?", "kind": "off topic" },
+  { "question": "Who won the football World Cup in 2018?", "kind": "off topic" },
+  { "question": "What is a good recipe for banana bread?", "kind": "off topic" }
+]

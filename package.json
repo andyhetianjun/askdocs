@@ -13,7 +13,8 @@
     "test": "vitest run",
     "fetch": "tsx scripts/fetch-corpus.ts",
     "ingest": "tsx scripts/ingest.ts",
-    "eval": "tsx scripts/eval.ts"
+    "eval": "tsx scripts/eval.ts",
+    "eval:trust": "tsx scripts/eval-trust.ts"
   },
   "engines": {
     "node": ">=20"

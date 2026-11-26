@@ -2,11 +2,14 @@ import type { Embedder } from "./types";
 
 export const MODEL_ID = "Xenova/all-MiniLM-L6-v2";
 export const DIMS = 384;
+export const DEFAULT_ABSTAIN_BELOW = 0.45;
 
 /** Local sentence embeddings (all-MiniLM-L6-v2 through transformers.js). No API key. */
 export class TransformersEmbedder implements Embedder {
   readonly name = MODEL_ID;
   readonly dims = DIMS;
+  /** Picked from the sweep in docs/trustworthy-answers.md. Override with ASKDOCS_MIN_SIMILARITY. */
+  readonly abstainBelow = Number(process.env.ASKDOCS_MIN_SIMILARITY ?? DEFAULT_ABSTAIN_BELOW);
   private extractor: Promise<(texts: string[], opts: object) => Promise<{ tolist(): number[][] }>> | null = null;
 
   private load() {

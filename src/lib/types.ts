@@ -28,4 +28,9 @@ export interface Embedder {
   readonly name: string;
   readonly dims: number;
   embed(texts: string[]): Promise<Float32Array[]>;
+  /**
+   * Questions whose best passage scores below this cosine similarity are treated as not
+   * answered by the docs. It depends on the model's score scale, so it lives with the embedder.
+   */
+  readonly abstainBelow?: number;
 }

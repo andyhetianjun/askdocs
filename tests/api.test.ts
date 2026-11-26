@@ -48,6 +48,13 @@ describe("POST /api/ask", () => {
     expect(data.answer).toMatch(/\[1\]/);
   });
 
+  it("reports whether the answer was checked and abstained", async () => {
+    await install(true);
+    const data = await (await post({ question: "serialize an object to a JSON string" })).json();
+    expect(data.abstained).toBe(false);
+    expect(data.citations[0]).toMatchObject({ cited: [1], status: "supported" });
+  });
+
   it("rejects bad input", async () => {
     expect((await post("not json")).status).toBe(400);
     expect((await post({})).status).toBe(400);

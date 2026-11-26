@@ -11,6 +11,11 @@ export interface Trace {
   chunksReturned: number;
   topChunks: { id: string; doc: string; section: string }[];
   llm: { model: string; inputTokens: number; outputTokens: number } | null;
+  similarity?: number;
+  abstained?: boolean;
+  abstainReason?: string;
+  citedSentences?: number;
+  droppedSentences?: number;
   error?: string;
 }
 

@@ -27,6 +27,11 @@ export async function POST(req: Request): Promise<Response> {
     return Response.json({
       answer: result.answer,
       model: result.model,
+      abstained: result.abstained,
+      abstainReason: result.abstainReason,
+      similarity: result.similarity,
+      citations: result.citations?.sentences ?? null,
+      droppedSentences: result.citations?.dropped ?? 0,
       traceId: result.trace.id,
       retrievalMs: result.trace.retrievalMs,
       passages: result.hits.map((h) => ({

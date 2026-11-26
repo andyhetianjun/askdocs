@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { ModelVerifier, LexicalVerifier, type CitationVerifier } from "./citations";
 import type { Hit } from "./types";
 
 export const MODEL = "claude-sonnet-5-5";
@@ -16,7 +17,9 @@ export interface Generator {
 
 const SYSTEM =
   "You answer questions about the Python standard library using only the numbered passages you are given. " +
-  "Cite passages inline like [1] or [2]. If the passages do not contain the answer, say so plainly. Keep answers short.";
+  "Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. " +
+  "Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: " +
+  "I couldn't find this in the docs.";
 
 export function buildPrompt(question: string, hits: Hit[]): string {
   const passages = hits
@@ -64,4 +67,21 @@ export function createGenerator(env: NodeJS.ProcessEnv = process.env): Generator
   if (env.ASKDOCS_LLM === "scripted") return new ScriptedGenerator();
   if (env.ANTHROPIC_API_KEY) return new AnthropicGenerator(env.ANTHROPIC_API_KEY);
   return null;
+}
+
+/**
+ * With ANTHROPIC_API_KEY the citation check is made by the model (one short call per cited sentence).
+ * Without one, or with ASKDOCS_VERIFIER=lexical, it uses the offline word-overlap check.
+ */
+export function createVerifier(env: NodeJS.ProcessEnv = process.env): CitationVerifier {
+  if (!env.ANTHROPIC_API_KEY || env.ASKDOCS_VERIFIER === "lexical") return new LexicalVerifier();
+  const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
+  return new ModelVerifier(async (prompt) => {
+    const res = await client.messages.create({
+      model: MODEL,
+      max_tokens: 10,
+      messages: [{ role: "user", content: prompt }],
+    });
+    return res.content.map((b) => (b.type === "text" ? b.text : "")).join("");
+  });
 }

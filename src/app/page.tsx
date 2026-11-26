@@ -11,7 +11,17 @@ interface Passage {
   text: string;
 }
 
+interface Sentence {
+  text: string;
+  cited: number[];
+  status: "supported" | "unsupported" | "uncited" | "bad_citation";
+}
+
 interface Response {
+  abstained: boolean;
+  similarity: number;
+  citations: Sentence[] | null;
+  droppedSentences: number;
   answer: string | null;
   model: string | null;
   retrievalMs: number;
@@ -87,10 +97,21 @@ export default function Home() {
 
       {result && (
         <section className="space-y-4">
-          {result.answer ? (
+          {result.abstained ? (
+            <div className="rounded border border-amber-300 bg-amber-50 p-4 text-sm">
+              <p className="font-medium">{result.answer}</p>
+              <p className="mt-1 text-xs text-stone-600">
+                The closest passage scored {result.similarity.toFixed(2)} for similarity, which is too low to trust. The
+                passages below are the nearest ones, shown anyway.
+              </p>
+            </div>
+          ) : result.answer ? (
             <div className="rounded border border-stone-200 bg-white p-4 text-sm leading-relaxed whitespace-pre-wrap">
               {result.answer}
-              <p className="mt-2 text-xs text-stone-500">Answer by {result.model}</p>
+              <p className="mt-2 text-xs text-stone-500">
+                Answer by {result.model}. Each sentence was checked against the passage it cites.
+                {result.droppedSentences > 0 && ` ${result.droppedSentences} sentence(s) failed the check and were left out.`}
+              </p>
             </div>
           ) : (
             <p className="text-sm text-stone-600">
