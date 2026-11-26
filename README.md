@@ -2,18 +2,26 @@
 
 ![CI](https://github.com/andyhetianjun/askdocs/actions/workflows/ci.yml/badge.svg)
 
-**Try it:** https://andyhetianjun.github.io/askdocs/ (search runs in your browser, no server and no key)
-
-![The demo page](docs/img/demo.png)
-
 I built a small web app that answers questions about Python's standard library docs because I wanted to understand how "ask your docs" search actually finds the right passage, and how to measure whether it does. I picked Python's docs because I read them anyway.
 
+**Try it:** https://andyhetianjun.github.io/askdocs/ (search runs in your browser, no server and no key)
+
+**Install in one line** (Node 20 or newer):
+
+```bash
+npx github:andyhetianjun/askdocs ask "how do I limit a deque to the last few items?"
+```
+
+It prints the five passages from the docs that match best, each with a link. The first run installs the dependencies and downloads a small embedding model (about 90 MB); in my test the first run took about a minute and left about 1.3 GB in the npm cache, later runs took a few seconds. Set `ANTHROPIC_API_KEY` to also get a written answer with citations.
+
+![The demo: typing a question, then the matching passages, then a question the docs do not cover](docs/img/demo.gif)
 
 ## Features
 
 - [Checking that answers are backed by the docs](docs/trustworthy-answers.md): every answer sentence must cite a passage that really says it, and the app says "I couldn't find this in the docs" when the docs do not cover the question.
 - [Questionnaire mode](docs/questionnaire-mode.md): paste or upload a list of questions, get a drafted answer for each, labelled confident or needs review, as a filled CSV. Near-duplicate questions get the same answer.
 - [Connectors and incremental sync](docs/connectors-and-sync.md): read Markdown folders, Notion exports and Slack exports, and re-embed only what changed (about 45 ms for a one word edit, against about 18 s for a full rebuild).
+- [Recorded model runs](RECORDING.md): a small harness that shows a model each question with its retrieved passages, saves the answer it writes, and scores it with the citation check and the refusal check. The demo has a section for these recordings.
 - [The browser demo](docs/demo.md): the search runs entirely in the page, plus the measured results.
 
 ## What it does
@@ -90,6 +98,23 @@ npm run dev                      # now searches Postgres
 
 ## How it works
 
+```mermaid
+flowchart LR
+    D[Python docs] --> C[split into chunks]
+    C --> E[embed each chunk]
+    E --> I[(index.json)]
+    Q[your question] --> K[keyword search]
+    Q --> V[vector search]
+    I --> K
+    I --> V
+    K --> R[merge with RRF]
+    V --> R
+    R --> P[top 5 passages]
+    P --> A[model writes a cited answer]
+    A --> X[check each sentence against its citation]
+    X --> O["answer, or: I couldn't find this in the docs"]
+```
+
 1. The docs are split by heading, then each section is cut into chunks of about 160 words with a 30 word overlap, so an answer that straddles a cut is not lost.
 2. Each chunk is embedded locally with all-MiniLM-L6-v2, a small model that needs no key.
 3. For a question, keyword search and vector search each return a ranked list.
@@ -101,7 +126,7 @@ More detail and the file layout are in [docs/design.md](docs/design.md).
 ## Tests and CI
 
 ```bash
-npm test             # 77 tests pass, 1 skipped (needs DATABASE_URL)
+npm test             # 81 tests pass, 1 skipped (needs DATABASE_URL)
 npm run lint
 npm run typecheck
 ```

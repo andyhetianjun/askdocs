@@ -8,16 +8,12 @@ import { loadCases, scoreRecording, summarize, type CaseResult, type Recording }
 
 const pct = (n: number, d: number) => (d === 0 ? "n/a" : `${((100 * n) / d).toFixed(1)}%`);
 
-export async function evalRecordings(dirArg: string): Promise<void> {
+export async function scoreDirectory(dirArg: string) {
   const root = process.cwd();
   const dir = path.resolve(root, dirArg);
   const cases = await loadCases(root);
   const verifier = createVerifier();
   const files = (await readdir(dir).catch(() => [])).filter((f) => /^q\d+\.json$/.test(f)).sort();
-  if (files.length === 0) {
-    console.log(`No recordings in ${dirArg}.`);
-    return;
-  }
   const results: CaseResult[] = [];
   const recs: Recording[] = [];
   for (const f of files) {
@@ -32,9 +28,22 @@ export async function evalRecordings(dirArg: string): Promise<void> {
   }
   const model = recs[0]?.model ?? path.basename(dir);
   const s = summarize(model, verifier.name, cases.length, results);
+  return { summary: s, results, recs };
+}
+
+export const slimCases = (results: CaseResult[]) =>
+  results.map((r) => ({ caseId: r.caseId, question: r.question, answerable: r.answerable, abstained: r.abstained, sentences: r.report?.sentences ?? [] }));
+
+export async function evalRecordings(dirArg: string): Promise<void> {
+  const root = process.cwd();
+  const { summary: s, results, recs } = await scoreDirectory(dirArg);
+  if (recs.length === 0) {
+    console.log(`No recordings in ${dirArg}.`);
+    return;
+  }
   const a = s.answerable, u = s.unanswerable;
 
-  console.log(`Recorded answers from ${model}: ${s.recorded} of ${s.totalCases} questions. Citation check: ${s.verifier}.\n`);
+  console.log(`Recorded answers from ${s.model}: ${s.recorded} of ${s.totalCases} questions. Citation check: ${s.verifier}.\n`);
   console.log("| measure | result |\n|---|---|");
   console.log(`| answerable questions answered (not refused) | ${a.answered} of ${a.recorded} (${pct(a.answered, a.recorded)}) |`);
   console.log(`| answer sentences kept by the citation check | ${a.supported} of ${a.sentences} (${pct(a.supported, a.sentences)}) |`);
@@ -44,11 +53,7 @@ export async function evalRecordings(dirArg: string): Promise<void> {
   console.log(`| unanswerable questions answered anyway | ${u.answered} of ${u.recorded} (${u.answeredWithSupportedSentence} had a sentence that passed the check) |`);
 
   await mkdir(path.join(root, "data", "results"), { recursive: true });
-  const slim = results.map((r) => ({
-    caseId: r.caseId, question: r.question, answerable: r.answerable, abstained: r.abstained,
-    sentences: r.report?.sentences ?? [],
-  }));
-  await writeFile(path.join(root, "data", "results", "recordings.json"), JSON.stringify({ summary: s, cases: slim }, null, 2) + "\n");
+  await writeFile(path.join(root, "data", "results", "recordings.json"), JSON.stringify({ summary: s, cases: slimCases(results) }, null, 2) + "\n");
   console.log("\nWrote data/results/recordings.json");
 }
 

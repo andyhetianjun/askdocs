@@ -4,7 +4,7 @@ A version of askdocs that runs as a static website: https://andyhetianjun.github
 
 You type a question, and it shows the five passages from the Python docs that match best, with a link to each doc. There is no server. Your question never leaves the page.
 
-**What it does not do:** write answers. A written answer needs a model, and a model needs an API key, so this demo shows the passages an answer would cite. The full app (see the README) writes answers and checks each sentence against its citation when you give it a key.
+**What it does not do:** write answers live. A written answer needs a model, and a model needs an API key, so this demo shows the passages an answer would cite. The full app (see the README) writes answers and checks each sentence against its citation when you give it a key. If answers have been recorded with the harness in [RECORDING.md](../RECORDING.md), the page also has a "Recorded answers" section where you pick a question and see the recorded answer, the passages the model was given and the checker's verdict on each sentence. They are recorded once, not live calls. Without recordings that section is hidden.
 
 ![The demo page](img/demo.png)
 

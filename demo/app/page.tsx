@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { RecordedAnswers } from "./recorded";
 import { ABSTAIN_BELOW, loadEmbedder, loadIndex, search, type Index, type Mode, type Result } from "./lib/browser-search";
 
 const EXAMPLES = [
@@ -20,6 +21,7 @@ export default function Home() {
   const [results, setResults] = useState<Result[] | null>(null);
   const [similarity, setSimilarity] = useState<number | null>(null);
   const [asked, setAsked] = useState("");
+  const [recordedPick, setRecordedPick] = useState("");
   const [ms, setMs] = useState(0);
   const index = useRef<Index | null>(null);
   const embed = useRef<Embed | null>(null);
@@ -77,7 +79,7 @@ export default function Home() {
           this page by the same small model the full app uses (the 8-bit version).
         </p>
         <p className="mt-2 text-stone-700">
-          <strong>Written answers are not part of this demo.</strong> They need an Anthropic API key, so the demo shows the
+          <strong>This demo does not write answers live.</strong> That needs an Anthropic API key, so the search shows the
           passages an answer would cite. When the closest passage is a weak match it says the docs may not cover the question,
           the same cut-off the full app uses to refuse. Run the full app to get citation-checked answers.
         </p>
@@ -123,6 +125,7 @@ export default function Home() {
               key={ex}
               onClick={() => {
                 setQuestion(ex);
+                setRecordedPick(ex);
                 void run(ex, mode);
               }}
               className="rounded border border-stone-300 bg-white px-2 py-1 text-left text-stone-700 hover:border-stone-500"
@@ -164,6 +167,8 @@ export default function Home() {
           </ol>
         </section>
       )}
+
+      <RecordedAnswers preferred={recordedPick} />
     </div>
   );
 }
