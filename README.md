@@ -1,8 +1,9 @@
-I built a small web app that answers questions about Python's standard library docs because I wanted to understand how "ask your docs" search actually finds the right passage, and how to measure whether it does. I picked Python's docs because I read them anyway.
+# askdocs
 
 ![CI](https://github.com/andyhetianjun/askdocs/actions/workflows/ci.yml/badge.svg)
 
-# askdocs
+I built a small web app that answers questions about Python's standard library docs because I wanted to understand how "ask your docs" search actually finds the right passage, and how to measure whether it does. I picked Python's docs because I read them anyway.
+
 
 ## What it does
 
