@@ -3,6 +3,8 @@
 import { spawnSync } from "node:child_process";
 import { cp, mkdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { readFile } from "node:fs/promises";
+import { recordingToOtlp, type ViewerTrace } from "../src/lib/trace-view";
 import { scoreDirectory } from "./eval-recordings";
 
 const root = process.cwd();
@@ -31,6 +33,21 @@ async function main() {
   } else {
     await writeFile(path.join(publicData, "recordings.json"), JSON.stringify({ model: summary.model, verifier: summary.verifier, entries: [] }) + "\n");
   }
+  // Traces for the viewer page: recorded ones from the recordings, sample runs from data/results/sample-traces.json.
+  const traces: ViewerTrace[] = recs.map((rec) => ({
+    id: `rec-${rec.caseId}`,
+    label: rec.question,
+    source: "recorded",
+    model: summary.model,
+    otlp: recordingToOtlp(rec),
+  }));
+  try {
+    const sample = JSON.parse(await readFile(path.join(root, "data", "results", "sample-traces.json"), "utf8")) as { traces: ViewerTrace[] };
+    traces.push(...sample.traces);
+  } catch {
+    console.log("no data/results/sample-traces.json; run `npm run traces:sample` to add sample runs to the viewer");
+  }
+  await writeFile(path.join(publicData, "traces.json"), JSON.stringify(traces));
   await rm(path.join(root, "demo", "out"), { recursive: true, force: true });
 
   const build = spawnSync("npx", ["next", "build", "demo"], { stdio: "inherit", cwd: root, env: process.env });

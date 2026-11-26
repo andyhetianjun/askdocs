@@ -15,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <nav className="mx-auto flex max-w-3xl items-center gap-6 px-4 py-3 text-sm">
             <Link href="/" className="font-semibold">askdocs demo</Link>
             <Link href="/eval/" className="text-stone-600 hover:text-stone-900">Eval results</Link>
+            <Link href="/traces/" className="text-stone-600 hover:text-stone-900">Traces</Link>
             <a href="https://github.com/andyhetianjun/askdocs" className="ml-auto text-stone-600 hover:text-stone-900">Source</a>
           </nav>
         </header>
