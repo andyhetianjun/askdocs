@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q13",
+  "question": "How do I stop two threads from changing shared data at the same moment?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] threading / Thread-Local Data\nThread-local data is data whose values are thread specific.  To manage\nthread-local data, just create an instance of local (or a\nsubclass) and store attributes on it:\n\nmydata = threading.local()\nmydata.x = 1\n\nThe instance's values will be different for separate threads.\n\nlocal()\n\nA class that represents thread-local data.\n\nFor more details and extensive examples, see the documentation string of the\n_threading_local module: Lib/_threading_local.py.\n\n[2] logging / Thread Safety\nThe logging module is intended to be thread-safe without any special work\nneeding to be done by its clients. It achieves this though using threading\nlocks; there is one lock to serialize access to the module's shared data, and\neach handler also creates a lock to serialize access to its underlying I/O.\n\nIf you are implementing asynchronous signal handlers using the signal\nmodule, you may not be able to use logging from within such handlers. This is\nbecause lock implementations in the threading module are not always\nre-entrant, and so cannot be invoked from such signal handlers.\n\n[3] sqlite3 / Module constants\n1. **Single-thread**: In this mode, all mutexes are disabled and SQLite is\n   unsafe to use in more than a single thread at once.\n2. **Multi-thread**: In this mode, SQLite can be safely used by multiple\n   threads provided that no single database connection is used\n   simultaneously in two or more threads.\n3. **Serialized**: In serialized mode, SQLite can be safely used by\n   multiple threads with no restriction.\n\nThe mappings from SQLite threading modes to DB-API 2.0 threadsafety levels\nare as follows:\n\n+------------------+----------------------+----------------------+-------------------------------+\n| SQLite threading | threadsafety   | SQLITE_THREADSAFE`_ | DB-API 2.0 meaning            |\n| mode             | <0249#threadsafety>` |                      |                               |\n+==================+======================+======================+===============================+\n| single-thread    | 0                    | 0                    | Threads may not share the     |\n|                  |                      |                      | module                        |\n+------------------+----------------------+----------------------+-------------------------------+\n| multi-thread     | 1                    | 2                    | Threads may share the module, |\n|                  |                      |                      | but not connections           |\n+------------------+----------------------+----------------------+-------------------------------+\n| serialized       | 3                    | 1                    | Threads may share the module, |\n\n[4] threading / Thread Objects\nWhen the *timeout* argument is present and not None, it should be a\n   floating-point number specifying a timeout for the operation in seconds\n   (or fractions thereof). As Thread.join always returns None,\n   you must call Thread.is_alive after Thread.join to\n   decide whether a timeout happened -- if the thread is still alive, the\n   Thread.join call timed out.\n\n   When the *timeout* argument is not present or None, the operation will\n   block until the thread terminates.\n\n   A thread can be joined many times.\n\n   Thread.join raises a RuntimeError if an attempt is made\n   to join the current thread as that would cause a deadlock. It is also\n   an error to Thread.join a thread before it has been started\n   and attempts to do so raise the same exception.\n\nname\n\n   A string used for identification purposes only. It has no semantics.\n   Multiple threads may be given the same name.  The initial name is set by\n   the constructor.\n\ngetName()\n            setName()\n\n[5] threading / Thread Objects\nmethod tests whether the thread is alive.\n\nOther threads can call a thread's Thread.join method.  This blocks\nthe calling thread until the thread whose Thread.join method is\ncalled is terminated.\n\nA thread has a name.  The name can be passed to the constructor, and read or\nchanged through the Thread.name attribute.\n\nIf the Thread.run method raises an exception,\nthreading.excepthook is called to handle it. By default,\nthreading.excepthook ignores silently SystemExit.\n\nA thread can be flagged as a \"daemon thread\".  The significance of this flag is\nthat the entire Python program exits when only daemon threads are left.  The\ninitial value is inherited from the creating thread.  The flag can be set\nthrough the Thread.daemon property or the *daemon* constructor\nargument.\n\nDaemon threads are abruptly stopped at shutdown.  Their resources (such\nas open files, database transactions, etc.) may not be released properly.\nIf you want your threads to stop gracefully, make them non-daemonic and\n\nQuestion: How do I stop two threads from changing shared data at the same moment?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "threading-9",
+      "doc": "threading",
+      "section": "Thread-Local Data",
+      "url": "https://docs.python.org/3.12/library/threading.html",
+      "text": "Thread-local data is data whose values are thread specific.  To manage\nthread-local data, just create an instance of local (or a\nsubclass) and store attributes on it:\n\nmydata = threading.local()\nmydata.x = 1\n\nThe instance's values will be different for separate threads.\n\nlocal()\n\nA class that represents thread-local data.\n\nFor more details and extensive examples, see the documentation string of the\n_threading_local module: Lib/_threading_local.py."
+    },
+    {
+      "n": 2,
+      "id": "logging-54",
+      "doc": "logging",
+      "section": "Thread Safety",
+      "url": "https://docs.python.org/3.12/library/logging.html",
+      "text": "The logging module is intended to be thread-safe without any special work\nneeding to be done by its clients. It achieves this though using threading\nlocks; there is one lock to serialize access to the module's shared data, and\neach handler also creates a lock to serialize access to its underlying I/O.\n\nIf you are implementing asynchronous signal handlers using the signal\nmodule, you may not be able to use logging from within such handlers. This is\nbecause lock implementations in the threading module are not always\nre-entrant, and so cannot be invoked from such signal handlers."
+    },
+    {
+      "n": 3,
+      "id": "sqlite3-17",
+      "doc": "sqlite3",
+      "section": "Module constants",
+      "url": "https://docs.python.org/3.12/library/sqlite3.html",
+      "text": "1. **Single-thread**: In this mode, all mutexes are disabled and SQLite is\n   unsafe to use in more than a single thread at once.\n2. **Multi-thread**: In this mode, SQLite can be safely used by multiple\n   threads provided that no single database connection is used\n   simultaneously in two or more threads.\n3. **Serialized**: In serialized mode, SQLite can be safely used by\n   multiple threads with no restriction.\n\nThe mappings from SQLite threading modes to DB-API 2.0 threadsafety levels\nare as follows:\n\n+------------------+----------------------+----------------------+-------------------------------+\n| SQLite threading | threadsafety   | SQLITE_THREADSAFE`_ | DB-API 2.0 meaning            |\n| mode             | <0249#threadsafety>` |                      |                               |\n+==================+======================+======================+===============================+\n| single-thread    | 0                    | 0                    | Threads may not share the     |\n|                  |                      |                      | module                        |\n+------------------+----------------------+----------------------+-------------------------------+\n| multi-thread     | 1                    | 2                    | Threads may share the module, |\n|                  |                      |                      | but not connections           |\n+------------------+----------------------+----------------------+-------------------------------+\n| serialized       | 3                    | 1                    | Threads may share the module, |"
+    },
+    {
+      "n": 4,
+      "id": "threading-16",
+      "doc": "threading",
+      "section": "Thread Objects",
+      "url": "https://docs.python.org/3.12/library/threading.html",
+      "text": "When the *timeout* argument is present and not None, it should be a\n   floating-point number specifying a timeout for the operation in seconds\n   (or fractions thereof). As Thread.join always returns None,\n   you must call Thread.is_alive after Thread.join to\n   decide whether a timeout happened -- if the thread is still alive, the\n   Thread.join call timed out.\n\n   When the *timeout* argument is not present or None, the operation will\n   block until the thread terminates.\n\n   A thread can be joined many times.\n\n   Thread.join raises a RuntimeError if an attempt is made\n   to join the current thread as that would cause a deadlock. It is also\n   an error to Thread.join a thread before it has been started\n   and attempts to do so raise the same exception.\n\nname\n\n   A string used for identification purposes only. It has no semantics.\n   Multiple threads may be given the same name.  The initial name is set by\n   the constructor.\n\ngetName()\n            setName()"
+    },
+    {
+      "n": 5,
+      "id": "threading-11",
+      "doc": "threading",
+      "section": "Thread Objects",
+      "url": "https://docs.python.org/3.12/library/threading.html",
+      "text": "method tests whether the thread is alive.\n\nOther threads can call a thread's Thread.join method.  This blocks\nthe calling thread until the thread whose Thread.join method is\ncalled is terminated.\n\nA thread has a name.  The name can be passed to the constructor, and read or\nchanged through the Thread.name attribute.\n\nIf the Thread.run method raises an exception,\nthreading.excepthook is called to handle it. By default,\nthreading.excepthook ignores silently SystemExit.\n\nA thread can be flagged as a \"daemon thread\".  The significance of this flag is\nthat the entire Python program exits when only daemon threads are left.  The\ninitial value is inherited from the creating thread.  The flag can be set\nthrough the Thread.daemon property or the *daemon* constructor\nargument.\n\nDaemon threads are abruptly stopped at shutdown.  Their resources (such\nas open files, database transactions, etc.) may not be released properly.\nIf you want your threads to stop gracefully, make them non-daemonic and"
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.546
+  },
+  "promptedAt": "2026-11-26T02:45:10.145Z",
+  "answer": "I couldn't find this in the docs.",
+  "recordedAt": "2026-11-26T02:45:12.479Z",
+  "secondsToAnswer": 2
+}

@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q26",
+  "question": "How can an argument accept several values on the command line?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] argparse / The add_argument() method\nArgumentParser.add_argument(name or flags..., [action], [nargs], [const], [default], [type], [choices], [required], [help], [metavar], [dest])\n\nDefine how a single command-line argument should be parsed.  Each parameter\nhas its own more detailed description below, but in short they are:\n\n* name or flags - Either a name or a list of option strings, e.g. foo\n  or -f, --foo.\n\n* action_ - The basic type of action to be taken when this argument is\n  encountered at the command line.\n\n* nargs_ - The number of command-line arguments that should be consumed.\n\n* const_ - A constant value required by some action_ and nargs_ selections.\n\n* default_ - The value produced if the argument is absent from the\n  command line and if it is absent from the namespace object.\n\n* type_ - The type to which the command-line argument should be converted.\n\n* choices_ - A sequence of the allowable values for the argument.\n\n[2] argparse / The add_argument() method\ncommand line and if it is absent from the namespace object.\n\n* type_ - The type to which the command-line argument should be converted.\n\n* choices_ - A sequence of the allowable values for the argument.\n\n* required_ - Whether or not the command-line option may be omitted\n  (optionals only).\n\n* help_ - A brief description of what the argument does.\n\n* metavar_ - A name for the argument in usage messages.\n\n* dest_ - The name of the attribute to be added to the object returned by\n  parse_args.\n\nThe following sections describe how each of these are used.\n\n[3] argparse / nargs\nArgumentParser objects usually associate a single command-line argument with a\nsingle action to be taken.  The nargs keyword argument associates a\ndifferent number of command-line arguments with a single action.\nSee also specifying-ambiguous-arguments. The supported values are:\n\n* N (an integer).  N arguments from the command line will be gathered\ntogether into a list.  For example:\n\n  >>> parser = argparse.ArgumentParser()\n  >>> parser.add_argument('--foo', nargs=2)\n  >>> parser.add_argument('bar', nargs=1)\n  >>> parser.parse_args('c --foo a b'.split())\n  Namespace(bar=['c'], foo=['a', 'b'])\n\nNote that nargs=1 produces a list of one item.  This is different from\nthe default, in which the item is produced by itself.\n\n* '?'. One argument will be consumed from the command line if possible, and\nproduced as a single item.  If no command-line argument is present, the value from\ndefault_ will be produced.  Note that for optional arguments, there is an\nadditional case - the option string is present but not followed by a\n\n[4] argparse / Sub-commands\nArgumentParser.add_subparsers([title], [description], [prog], [parser_class], [action], [option_strings], [dest], [required], [help], [metavar])\n\nMany programs split up their functionality into a number of sub-commands,\nfor example, the svn program can invoke sub-commands like svn\ncheckout, svn update, and svn commit.  Splitting up functionality\nthis way can be a particularly good idea when a program performs several\ndifferent functions which require different kinds of command-line arguments.\nArgumentParser supports the creation of such sub-commands with the\nadd_subparsers method.  The add_subparsers method is normally\ncalled with no arguments and returns a special action object.  This object\nhas a single method, _SubParsersAction.add_parser, which takes a\ncommand name and any ArgumentParser constructor arguments, and\nreturns an ArgumentParser object that can be modified as usual.\n\nDescription of parameters:\n\n* title - title for the sub-parser group in help output; by default\n  \"subcommands\" if description is provided, otherwise uses title for\n  positional arguments\n\n* description - description for the sub-parser group in help output, by\n  default None\n\n[5] argparse / Option value syntax\nThe ArgumentParser.parse_args method supports several ways of\nspecifying the value of an option (if it takes one).  In the simplest case, the\noption and its value are passed as two separate arguments:\n\n>>> parser = argparse.ArgumentParser(prog='PROG')\n>>> parser.add_argument('-x')\n>>> parser.add_argument('--foo')\n>>> parser.parse_args(['-x', 'X'])\nNamespace(foo=None, x='X')\n>>> parser.parse_args(['--foo', 'FOO'])\nNamespace(foo='FOO', x=None)\n\nFor long options (options with names longer than a single character), the option\nand value can also be passed as a single command-line argument, using = to\nseparate them:\n\n>>> parser.parse_args(['--foo=FOO'])\nNamespace(foo='FOO', x=None)\n\nFor short options (options only one character long), the option and its value\ncan be concatenated:\n\n>>> parser.parse_args(['-xX'])\nNamespace(foo=None, x='X')\n\nSeveral short options can be joined together, using only a single - prefix,\nas long as only the last option (or none of them) requires a value:\n\n>>> parser = argparse.ArgumentParser(prog='PROG')\n>>> parser.add_argument('-x', action='store_true')\n>>> parser.add_argument('-y', action='store_true')\n>>> parser.add_argument('-z')\n>>> parser.parse_args(['-xyzZ'])\nNamespace(x=True, y=True, z='Z')\n\nQuestion: How can an argument accept several values on the command line?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "argparse-29",
+      "doc": "argparse",
+      "section": "The add_argument() method",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "ArgumentParser.add_argument(name or flags..., [action], [nargs], [const], [default], [type], [choices], [required], [help], [metavar], [dest])\n\nDefine how a single command-line argument should be parsed.  Each parameter\nhas its own more detailed description below, but in short they are:\n\n* name or flags - Either a name or a list of option strings, e.g. foo\n  or -f, --foo.\n\n* action_ - The basic type of action to be taken when this argument is\n  encountered at the command line.\n\n* nargs_ - The number of command-line arguments that should be consumed.\n\n* const_ - A constant value required by some action_ and nargs_ selections.\n\n* default_ - The value produced if the argument is absent from the\n  command line and if it is absent from the namespace object.\n\n* type_ - The type to which the command-line argument should be converted.\n\n* choices_ - A sequence of the allowable values for the argument."
+    },
+    {
+      "n": 2,
+      "id": "argparse-30",
+      "doc": "argparse",
+      "section": "The add_argument() method",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "command line and if it is absent from the namespace object.\n\n* type_ - The type to which the command-line argument should be converted.\n\n* choices_ - A sequence of the allowable values for the argument.\n\n* required_ - Whether or not the command-line option may be omitted\n  (optionals only).\n\n* help_ - A brief description of what the argument does.\n\n* metavar_ - A name for the argument in usage messages.\n\n* dest_ - The name of the attribute to be added to the object returned by\n  parse_args.\n\nThe following sections describe how each of these are used."
+    },
+    {
+      "n": 3,
+      "id": "argparse-37",
+      "doc": "argparse",
+      "section": "nargs",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "ArgumentParser objects usually associate a single command-line argument with a\nsingle action to be taken.  The nargs keyword argument associates a\ndifferent number of command-line arguments with a single action.\nSee also specifying-ambiguous-arguments. The supported values are:\n\n* N (an integer).  N arguments from the command line will be gathered\ntogether into a list.  For example:\n\n  >>> parser = argparse.ArgumentParser()\n  >>> parser.add_argument('--foo', nargs=2)\n  >>> parser.add_argument('bar', nargs=1)\n  >>> parser.parse_args('c --foo a b'.split())\n  Namespace(bar=['c'], foo=['a', 'b'])\n\nNote that nargs=1 produces a list of one item.  This is different from\nthe default, in which the item is produced by itself.\n\n* '?'. One argument will be consumed from the command line if possible, and\nproduced as a single item.  If no command-line argument is present, the value from\ndefault_ will be produced.  Note that for optional arguments, there is an\nadditional case - the option string is present but not followed by a"
+    },
+    {
+      "n": 4,
+      "id": "argparse-67",
+      "doc": "argparse",
+      "section": "Sub-commands",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "ArgumentParser.add_subparsers([title], [description], [prog], [parser_class], [action], [option_strings], [dest], [required], [help], [metavar])\n\nMany programs split up their functionality into a number of sub-commands,\nfor example, the svn program can invoke sub-commands like svn\ncheckout, svn update, and svn commit.  Splitting up functionality\nthis way can be a particularly good idea when a program performs several\ndifferent functions which require different kinds of command-line arguments.\nArgumentParser supports the creation of such sub-commands with the\nadd_subparsers method.  The add_subparsers method is normally\ncalled with no arguments and returns a special action object.  This object\nhas a single method, _SubParsersAction.add_parser, which takes a\ncommand name and any ArgumentParser constructor arguments, and\nreturns an ArgumentParser object that can be modified as usual.\n\nDescription of parameters:\n\n* title - title for the sub-parser group in help output; by default\n  \"subcommands\" if description is provided, otherwise uses title for\n  positional arguments\n\n* description - description for the sub-parser group in help output, by\n  default None"
+    },
+    {
+      "n": 5,
+      "id": "argparse-60",
+      "doc": "argparse",
+      "section": "Option value syntax",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "The ArgumentParser.parse_args method supports several ways of\nspecifying the value of an option (if it takes one).  In the simplest case, the\noption and its value are passed as two separate arguments:\n\n>>> parser = argparse.ArgumentParser(prog='PROG')\n>>> parser.add_argument('-x')\n>>> parser.add_argument('--foo')\n>>> parser.parse_args(['-x', 'X'])\nNamespace(foo=None, x='X')\n>>> parser.parse_args(['--foo', 'FOO'])\nNamespace(foo='FOO', x=None)\n\nFor long options (options with names longer than a single character), the option\nand value can also be passed as a single command-line argument, using = to\nseparate them:\n\n>>> parser.parse_args(['--foo=FOO'])\nNamespace(foo='FOO', x=None)\n\nFor short options (options only one character long), the option and its value\ncan be concatenated:\n\n>>> parser.parse_args(['-xX'])\nNamespace(foo=None, x='X')\n\nSeveral short options can be joined together, using only a single - prefix,\nas long as only the last option (or none of them) requires a value:\n\n>>> parser = argparse.ArgumentParser(prog='PROG')\n>>> parser.add_argument('-x', action='store_true')\n>>> parser.add_argument('-y', action='store_true')\n>>> parser.add_argument('-z')\n>>> parser.parse_args(['-xyzZ'])\nNamespace(x=True, y=True, z='Z')"
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.659
+  },
+  "promptedAt": "2026-11-26T02:45:29.423Z",
+  "answer": "Use the nargs keyword argument of add_argument(). [3]\nIt associates a different number of command-line arguments with a single action. [3]\nSetting nargs to an integer N gathers N arguments into a list. [3]\nFor example, nargs=2 on --foo produced foo=['a', 'b']. [3]",
+  "recordedAt": "2026-11-26T02:45:31.652Z",
+  "secondsToAnswer": 2
+}

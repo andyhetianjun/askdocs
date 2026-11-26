@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q10",
+  "question": "Which command line options does python -m json.tool accept?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] json / Command Line Interface\n**Source code:** Lib/json/tool.py\n\n--------------\n\nThe json.tool module provides a simple command line interface to validate\nand pretty-print JSON objects.\n\nIf the optional infile and outfile arguments are not\nspecified, sys.stdin and sys.stdout will be used respectively:\n\nshell-session\n\n $ echo '{\"json\": \"obj\"}' | python -m json.tool\n {\n     \"json\": \"obj\"\n }\n $ echo '{1.2:3.4}' | python -m json.tool\n Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\n\n3.5\nThe output is now in the same order as the input. Use the\n--sort-keys option to sort the output of dictionaries\nalphabetically by key.\n\n[2] json / Command line options\ninfile\n\nThe JSON file to be validated or pretty-printed:\n\nshell-session\n\n   $ python -m json.tool mp_films.json\n   [\n       {\n           \"title\": \"And Now for Something Completely Different\",\n           \"year\": 1971\n       },\n       {\n           \"title\": \"Monty Python and the Holy Grail\",\n           \"year\": 1975\n       }\n   ]\n\nIf *infile* is not specified, read from sys.stdin.\n\noutfile\n\nWrite the output of the *infile* to the given *outfile*. Otherwise, write it\nto sys.stdout.\n\n--sort-keys\n\nSort the output of dictionaries alphabetically by key.\n\n3.5\n\n--no-ensure-ascii\n\nDisable escaping of non-ascii characters, see json.dumps for more information.\n\n3.9\n\n--json-lines\n\nParse every input line as separate JSON object.\n\n3.8\n\n--indent, --tab, --no-indent, --compact\n\nMutually exclusive options for whitespace control.\n\n3.9\n\n-h, --help\n\nShow the help message.\n\nFootnotes\n\n<https://www.rfc-editor.org/errata_search.php?rfc=7159>`_,\nJSON permits literal U+2028 (LINE SEPARATOR) and\nU+2029 (PARAGRAPH SEPARATOR) characters in strings, whereas JavaScript\n(as of ECMAScript Edition 5.1) does not.\n\n[3] json / json - JSON encoder and decoder\n...     object_hook=as_complex)\n (1+2j)\n >>> import decimal\n >>> json.loads('1.1', parse_float=decimal.Decimal)\n Decimal('1.1')\n\nExtending JSONEncoder:\n\n >>> import json\n >>> class ComplexEncoder(json.JSONEncoder):\n ...     def default(self, obj):\n ...         if isinstance(obj, complex):\n ...             return [obj.real, obj.imag]\n ...         # Let the base class default method raise the TypeError\n ...         return super().default(obj)\n ...\n >>> json.dumps(2 + 1j, cls=ComplexEncoder)\n '[2.0, 1.0]'\n >>> ComplexEncoder().encode(2 + 1j)\n '[2.0, 1.0]'\n >>> list(ComplexEncoder().iterencode(2 + 1j))\n ['[2.0', ', 1.0', ']']\n\nUsing json.tool from the shell to validate and pretty-print:\n\nshell-session\n\n $ echo '{\"json\":\"obj\"}' | python -m json.tool\n {\n     \"json\": \"obj\"\n }\n $ echo '{1.2:3.4}' | python -m json.tool\n Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\n\nSee json-commandline for detailed documentation.\n\nJSON is a subset of YAML 1.2.  The JSON produced by\nthis module's default settings (in particular, the default *separators*\nvalue) is also a subset of YAML 1.0 and 1.1.  This module can thus also be\nused as a YAML serializer.\n\n[4] json / Implementation Limitations\nSome JSON deserializer implementations may set limits on:\n\n* the size of accepted JSON texts\n* the maximum level of nesting of JSON objects and arrays\n* the range and precision of JSON numbers\n* the content and maximum length of JSON strings\n\nThis module does not impose any such limits beyond those of the relevant\nPython datatypes themselves or the Python interpreter itself.\n\nWhen serializing to JSON, beware any such limitations in applications that may\nconsume your JSON.  In particular, it is common for JSON numbers to be\ndeserialized into IEEE 754 double precision numbers and thus subject to that\nrepresentation's range and precision limitations.  This is especially relevant\nwhen serializing Python int values of extremely large magnitude, or\nwhen serializing instances of \"exotic\" numerical types such as\ndecimal.Decimal.\n\njson.tool\n\n[5] argparse / argparse - Parser for command-line options, arguments and sub-commands\n3.2\n\n**Source code:** Lib/argparse.py\n\n--------------\n\nThis page contains the API reference information. For a more gentle\nintroduction to Python command-line parsing, have a look at the\nargparse tutorial.\n\nThe argparse module makes it easy to write user-friendly command-line\ninterfaces. The program defines what arguments it requires, and argparse\nwill figure out how to parse those out of sys.argv.  The argparse\nmodule also automatically generates help and usage messages.  The module\nwill also issue errors when users give the program invalid arguments.\n\nQuestion: Which command line options does python -m json.tool accept?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "json-29",
+      "doc": "json",
+      "section": "Command Line Interface",
+      "url": "https://docs.python.org/3.12/library/json.html",
+      "text": "**Source code:** Lib/json/tool.py\n\n--------------\n\nThe json.tool module provides a simple command line interface to validate\nand pretty-print JSON objects.\n\nIf the optional infile and outfile arguments are not\nspecified, sys.stdin and sys.stdout will be used respectively:\n\nshell-session\n\n $ echo '{\"json\": \"obj\"}' | python -m json.tool\n {\n     \"json\": \"obj\"\n }\n $ echo '{1.2:3.4}' | python -m json.tool\n Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\n\n3.5\nThe output is now in the same order as the input. Use the\n--sort-keys option to sort the output of dictionaries\nalphabetically by key."
+    },
+    {
+      "n": 2,
+      "id": "json-30",
+      "doc": "json",
+      "section": "Command line options",
+      "url": "https://docs.python.org/3.12/library/json.html",
+      "text": "infile\n\nThe JSON file to be validated or pretty-printed:\n\nshell-session\n\n   $ python -m json.tool mp_films.json\n   [\n       {\n           \"title\": \"And Now for Something Completely Different\",\n           \"year\": 1971\n       },\n       {\n           \"title\": \"Monty Python and the Holy Grail\",\n           \"year\": 1975\n       }\n   ]\n\nIf *infile* is not specified, read from sys.stdin.\n\noutfile\n\nWrite the output of the *infile* to the given *outfile*. Otherwise, write it\nto sys.stdout.\n\n--sort-keys\n\nSort the output of dictionaries alphabetically by key.\n\n3.5\n\n--no-ensure-ascii\n\nDisable escaping of non-ascii characters, see json.dumps for more information.\n\n3.9\n\n--json-lines\n\nParse every input line as separate JSON object.\n\n3.8\n\n--indent, --tab, --no-indent, --compact\n\nMutually exclusive options for whitespace control.\n\n3.9\n\n-h, --help\n\nShow the help message.\n\nFootnotes\n\n<https://www.rfc-editor.org/errata_search.php?rfc=7159>`_,\nJSON permits literal U+2028 (LINE SEPARATOR) and\nU+2029 (PARAGRAPH SEPARATOR) characters in strings, whereas JavaScript\n(as of ECMAScript Edition 5.1) does not."
+    },
+    {
+      "n": 3,
+      "id": "json-2",
+      "doc": "json",
+      "section": "json - JSON encoder and decoder",
+      "url": "https://docs.python.org/3.12/library/json.html",
+      "text": "...     object_hook=as_complex)\n (1+2j)\n >>> import decimal\n >>> json.loads('1.1', parse_float=decimal.Decimal)\n Decimal('1.1')\n\nExtending JSONEncoder:\n\n >>> import json\n >>> class ComplexEncoder(json.JSONEncoder):\n ...     def default(self, obj):\n ...         if isinstance(obj, complex):\n ...             return [obj.real, obj.imag]\n ...         # Let the base class default method raise the TypeError\n ...         return super().default(obj)\n ...\n >>> json.dumps(2 + 1j, cls=ComplexEncoder)\n '[2.0, 1.0]'\n >>> ComplexEncoder().encode(2 + 1j)\n '[2.0, 1.0]'\n >>> list(ComplexEncoder().iterencode(2 + 1j))\n ['[2.0', ', 1.0', ']']\n\nUsing json.tool from the shell to validate and pretty-print:\n\nshell-session\n\n $ echo '{\"json\":\"obj\"}' | python -m json.tool\n {\n     \"json\": \"obj\"\n }\n $ echo '{1.2:3.4}' | python -m json.tool\n Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\n\nSee json-commandline for detailed documentation.\n\nJSON is a subset of YAML 1.2.  The JSON produced by\nthis module's default settings (in particular, the default *separators*\nvalue) is also a subset of YAML 1.0 and 1.1.  This module can thus also be\nused as a YAML serializer."
+    },
+    {
+      "n": 4,
+      "id": "json-28",
+      "doc": "json",
+      "section": "Implementation Limitations",
+      "url": "https://docs.python.org/3.12/library/json.html",
+      "text": "Some JSON deserializer implementations may set limits on:\n\n* the size of accepted JSON texts\n* the maximum level of nesting of JSON objects and arrays\n* the range and precision of JSON numbers\n* the content and maximum length of JSON strings\n\nThis module does not impose any such limits beyond those of the relevant\nPython datatypes themselves or the Python interpreter itself.\n\nWhen serializing to JSON, beware any such limitations in applications that may\nconsume your JSON.  In particular, it is common for JSON numbers to be\ndeserialized into IEEE 754 double precision numbers and thus subject to that\nrepresentation's range and precision limitations.  This is especially relevant\nwhen serializing Python int values of extremely large magnitude, or\nwhen serializing instances of \"exotic\" numerical types such as\ndecimal.Decimal.\n\njson.tool"
+    },
+    {
+      "n": 5,
+      "id": "argparse-0",
+      "doc": "argparse",
+      "section": "argparse - Parser for command-line options, arguments and sub-commands",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "3.2\n\n**Source code:** Lib/argparse.py\n\n--------------\n\nThis page contains the API reference information. For a more gentle\nintroduction to Python command-line parsing, have a look at the\nargparse tutorial.\n\nThe argparse module makes it easy to write user-friendly command-line\ninterfaces. The program defines what arguments it requires, and argparse\nwill figure out how to parse those out of sys.argv.  The argparse\nmodule also automatically generates help and usage messages.  The module\nwill also issue errors when users give the program invalid arguments."
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.676
+  },
+  "promptedAt": "2026-11-26T02:45:06.499Z",
+  "answer": "It accepts an optional infile argument, which is the JSON file to validate or pretty-print [2].\nIt accepts an optional outfile argument, which is where the output is written [2].\nWithout infile it reads from sys.stdin [2].\nWithout outfile it writes to sys.stdout [2].\nThe --sort-keys option sorts dictionary output alphabetically by key [2].\nThe --no-ensure-ascii option disables escaping of non-ascii characters [2].\nThe --json-lines option parses every input line as a separate JSON object [2].\nThe --indent, --tab, --no-indent and --compact options are mutually exclusive whitespace controls [2].\nThe -h and --help options show the help message [2].",
+  "recordedAt": "2026-11-26T02:45:09.276Z",
+  "secondsToAnswer": 3
+}

@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q40",
+  "question": "How do I compute the SHA-256 digest of a large file in chunks?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] hashlib / Hash algorithms\nThere is one constructor method named for each type of hash.  All return\na hash object with the same simple interface. For example: use sha256\nto create a SHA-256 hash object. You can now feed this object with\nbytes-like objects (normally bytes) using\nthe update method.  At any point you can ask it for the\ndigest of the concatenation of the data fed to it so far using the\ndigest() or hexdigest() methods.\n\nTo allow multithreading, the Python GIL is released while computing a\nhash supplied more than 2047 bytes of data at once in its constructor or\n.update method.\n\nConstructors for hash algorithms that are always present in this module are\nsha1, sha224, sha256, sha384, sha512,\nsha3_224, sha3_256, sha3_384, sha3_512,\nshake_128, shake_256, blake2b, and blake2s.\nmd5 is normally available as well, though it may be missing or blocked\nif you are using a rare \"FIPS compliant\" build of Python.\nThese correspond to algorithms_guaranteed.\n\n[2] hashlib / Key derivation\ncomputing power. As of 2022, hundreds of thousands of iterations of SHA-256\nare suggested. For rationale as to why and how to choose what is best for\nyour application, read *Appendix A.2.2* of NIST-SP-800-132_. The answers\non the stackexchange pbkdf2 iterations question explain in detail.\n\n*dklen* is the length of the derived key in bytes. If *dklen* is None then the\ndigest size of the hash algorithm *hash_name* is used, e.g. 64 for SHA-512.\n\n>>> from hashlib import pbkdf2_hmac\n>>> our_app_iters = 500_000  # Application specific, read above.\n>>> dk = pbkdf2_hmac('sha256', b'password', b'bad salt' * 2, our_app_iters)\n>>> dk.hex()\n'15530bba69924174860db778f2c6f8104d3aaf9d26241840c8c4a641c8d000a9'\n\nFunction only available when Python is compiled with OpenSSL.\n\n3.4\n\n3.12\n   Function now only available when Python is built with OpenSSL. The slow\n   pure Python implementation has been removed.\n\nscrypt(password, *, salt, n, r, p, maxmem=0, dklen=64)\n\nThe function provides scrypt password-based key derivation function as\ndefined in 7914.\n\n[3] hashlib / SHAKE variable length digests\nshake_128([, data], *, usedforsecurity=True)\nshake_256([, data], *, usedforsecurity=True)\n\nThe shake_128 and shake_256 algorithms provide variable\nlength digests with length_in_bits//2 up to 128 or 256 bits of security.\nAs such, their digest methods require a length. Maximum length is not limited\nby the SHAKE algorithm.\n\nshake.digest(length)\n\nReturn the digest of the data passed to the hash.update method so far.\nThis is a bytes object of size *length* which may contain bytes in\nthe whole range from 0 to 255.\n\nshake.hexdigest(length)\n\nLike digest except the digest is returned as a string object of\ndouble length, containing only hexadecimal digits.  This may be used to\nexchange the value in email or other non-binary environments.\n\nExample use:\n\n>>> h = hashlib.shake_256(b'Nobody inspects the spammish repetition')\n>>> h.hexdigest(20)\n'44709d6fcb83d92a76dcb0b668c98e1b1d3dafe7'\n\n[4] hashlib / File hashing\nThe hashlib module provides a helper function for efficient hashing of\na file or file-like object.\n\nfile_digest(fileobj, digest, /)\n\nReturn a digest object that has been updated with contents of file object.\n\n*fileobj* must be a file-like object opened for reading in binary mode.\nIt accepts file objects from  builtin open, io.BytesIO\ninstances, SocketIO objects from socket.socket.makefile, and\nsimilar. The function may bypass Python's I/O and use the file descriptor\nfrom io.IOBase.fileno directly. *fileobj* must be assumed to be\nin an unknown state after this function returns or raises. It is up to\nthe caller to close *fileobj*.\n\n*digest* must either be a hash algorithm name as a *str*, a hash\nconstructor, or a callable that returns a hash object.\n\nExample:\n\n   >>> import io, hashlib, hmac\n   >>> with open(hashlib.__file__, \"rb\") as f:\n   ...     digest = hashlib.file_digest(f, \"sha256\")\n   ...\n   >>> digest.hexdigest()  # doctest: +ELLIPSIS\n   '...'\n\n   >>> buf = io.BytesIO(b\"somedata\")\n   >>> mac1 = hmac.HMAC(b\"key\", digestmod=hashlib.sha512)\n   >>> digest = hashlib.file_digest(buf, lambda: mac1)\n\n[5] hashlib / Hash Objects\nequivalent to m.update(a+b).\n\nhash.digest()\n\nReturn the digest of the data passed to the update method so far.\nThis is a bytes object of size digest_size which may contain bytes in\nthe whole range from 0 to 255.\n\nhash.hexdigest()\n\nLike digest except the digest is returned as a string object of\ndouble length, containing only hexadecimal digits.  This may be used to\nexchange the value safely in email or other non-binary environments.\n\nhash.copy()\n\nReturn a copy (\"clone\") of the hash object.  This can be used to efficiently\ncompute the digests of data sharing a common initial substring.\n\nQuestion: How do I compute the SHA-256 digest of a large file in chunks?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "hashlib-1",
+      "doc": "hashlib",
+      "section": "Hash algorithms",
+      "url": "https://docs.python.org/3.12/library/hashlib.html",
+      "text": "There is one constructor method named for each type of hash.  All return\na hash object with the same simple interface. For example: use sha256\nto create a SHA-256 hash object. You can now feed this object with\nbytes-like objects (normally bytes) using\nthe update method.  At any point you can ask it for the\ndigest of the concatenation of the data fed to it so far using the\ndigest() or hexdigest() methods.\n\nTo allow multithreading, the Python GIL is released while computing a\nhash supplied more than 2047 bytes of data at once in its constructor or\n.update method.\n\nConstructors for hash algorithms that are always present in this module are\nsha1, sha224, sha256, sha384, sha512,\nsha3_224, sha3_256, sha3_384, sha3_512,\nshake_128, shake_256, blake2b, and blake2s.\nmd5 is normally available as well, though it may be missing or blocked\nif you are using a rare \"FIPS compliant\" build of Python.\nThese correspond to algorithms_guaranteed."
+    },
+    {
+      "n": 2,
+      "id": "hashlib-13",
+      "doc": "hashlib",
+      "section": "Key derivation",
+      "url": "https://docs.python.org/3.12/library/hashlib.html",
+      "text": "computing power. As of 2022, hundreds of thousands of iterations of SHA-256\nare suggested. For rationale as to why and how to choose what is best for\nyour application, read *Appendix A.2.2* of NIST-SP-800-132_. The answers\non the stackexchange pbkdf2 iterations question explain in detail.\n\n*dklen* is the length of the derived key in bytes. If *dklen* is None then the\ndigest size of the hash algorithm *hash_name* is used, e.g. 64 for SHA-512.\n\n>>> from hashlib import pbkdf2_hmac\n>>> our_app_iters = 500_000  # Application specific, read above.\n>>> dk = pbkdf2_hmac('sha256', b'password', b'bad salt' * 2, our_app_iters)\n>>> dk.hex()\n'15530bba69924174860db778f2c6f8104d3aaf9d26241840c8c4a641c8d000a9'\n\nFunction only available when Python is compiled with OpenSSL.\n\n3.4\n\n3.12\n   Function now only available when Python is built with OpenSSL. The slow\n   pure Python implementation has been removed.\n\nscrypt(password, *, salt, n, r, p, maxmem=0, dklen=64)\n\nThe function provides scrypt password-based key derivation function as\ndefined in 7914."
+    },
+    {
+      "n": 3,
+      "id": "hashlib-9",
+      "doc": "hashlib",
+      "section": "SHAKE variable length digests",
+      "url": "https://docs.python.org/3.12/library/hashlib.html",
+      "text": "shake_128([, data], *, usedforsecurity=True)\nshake_256([, data], *, usedforsecurity=True)\n\nThe shake_128 and shake_256 algorithms provide variable\nlength digests with length_in_bits//2 up to 128 or 256 bits of security.\nAs such, their digest methods require a length. Maximum length is not limited\nby the SHAKE algorithm.\n\nshake.digest(length)\n\nReturn the digest of the data passed to the hash.update method so far.\nThis is a bytes object of size *length* which may contain bytes in\nthe whole range from 0 to 255.\n\nshake.hexdigest(length)\n\nLike digest except the digest is returned as a string object of\ndouble length, containing only hexadecimal digits.  This may be used to\nexchange the value in email or other non-binary environments.\n\nExample use:\n\n>>> h = hashlib.shake_256(b'Nobody inspects the spammish repetition')\n>>> h.hexdigest(20)\n'44709d6fcb83d92a76dcb0b668c98e1b1d3dafe7'"
+    },
+    {
+      "n": 4,
+      "id": "hashlib-10",
+      "doc": "hashlib",
+      "section": "File hashing",
+      "url": "https://docs.python.org/3.12/library/hashlib.html",
+      "text": "The hashlib module provides a helper function for efficient hashing of\na file or file-like object.\n\nfile_digest(fileobj, digest, /)\n\nReturn a digest object that has been updated with contents of file object.\n\n*fileobj* must be a file-like object opened for reading in binary mode.\nIt accepts file objects from  builtin open, io.BytesIO\ninstances, SocketIO objects from socket.socket.makefile, and\nsimilar. The function may bypass Python's I/O and use the file descriptor\nfrom io.IOBase.fileno directly. *fileobj* must be assumed to be\nin an unknown state after this function returns or raises. It is up to\nthe caller to close *fileobj*.\n\n*digest* must either be a hash algorithm name as a *str*, a hash\nconstructor, or a callable that returns a hash object.\n\nExample:\n\n   >>> import io, hashlib, hmac\n   >>> with open(hashlib.__file__, \"rb\") as f:\n   ...     digest = hashlib.file_digest(f, \"sha256\")\n   ...\n   >>> digest.hexdigest()  # doctest: +ELLIPSIS\n   '...'\n\n   >>> buf = io.BytesIO(b\"somedata\")\n   >>> mac1 = hmac.HMAC(b\"key\", digestmod=hashlib.sha512)\n   >>> digest = hashlib.file_digest(buf, lambda: mac1)"
+    },
+    {
+      "n": 5,
+      "id": "hashlib-8",
+      "doc": "hashlib",
+      "section": "Hash Objects",
+      "url": "https://docs.python.org/3.12/library/hashlib.html",
+      "text": "equivalent to m.update(a+b).\n\nhash.digest()\n\nReturn the digest of the data passed to the update method so far.\nThis is a bytes object of size digest_size which may contain bytes in\nthe whole range from 0 to 255.\n\nhash.hexdigest()\n\nLike digest except the digest is returned as a string object of\ndouble length, containing only hexadecimal digits.  This may be used to\nexchange the value safely in email or other non-binary environments.\n\nhash.copy()\n\nReturn a copy (\"clone\") of the hash object.  This can be used to efficiently\ncompute the digests of data sharing a common initial substring."
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.566
+  },
+  "promptedAt": "2026-11-26T02:45:46.475Z",
+  "answer": "Use sha256 to create a SHA-256 hash object. [1]\nYou can feed that object with bytes using the update method. [1]\nCalling update more than once is equivalent to hashing the joined data. [5]\nAsk for the result with digest() or hexdigest() when you are done. [1]\nhexdigest() returns the digest as a string of hexadecimal digits. [5]\nAlternatively, file_digest(fileobj, \"sha256\") returns a digest object updated with the contents of a binary file. [4]\nThe fileobj must be opened for reading in binary mode. [4]",
+  "recordedAt": "2026-11-26T02:45:49.836Z",
+  "secondsToAnswer": 3
+}

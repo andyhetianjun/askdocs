@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q18",
+  "question": "How do I set the rounding mode for exact decimal arithmetic?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] math / Number-theoretic and representation functions\nand *e* is an integer such that x == m * 2**e exactly. If *x* is zero,\nreturns (0.0, 0), otherwise 0.5 <= abs(m) < 1.  This is used to \"pick\napart\" the internal representation of a float in a portable way.\n\nfsum(iterable)\n\nReturn an accurate floating-point sum of values in the iterable.  Avoids\nloss of precision by tracking multiple intermediate partial sums.\n\nThe algorithm's accuracy depends on IEEE-754 arithmetic guarantees and the\ntypical case where the rounding mode is half-even.  On some non-Windows\nbuilds, the underlying C library uses extended precision addition and may\noccasionally double-round an intermediate sum causing it to be off in its\nleast significant bit.\n\nFor further discussion and two alternative approaches, see the ASPN cookbook\nrecipes for accurate floating-point summation\\.\n\ngcd(*integers)\n\nReturn the greatest common divisor of the specified integer arguments.\nIf any of the arguments is nonzero, then the returned value is the largest\n\n[2] string / Format Specification Mini-Language\ninteger to a floating-point number before formatting.\n\nThe available presentation types for float and\ndecimal.Decimal values are:\n\n+---------+----------------------------------------------------------+\n| Type    | Meaning                                                  |\n+=========+==========================================================+\n| 'e' | Scientific notation. For a given precision p,        |\n|         | formats the number in scientific notation with the       |\n|         | letter 'e' separating the coefficient from the exponent. |\n|         | The coefficient has one digit before and p digits    |\n|         | after the decimal point, for a total of p + 1        |\n|         | significant digits. With no precision given, uses a      |\n|         | precision of 6 digits after the decimal point for    |\n|         | float, and shows all coefficient digits         |\n|         | for decimal.Decimal. If no digits follow the   |\n|         | decimal point, the decimal point is also removed unless  |\n|         | the # option is used.                                |\n+---------+----------------------------------------------------------+\n| 'E' | Scientific notation. Same as 'e' except it uses      |\n\n[3] string / Format Specification Mini-Language\n|         | decimal point, the decimal point is also removed unless  |\n|         | the # option is used.                                |\n+---------+----------------------------------------------------------+\n| 'E' | Scientific notation. Same as 'e' except it uses      |\n|         | an upper case 'E' as the separator character.            |\n+---------+----------------------------------------------------------+\n| 'f' | Fixed-point notation. For a given precision p,       |\n|         | formats the number as a decimal number with exactly      |\n|         | p digits following the decimal point. With no        |\n|         | precision given, uses a precision of 6 digits after  |\n|         | the decimal point for float, and uses a         |\n|         | precision large enough to show all coefficient digits    |\n|         | for decimal.Decimal. If no digits follow the   |\n|         | decimal point, the decimal point is also removed unless  |\n|         | the # option is used.                                |\n+---------+----------------------------------------------------------+\n| 'F' | Fixed-point notation. Same as 'f', but converts      |\n\n[4] math / Number-theoretic and representation functions\n485 -- A function for testing approximate equality\n\nisfinite(x)\n\nReturn True if *x* is neither an infinity nor a NaN, and\nFalse otherwise.  (Note that 0.0 *is* considered finite.)\n\n3.2\n\nisinf(x)\n\nReturn True if *x* is a positive or negative infinity, and\nFalse otherwise.\n\nisnan(x)\n\nReturn True if *x* is a NaN (not a number), and False otherwise.\n\nisqrt(n)\n\nReturn the integer square root of the nonnegative integer *n*. This is the\nfloor of the exact square root of *n*, or equivalently the greatest integer\n*a* such that *a*\\ ²  ≤  *n*.\n\nFor some applications, it may be more convenient to have the least integer\n*a* such that *n*  ≤  *a*\\ ², or in other words the ceiling of\nthe exact square root of *n*. For positive *n*, this can be computed using\na = 1 + isqrt(n - 1).\n\n3.8\n\nlcm(*integers)\n\nReturn the least common multiple of the specified integer arguments.\n\n[5] math / Number-theoretic and representation functions\nFor the ceil, floor, and modf functions, note that *all*\nfloating-point numbers of sufficiently large magnitude are exact integers.\nPython floats typically carry no more than 53 bits of precision (the same as the\nplatform C double type), in which case any float *x* with abs(x) >= 2**52\nnecessarily has no fractional bits.\n\nQuestion: How do I set the rounding mode for exact decimal arithmetic?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "math-4",
+      "doc": "math",
+      "section": "Number-theoretic and representation functions",
+      "url": "https://docs.python.org/3.12/library/math.html",
+      "text": "and *e* is an integer such that x == m * 2**e exactly. If *x* is zero,\nreturns (0.0, 0), otherwise 0.5 <= abs(m) < 1.  This is used to \"pick\napart\" the internal representation of a float in a portable way.\n\nfsum(iterable)\n\nReturn an accurate floating-point sum of values in the iterable.  Avoids\nloss of precision by tracking multiple intermediate partial sums.\n\nThe algorithm's accuracy depends on IEEE-754 arithmetic guarantees and the\ntypical case where the rounding mode is half-even.  On some non-Windows\nbuilds, the underlying C library uses extended precision addition and may\noccasionally double-round an intermediate sum causing it to be off in its\nleast significant bit.\n\nFor further discussion and two alternative approaches, see the ASPN cookbook\nrecipes for accurate floating-point summation\\.\n\ngcd(*integers)\n\nReturn the greatest common divisor of the specified integer arguments.\nIf any of the arguments is nonzero, then the returned value is the largest"
+    },
+    {
+      "n": 2,
+      "id": "string-22",
+      "doc": "string",
+      "section": "Format Specification Mini-Language",
+      "url": "https://docs.python.org/3.12/library/string.html",
+      "text": "integer to a floating-point number before formatting.\n\nThe available presentation types for float and\ndecimal.Decimal values are:\n\n+---------+----------------------------------------------------------+\n| Type    | Meaning                                                  |\n+=========+==========================================================+\n| 'e' | Scientific notation. For a given precision p,        |\n|         | formats the number in scientific notation with the       |\n|         | letter 'e' separating the coefficient from the exponent. |\n|         | The coefficient has one digit before and p digits    |\n|         | after the decimal point, for a total of p + 1        |\n|         | significant digits. With no precision given, uses a      |\n|         | precision of 6 digits after the decimal point for    |\n|         | float, and shows all coefficient digits         |\n|         | for decimal.Decimal. If no digits follow the   |\n|         | decimal point, the decimal point is also removed unless  |\n|         | the # option is used.                                |\n+---------+----------------------------------------------------------+\n| 'E' | Scientific notation. Same as 'e' except it uses      |"
+    },
+    {
+      "n": 3,
+      "id": "string-23",
+      "doc": "string",
+      "section": "Format Specification Mini-Language",
+      "url": "https://docs.python.org/3.12/library/string.html",
+      "text": "|         | decimal point, the decimal point is also removed unless  |\n|         | the # option is used.                                |\n+---------+----------------------------------------------------------+\n| 'E' | Scientific notation. Same as 'e' except it uses      |\n|         | an upper case 'E' as the separator character.            |\n+---------+----------------------------------------------------------+\n| 'f' | Fixed-point notation. For a given precision p,       |\n|         | formats the number as a decimal number with exactly      |\n|         | p digits following the decimal point. With no        |\n|         | precision given, uses a precision of 6 digits after  |\n|         | the decimal point for float, and uses a         |\n|         | precision large enough to show all coefficient digits    |\n|         | for decimal.Decimal. If no digits follow the   |\n|         | decimal point, the decimal point is also removed unless  |\n|         | the # option is used.                                |\n+---------+----------------------------------------------------------+\n| 'F' | Fixed-point notation. Same as 'f', but converts      |"
+    },
+    {
+      "n": 4,
+      "id": "math-7",
+      "doc": "math",
+      "section": "Number-theoretic and representation functions",
+      "url": "https://docs.python.org/3.12/library/math.html",
+      "text": "485 -- A function for testing approximate equality\n\nisfinite(x)\n\nReturn True if *x* is neither an infinity nor a NaN, and\nFalse otherwise.  (Note that 0.0 *is* considered finite.)\n\n3.2\n\nisinf(x)\n\nReturn True if *x* is a positive or negative infinity, and\nFalse otherwise.\n\nisnan(x)\n\nReturn True if *x* is a NaN (not a number), and False otherwise.\n\nisqrt(n)\n\nReturn the integer square root of the nonnegative integer *n*. This is the\nfloor of the exact square root of *n*, or equivalently the greatest integer\n*a* such that *a*\\ ²  ≤  *n*.\n\nFor some applications, it may be more convenient to have the least integer\n*a* such that *n*  ≤  *a*\\ ², or in other words the ceiling of\nthe exact square root of *n*. For positive *n*, this can be computed using\na = 1 + isqrt(n - 1).\n\n3.8\n\nlcm(*integers)\n\nReturn the least common multiple of the specified integer arguments."
+    },
+    {
+      "n": 5,
+      "id": "math-14",
+      "doc": "math",
+      "section": "Number-theoretic and representation functions",
+      "url": "https://docs.python.org/3.12/library/math.html",
+      "text": "For the ceil, floor, and modf functions, note that *all*\nfloating-point numbers of sufficiently large magnitude are exact integers.\nPython floats typically carry no more than 53 bits of precision (the same as the\nplatform C double type), in which case any float *x* with abs(x) >= 2**52\nnecessarily has no fractional bits."
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.483
+  },
+  "promptedAt": "2026-11-26T02:45:19.696Z",
+  "answer": "I couldn't find this in the docs.",
+  "recordedAt": "2026-11-26T02:45:21.550Z",
+  "secondsToAnswer": 2
+}

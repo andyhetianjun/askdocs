@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q33",
+  "question": "How do I limit a deque to the last few items?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] collections / deque objects\narbitrary length.  Otherwise, the deque is bounded to the specified maximum\n length.  Once a bounded length deque is full, when new items are added, a\n corresponding number of items are discarded from the opposite end.  Bounded\n length deques provide functionality similar to the tail filter in\n Unix. They are also useful for tracking transactions and other pools of data\n where only the most recent activity is of interest.\n\n Deque objects support the following methods:\n\nappend(x)\n\n     Add *x* to the right side of the deque.\n\nappendleft(x)\n\n     Add *x* to the left side of the deque.\n\nclear()\n\n     Remove all elements from the deque leaving it with length 0.\n\ncopy()\n\n     Create a shallow copy of the deque.\n\n3.5\n\ncount(x)\n\n     Count the number of deque elements equal to *x*.\n\n3.2\n\nextend(iterable)\n\n     Extend the right side of the deque by appending elements from the iterable\n     argument.\n\nextendleft(iterable)\n\n     Extend the left side of the deque by appending elements from *iterable*.\n\n[2] collections / deque objects\nMaximum size of a deque or None if unbounded.\n\n3.1\n\nIn addition to the above, deques support iteration, pickling, len(d),\nreversed(d), copy.copy(d), copy.deepcopy(d), membership testing with\nthe in operator, and subscript references such as d[0] to access\nthe first element.  Indexed access is *O*\\ (1) at both ends but slows to *O*\\ (*n*) in\nthe middle.  For fast random access, use lists instead.\n\nStarting in version 3.5, deques support __add__(), __mul__(),\nand __imul__().\n\nExample:\n\n >>> from collections import deque\n >>> d = deque('ghi')                 # make a new deque with three items\n >>> for elem in d:                   # iterate over the deque's elements\n ...     print(elem.upper())\n G\n H\n I\n\n >>> d.append('j')                    # add a new entry to the right side\n >>> d.appendleft('f')                # add a new entry to the left side\n >>> d                                # show the representation of the deque\n deque(['f', 'g', 'h', 'i', 'j'])\n\n >>> d.pop()                          # return and remove the rightmost item\n 'j'\n\n[3] collections / deque objects\ndeque([iterable, [maxlen]])\n\n Returns a new deque object initialized left-to-right (using append) with\n data from *iterable*.  If *iterable* is not specified, the new deque is empty.\n\n Deques are a generalization of stacks and queues (the name is pronounced \"deck\"\n and is short for \"double-ended queue\").  Deques support thread-safe, memory\n efficient appends and pops from either side of the deque with approximately the\n same *O*\\ (1) performance in either direction.\n\n Though list objects support similar operations, they are optimized for\n fast fixed-length operations and incur *O*\\ (*n*) memory movement costs for\n pop(0) and insert(0, v) operations which change both the size and\n position of the underlying data representation.\n\n If *maxlen* is not specified or is None, deques may grow to an\n arbitrary length.  Otherwise, the deque is bounded to the specified maximum\n length.  Once a bounded length deque is full, when new items are added, a\n corresponding number of items are discarded from the opposite end.  Bounded\n\n[4] collections / deque objects\n>>> d.appendleft('f')                # add a new entry to the left side\n >>> d                                # show the representation of the deque\n deque(['f', 'g', 'h', 'i', 'j'])\n\n >>> d.pop()                          # return and remove the rightmost item\n 'j'\n >>> d.popleft()                      # return and remove the leftmost item\n 'f'\n >>> list(d)                          # list the contents of the deque\n ['g', 'h', 'i']\n >>> d[0]                             # peek at leftmost item\n 'g'\n >>> d[-1]                            # peek at rightmost item\n 'i'\n\n >>> list(reversed(d))                # list the contents of a deque in reverse\n ['i', 'h', 'g']\n >>> 'h' in d                         # search the deque\n True\n >>> d.extend('jkl')                  # add multiple elements at once\n >>> d\n deque(['g', 'h', 'i', 'j', 'k', 'l'])\n >>> d.rotate(1)                      # right rotation\n >>> d\n deque(['l', 'g', 'h', 'i', 'j', 'k'])\n >>> d.rotate(-1)                     # left rotation\n >>> d\n deque(['g', 'h', 'i', 'j', 'k', 'l'])\n\n >>> deque(reversed(d))               # make a new deque in reverse order\n deque(['l', 'k', 'j', 'i', 'h', 'g'])\n >>> d.clear()                        # empty the deque\n\n[5] collections / deque objects\n>>> d\n deque(['g', 'h', 'i', 'j', 'k', 'l'])\n\n >>> deque(reversed(d))               # make a new deque in reverse order\n deque(['l', 'k', 'j', 'i', 'h', 'g'])\n >>> d.clear()                        # empty the deque\n >>> d.pop()                          # cannot pop from an empty deque\n Traceback (most recent call last):\n     File \"<pyshell#6>\", line 1, in -toplevel-\n         d.pop()\n IndexError: pop from an empty deque\n\n >>> d.extendleft('abc')              # extendleft() reverses the input order\n >>> d\n deque(['c', 'b', 'a'])\n\nQuestion: How do I limit a deque to the last few items?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "collections-20",
+      "doc": "collections",
+      "section": "deque objects",
+      "url": "https://docs.python.org/3.12/library/collections.html",
+      "text": "arbitrary length.  Otherwise, the deque is bounded to the specified maximum\n length.  Once a bounded length deque is full, when new items are added, a\n corresponding number of items are discarded from the opposite end.  Bounded\n length deques provide functionality similar to the tail filter in\n Unix. They are also useful for tracking transactions and other pools of data\n where only the most recent activity is of interest.\n\n Deque objects support the following methods:\n\nappend(x)\n\n     Add *x* to the right side of the deque.\n\nappendleft(x)\n\n     Add *x* to the left side of the deque.\n\nclear()\n\n     Remove all elements from the deque leaving it with length 0.\n\ncopy()\n\n     Create a shallow copy of the deque.\n\n3.5\n\ncount(x)\n\n     Count the number of deque elements equal to *x*.\n\n3.2\n\nextend(iterable)\n\n     Extend the right side of the deque by appending elements from the iterable\n     argument.\n\nextendleft(iterable)\n\n     Extend the left side of the deque by appending elements from *iterable*."
+    },
+    {
+      "n": 2,
+      "id": "collections-23",
+      "doc": "collections",
+      "section": "deque objects",
+      "url": "https://docs.python.org/3.12/library/collections.html",
+      "text": "Maximum size of a deque or None if unbounded.\n\n3.1\n\nIn addition to the above, deques support iteration, pickling, len(d),\nreversed(d), copy.copy(d), copy.deepcopy(d), membership testing with\nthe in operator, and subscript references such as d[0] to access\nthe first element.  Indexed access is *O*\\ (1) at both ends but slows to *O*\\ (*n*) in\nthe middle.  For fast random access, use lists instead.\n\nStarting in version 3.5, deques support __add__(), __mul__(),\nand __imul__().\n\nExample:\n\n >>> from collections import deque\n >>> d = deque('ghi')                 # make a new deque with three items\n >>> for elem in d:                   # iterate over the deque's elements\n ...     print(elem.upper())\n G\n H\n I\n\n >>> d.append('j')                    # add a new entry to the right side\n >>> d.appendleft('f')                # add a new entry to the left side\n >>> d                                # show the representation of the deque\n deque(['f', 'g', 'h', 'i', 'j'])\n\n >>> d.pop()                          # return and remove the rightmost item\n 'j'"
+    },
+    {
+      "n": 3,
+      "id": "collections-19",
+      "doc": "collections",
+      "section": "deque objects",
+      "url": "https://docs.python.org/3.12/library/collections.html",
+      "text": "deque([iterable, [maxlen]])\n\n Returns a new deque object initialized left-to-right (using append) with\n data from *iterable*.  If *iterable* is not specified, the new deque is empty.\n\n Deques are a generalization of stacks and queues (the name is pronounced \"deck\"\n and is short for \"double-ended queue\").  Deques support thread-safe, memory\n efficient appends and pops from either side of the deque with approximately the\n same *O*\\ (1) performance in either direction.\n\n Though list objects support similar operations, they are optimized for\n fast fixed-length operations and incur *O*\\ (*n*) memory movement costs for\n pop(0) and insert(0, v) operations which change both the size and\n position of the underlying data representation.\n\n If *maxlen* is not specified or is None, deques may grow to an\n arbitrary length.  Otherwise, the deque is bounded to the specified maximum\n length.  Once a bounded length deque is full, when new items are added, a\n corresponding number of items are discarded from the opposite end.  Bounded"
+    },
+    {
+      "n": 4,
+      "id": "collections-24",
+      "doc": "collections",
+      "section": "deque objects",
+      "url": "https://docs.python.org/3.12/library/collections.html",
+      "text": ">>> d.appendleft('f')                # add a new entry to the left side\n >>> d                                # show the representation of the deque\n deque(['f', 'g', 'h', 'i', 'j'])\n\n >>> d.pop()                          # return and remove the rightmost item\n 'j'\n >>> d.popleft()                      # return and remove the leftmost item\n 'f'\n >>> list(d)                          # list the contents of the deque\n ['g', 'h', 'i']\n >>> d[0]                             # peek at leftmost item\n 'g'\n >>> d[-1]                            # peek at rightmost item\n 'i'\n\n >>> list(reversed(d))                # list the contents of a deque in reverse\n ['i', 'h', 'g']\n >>> 'h' in d                         # search the deque\n True\n >>> d.extend('jkl')                  # add multiple elements at once\n >>> d\n deque(['g', 'h', 'i', 'j', 'k', 'l'])\n >>> d.rotate(1)                      # right rotation\n >>> d\n deque(['l', 'g', 'h', 'i', 'j', 'k'])\n >>> d.rotate(-1)                     # left rotation\n >>> d\n deque(['g', 'h', 'i', 'j', 'k', 'l'])\n\n >>> deque(reversed(d))               # make a new deque in reverse order\n deque(['l', 'k', 'j', 'i', 'h', 'g'])\n >>> d.clear()                        # empty the deque"
+    },
+    {
+      "n": 5,
+      "id": "collections-25",
+      "doc": "collections",
+      "section": "deque objects",
+      "url": "https://docs.python.org/3.12/library/collections.html",
+      "text": ">>> d\n deque(['g', 'h', 'i', 'j', 'k', 'l'])\n\n >>> deque(reversed(d))               # make a new deque in reverse order\n deque(['l', 'k', 'j', 'i', 'h', 'g'])\n >>> d.clear()                        # empty the deque\n >>> d.pop()                          # cannot pop from an empty deque\n Traceback (most recent call last):\n     File \"<pyshell#6>\", line 1, in -toplevel-\n         d.pop()\n IndexError: pop from an empty deque\n\n >>> d.extendleft('abc')              # extendleft() reverses the input order\n >>> d\n deque(['c', 'b', 'a'])"
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.61
+  },
+  "promptedAt": "2026-11-26T02:45:38.256Z",
+  "answer": "Pass a maxlen argument when you create the deque. [3]\nIf maxlen is not specified or is None, the deque may grow to an arbitrary length. [3]\nOtherwise, the deque is bounded to the specified maximum length. [3]\nOnce a bounded deque is full, adding new items discards a corresponding number of items from the opposite end. [1]\nThis keeps only the most recent items. [1]",
+  "recordedAt": "2026-11-26T02:45:40.445Z",
+  "secondsToAnswer": 2
+}

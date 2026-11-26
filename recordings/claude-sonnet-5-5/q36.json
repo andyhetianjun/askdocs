@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q36",
+  "question": "What is the capital of Australia?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] time / Functions\nspecify the timezone rules. To do this, set the  TZ environment\nvariable to the path of the required timezone  datafile, relative to the root of\nthe systems 'zoneinfo' timezone database, usually located at\n/usr/share/zoneinfo. For example,  'US/Eastern',\n'Australia/Melbourne', 'Egypt' or  'Europe/Amsterdam'. :\n\n   >>> os.environ['TZ'] = 'US/Eastern'\n   >>> time.tzset()\n   >>> time.tzname\n   ('EST', 'EDT')\n   >>> os.environ['TZ'] = 'Egypt'\n   >>> time.tzset()\n   >>> time.tzname\n   ('EET', 'EEST')\n\n[2] string / Format Specification Mini-Language\n| None    | For float this is like the 'g' type, except |\n|         | that when fixed-point notation is used to format the     |\n|         | result, it always includes at least one digit past the   |\n|         | decimal point, and switches to the scientific notation   |\n|         | when exp >= p - 1.  When the precision is not        |\n|         | specified, the latter will be as large as needed to      |\n|         | represent the given value faithfully.                    |\n|         |                                                          |\n|         | For decimal.Decimal, this is the same as       |\n|         | either 'g' or 'G' depending on the value of      |\n|         | context.capitals for the current decimal context.    |\n|         |                                                          |\n|         | The overall effect is to match the output of str |\n|         | as altered by the other format modifiers.                |\n+---------+----------------------------------------------------------+\n\n[3] string / Helper functions\ncapwords(s, sep=None)\n\nSplit the argument into words using str.split, capitalize each word\nusing str.capitalize, and join the capitalized words using\nstr.join.  If the optional second argument *sep* is absent\nor None, runs of whitespace characters are replaced by a single space\nand leading and trailing whitespace are removed, otherwise *sep* is used to\nsplit and join the words.\n\n[4] datetime / .datetime.strftime and .datetime.strptime Format Codes\n| %A    | Weekday as locale's full name. || Sunday, Monday, ...,  | \\(1)  |\n|           |                                |  Saturday (en_US);     |       |\n|           |                                || Sonntag, Montag, ..., |       |\n|           |                                |  Samstag (de_DE)       |       |\n+-----------+--------------------------------+------------------------+-------+\n| %w    | Weekday as a decimal number,   | 0, 1, ..., 6           |       |\n|           | where 0 is Sunday and 6 is     |                        |       |\n|           | Saturday.                      |                        |       |\n+-----------+--------------------------------+------------------------+-------+\n| %d    | Day of the month as a          | 01, 02, ..., 31        | \\(9)  |\n|           | zero-padded decimal number.    |                        |       |\n+-----------+--------------------------------+------------------------+-------+\n| %b    | Month as locale's abbreviated  || Jan, Feb, ..., Dec    | \\(1)  |\n|           | name.                          |  (en_US);              |       |\n|           |                                || Jan, Feb, ..., Dez    |       |\n|           |                                |  (de_DE)               |       |\n+-----------+--------------------------------+------------------------+-------+\n| %B    | Month as locale's full name.   || January, February,    | \\(1)  |\n|           |                                |  ..., December (en_US);|       |\n\n[5] datetime / .datetime.strftime and .datetime.strptime Format Codes\n|           |                                || Jan, Feb, ..., Dez    |       |\n|           |                                |  (de_DE)               |       |\n+-----------+--------------------------------+------------------------+-------+\n| %B    | Month as locale's full name.   || January, February,    | \\(1)  |\n|           |                                |  ..., December (en_US);|       |\n|           |                                || Januar, Februar, ..., |       |\n|           |                                |  Dezember (de_DE)      |       |\n+-----------+--------------------------------+------------------------+-------+\n| %m    | Month as a zero-padded         | 01, 02, ..., 12        | \\(9)  |\n|           | decimal number.                |                        |       |\n+-----------+--------------------------------+------------------------+-------+\n| %y    | Year without century as a      | 00, 01, ..., 99        | \\(9)  |\n|           | zero-padded decimal number.    |                        |       |\n+-----------+--------------------------------+------------------------+-------+\n| %Y    | Year with century as a decimal | 0001, 0002, ..., 2013, | \\(2)  |\n|           | number.                        | 2014, ..., 9998, 9999  |       |\n+-----------+--------------------------------+------------------------+-------+\n| %H    | Hour (24-hour clock) as a      | 00, 01, ..., 23        | \\(9)  |\n|           | zero-padded decimal number.    |                        |       |\n+-----------+--------------------------------+------------------------+-------+\n\nQuestion: What is the capital of Australia?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "time-32",
+      "doc": "time",
+      "section": "Functions",
+      "url": "https://docs.python.org/3.12/library/time.html",
+      "text": "specify the timezone rules. To do this, set the  TZ environment\nvariable to the path of the required timezone  datafile, relative to the root of\nthe systems 'zoneinfo' timezone database, usually located at\n/usr/share/zoneinfo. For example,  'US/Eastern',\n'Australia/Melbourne', 'Egypt' or  'Europe/Amsterdam'. :\n\n   >>> os.environ['TZ'] = 'US/Eastern'\n   >>> time.tzset()\n   >>> time.tzname\n   ('EST', 'EDT')\n   >>> os.environ['TZ'] = 'Egypt'\n   >>> time.tzset()\n   >>> time.tzname\n   ('EET', 'EEST')"
+    },
+    {
+      "n": 2,
+      "id": "string-28",
+      "doc": "string",
+      "section": "Format Specification Mini-Language",
+      "url": "https://docs.python.org/3.12/library/string.html",
+      "text": "| None    | For float this is like the 'g' type, except |\n|         | that when fixed-point notation is used to format the     |\n|         | result, it always includes at least one digit past the   |\n|         | decimal point, and switches to the scientific notation   |\n|         | when exp >= p - 1.  When the precision is not        |\n|         | specified, the latter will be as large as needed to      |\n|         | represent the given value faithfully.                    |\n|         |                                                          |\n|         | For decimal.Decimal, this is the same as       |\n|         | either 'g' or 'G' depending on the value of      |\n|         | context.capitals for the current decimal context.    |\n|         |                                                          |\n|         | The overall effect is to match the output of str |\n|         | as altered by the other format modifiers.                |\n+---------+----------------------------------------------------------+"
+    },
+    {
+      "n": 3,
+      "id": "string-42",
+      "doc": "string",
+      "section": "Helper functions",
+      "url": "https://docs.python.org/3.12/library/string.html",
+      "text": "capwords(s, sep=None)\n\nSplit the argument into words using str.split, capitalize each word\nusing str.capitalize, and join the capitalized words using\nstr.join.  If the optional second argument *sep* is absent\nor None, runs of whitespace characters are replaced by a single space\nand leading and trailing whitespace are removed, otherwise *sep* is used to\nsplit and join the words."
+    },
+    {
+      "n": 4,
+      "id": "datetime-88",
+      "doc": "datetime",
+      "section": ".datetime.strftime and .datetime.strptime Format Codes",
+      "url": "https://docs.python.org/3.12/library/datetime.html",
+      "text": "| %A    | Weekday as locale's full name. || Sunday, Monday, ...,  | \\(1)  |\n|           |                                |  Saturday (en_US);     |       |\n|           |                                || Sonntag, Montag, ..., |       |\n|           |                                |  Samstag (de_DE)       |       |\n+-----------+--------------------------------+------------------------+-------+\n| %w    | Weekday as a decimal number,   | 0, 1, ..., 6           |       |\n|           | where 0 is Sunday and 6 is     |                        |       |\n|           | Saturday.                      |                        |       |\n+-----------+--------------------------------+------------------------+-------+\n| %d    | Day of the month as a          | 01, 02, ..., 31        | \\(9)  |\n|           | zero-padded decimal number.    |                        |       |\n+-----------+--------------------------------+------------------------+-------+\n| %b    | Month as locale's abbreviated  || Jan, Feb, ..., Dec    | \\(1)  |\n|           | name.                          |  (en_US);              |       |\n|           |                                || Jan, Feb, ..., Dez    |       |\n|           |                                |  (de_DE)               |       |\n+-----------+--------------------------------+------------------------+-------+\n| %B    | Month as locale's full name.   || January, February,    | \\(1)  |\n|           |                                |  ..., December (en_US);|       |"
+    },
+    {
+      "n": 5,
+      "id": "datetime-89",
+      "doc": "datetime",
+      "section": ".datetime.strftime and .datetime.strptime Format Codes",
+      "url": "https://docs.python.org/3.12/library/datetime.html",
+      "text": "|           |                                || Jan, Feb, ..., Dez    |       |\n|           |                                |  (de_DE)               |       |\n+-----------+--------------------------------+------------------------+-------+\n| %B    | Month as locale's full name.   || January, February,    | \\(1)  |\n|           |                                |  ..., December (en_US);|       |\n|           |                                || Januar, Februar, ..., |       |\n|           |                                |  Dezember (de_DE)      |       |\n+-----------+--------------------------------+------------------------+-------+\n| %m    | Month as a zero-padded         | 01, 02, ..., 12        | \\(9)  |\n|           | decimal number.                |                        |       |\n+-----------+--------------------------------+------------------------+-------+\n| %y    | Year without century as a      | 00, 01, ..., 99        | \\(9)  |\n|           | zero-padded decimal number.    |                        |       |\n+-----------+--------------------------------+------------------------+-------+\n| %Y    | Year with century as a decimal | 0001, 0002, ..., 2013, | \\(2)  |\n|           | number.                        | 2014, ..., 9998, 9999  |       |\n+-----------+--------------------------------+------------------------+-------+\n| %H    | Hour (24-hour clock) as a      | 00, 01, ..., 23        | \\(9)  |\n|           | zero-padded decimal number.    |                        |       |\n+-----------+--------------------------------+------------------------+-------+"
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.218
+  },
+  "promptedAt": "2026-11-26T02:45:41.632Z",
+  "answer": "I couldn't find this in the docs.",
+  "recordedAt": "2026-11-26T02:45:43.282Z",
+  "secondsToAnswer": 2
+}

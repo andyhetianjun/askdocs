@@ -95,6 +95,24 @@ At the default, 8 of the 12 unanswerable questions were refused and 27 of 30 ans
 
 With the offline generator (it quotes the sentences of the top passages that share the most words with the question), 85.2% of 54 citations pointed at a passage from the labeled doc before the check and 86.5% of the 52 that survived did after it. So the check dropped 2 citations and both were wrong-doc ones. The generator only quotes, so it cannot invent anything, and this line shows the plumbing works more than it shows the check is good. The table above is the real test of the check.
 
+### With a real model, recorded
+
+| | offline quoting generator | recorded Claude Sonnet 5.5 |
+|---|---|---|
+| answerable questions answered | 27 of 30 | 28 of 30 |
+| unanswerable questions correctly refused | 8 of 12 | 12 of 12 |
+| unanswerable questions answered anyway | 4 of 12 | 0 of 12 |
+| kept citations pointing at the labeled doc | 86.5% of 52 | 99.1% of 107 |
+| answer sentences kept by the citation check | not measured | 107 of 134 (79.9%) |
+
+Each Claude answer was recorded once, by a separate fresh Claude Sonnet 5.5 session that was shown only the question and the five retrieved passages (see [RECORDING.md](../RECORDING.md)); it is not a live call and has no retries. The offline column is the quoting generator with the 0.45 similarity cut-off, so it refuses before writing; the Claude column has no cut-off, the model decided by itself. The citation check is the offline word-overlap version, not a model. Reproduce with `npm run eval:trust` and `npm run eval -- --from-recordings recordings/claude-sonnet-5-5`.
+
+Three cases that show what the numbers mean:
+
+- **A sentence the check dropped (q33, "How do I limit a deque to the last few items?").** Claude wrote five cited sentences and the check kept four. The dropped one was "Pass a maxlen argument when you create the deque." It is correct, but the passage only shows `deque([iterable, [maxlen]])`, so the word overlap was too low. So 27 dropped sentences out of 134 are not 27 wrong sentences. I have not hand-labeled them, so I cannot say how many were really unsupported.
+- **A correct refusal (the smtplib question).** The index has no smtplib doc, and the model replied exactly "I couldn't find this in the docs." The offline path refuses this one too, but it missed 4 other unanswerable questions that the model refused.
+- **A refusal that cost an answer (q13, "How do I stop two threads from changing shared data at the same moment?").** The docs do cover this (the answer is a lock), but the five passages did not include the `Lock` section, so the model refused. That one is a search miss more than a model error. The other wrongly refused question, q16 (counting items), did have the `Counter` passages in its top five and the model still refused; I did not look into why.
+
 ## Limits
 
 - 36 claims and 42 questions is a small sample, and I wrote them all. I also chose the two cut-offs (0.5 and 0.45) while looking at these same numbers, so they are probably a little better than they would be on new questions.

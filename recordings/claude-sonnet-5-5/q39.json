@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q39",
+  "question": "How do I parse command line arguments with getopt?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] argparse / argparse - Parser for command-line options, arguments and sub-commands\n3.2\n\n**Source code:** Lib/argparse.py\n\n--------------\n\nThis page contains the API reference information. For a more gentle\nintroduction to Python command-line parsing, have a look at the\nargparse tutorial.\n\nThe argparse module makes it easy to write user-friendly command-line\ninterfaces. The program defines what arguments it requires, and argparse\nwill figure out how to parse those out of sys.argv.  The argparse\nmodule also automatically generates help and usage messages.  The module\nwill also issue errors when users give the program invalid arguments.\n\n[2] argparse / Parsing arguments\nArgumentParser parses arguments through the\nArgumentParser.parse_args method.  This will inspect the command line,\nconvert each argument to the appropriate type and then invoke the appropriate action.\nIn most cases, this means a simple Namespace object will be built up from\nattributes parsed out of the command line:\n\n>>> parser.parse_args(['--sum', '7', '-1', '42'])\nNamespace(accumulate=<built-in function sum>, integers=[7, -1, 42])\n\nIn a script, ArgumentParser.parse_args will typically be called with no\narguments, and the ArgumentParser will automatically determine the\ncommand-line arguments from sys.argv.\n\n[3] argparse / The add_argument() method\nArgumentParser.add_argument(name or flags..., [action], [nargs], [const], [default], [type], [choices], [required], [help], [metavar], [dest])\n\nDefine how a single command-line argument should be parsed.  Each parameter\nhas its own more detailed description below, but in short they are:\n\n* name or flags - Either a name or a list of option strings, e.g. foo\n  or -f, --foo.\n\n* action_ - The basic type of action to be taken when this argument is\n  encountered at the command line.\n\n* nargs_ - The number of command-line arguments that should be consumed.\n\n* const_ - A constant value required by some action_ and nargs_ selections.\n\n* default_ - The value produced if the argument is absent from the\n  command line and if it is absent from the namespace object.\n\n* type_ - The type to which the command-line argument should be converted.\n\n* choices_ - A sequence of the allowable values for the argument.\n\n[4] argparse / Partial parsing\nArgumentParser.parse_known_args(args=None, namespace=None)\n\nSometimes a script may only parse a few of the command-line arguments, passing\nthe remaining arguments on to another script or program. In these cases, the\nArgumentParser.parse_known_args method can be useful.  It works much like\nArgumentParser.parse_args except that it does not produce an error when\nextra arguments are present.  Instead, it returns a two item tuple containing\nthe populated namespace and the list of remaining argument strings.\n\n>>> parser = argparse.ArgumentParser()\n>>> parser.add_argument('--foo', action='store_true')\n>>> parser.add_argument('bar')\n>>> parser.parse_known_args(['--foo', '--badger', 'BAR', 'spam'])\n(Namespace(bar='BAR', foo=True), ['--badger', 'spam'])\n\nPrefix matching rules apply to\nArgumentParser.parse_known_args. The parser may consume an option even if it's just\na prefix of one of its known options, instead of leaving it in the remaining\narguments list.\n\n[5] argparse / Creating a parser\nThe first step in using the argparse is creating an\nArgumentParser object:\n\n>>> parser = argparse.ArgumentParser(description='Process some integers.')\n\nThe ArgumentParser object will hold all the information necessary to\nparse the command line into Python data types.\n\nQuestion: How do I parse command line arguments with getopt?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "argparse-0",
+      "doc": "argparse",
+      "section": "argparse - Parser for command-line options, arguments and sub-commands",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "3.2\n\n**Source code:** Lib/argparse.py\n\n--------------\n\nThis page contains the API reference information. For a more gentle\nintroduction to Python command-line parsing, have a look at the\nargparse tutorial.\n\nThe argparse module makes it easy to write user-friendly command-line\ninterfaces. The program defines what arguments it requires, and argparse\nwill figure out how to parse those out of sys.argv.  The argparse\nmodule also automatically generates help and usage messages.  The module\nwill also issue errors when users give the program invalid arguments."
+    },
+    {
+      "n": 2,
+      "id": "argparse-7",
+      "doc": "argparse",
+      "section": "Parsing arguments",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "ArgumentParser parses arguments through the\nArgumentParser.parse_args method.  This will inspect the command line,\nconvert each argument to the appropriate type and then invoke the appropriate action.\nIn most cases, this means a simple Namespace object will be built up from\nattributes parsed out of the command line:\n\n>>> parser.parse_args(['--sum', '7', '-1', '42'])\nNamespace(accumulate=<built-in function sum>, integers=[7, -1, 42])\n\nIn a script, ArgumentParser.parse_args will typically be called with no\narguments, and the ArgumentParser will automatically determine the\ncommand-line arguments from sys.argv."
+    },
+    {
+      "n": 3,
+      "id": "argparse-29",
+      "doc": "argparse",
+      "section": "The add_argument() method",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "ArgumentParser.add_argument(name or flags..., [action], [nargs], [const], [default], [type], [choices], [required], [help], [metavar], [dest])\n\nDefine how a single command-line argument should be parsed.  Each parameter\nhas its own more detailed description below, but in short they are:\n\n* name or flags - Either a name or a list of option strings, e.g. foo\n  or -f, --foo.\n\n* action_ - The basic type of action to be taken when this argument is\n  encountered at the command line.\n\n* nargs_ - The number of command-line arguments that should be consumed.\n\n* const_ - A constant value required by some action_ and nargs_ selections.\n\n* default_ - The value produced if the argument is absent from the\n  command line and if it is absent from the namespace object.\n\n* type_ - The type to which the command-line argument should be converted.\n\n* choices_ - A sequence of the allowable values for the argument."
+    },
+    {
+      "n": 4,
+      "id": "argparse-82",
+      "doc": "argparse",
+      "section": "Partial parsing",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "ArgumentParser.parse_known_args(args=None, namespace=None)\n\nSometimes a script may only parse a few of the command-line arguments, passing\nthe remaining arguments on to another script or program. In these cases, the\nArgumentParser.parse_known_args method can be useful.  It works much like\nArgumentParser.parse_args except that it does not produce an error when\nextra arguments are present.  Instead, it returns a two item tuple containing\nthe populated namespace and the list of remaining argument strings.\n\n>>> parser = argparse.ArgumentParser()\n>>> parser.add_argument('--foo', action='store_true')\n>>> parser.add_argument('bar')\n>>> parser.parse_known_args(['--foo', '--badger', 'BAR', 'spam'])\n(Namespace(bar='BAR', foo=True), ['--badger', 'spam'])\n\nPrefix matching rules apply to\nArgumentParser.parse_known_args. The parser may consume an option even if it's just\na prefix of one of its known options, instead of leaving it in the remaining\narguments list."
+    },
+    {
+      "n": 5,
+      "id": "argparse-5",
+      "doc": "argparse",
+      "section": "Creating a parser",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "The first step in using the argparse is creating an\nArgumentParser object:\n\n>>> parser = argparse.ArgumentParser(description='Process some integers.')\n\nThe ArgumentParser object will hold all the information necessary to\nparse the command line into Python data types."
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.607
+  },
+  "promptedAt": "2026-11-26T02:45:45.388Z",
+  "answer": "I couldn't find this in the docs.",
+  "recordedAt": "2026-11-26T02:45:47.018Z",
+  "secondsToAnswer": 2
+}

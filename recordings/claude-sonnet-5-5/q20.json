@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q20",
+  "question": "How do I replace a shell pipeline like dmesg piped into grep?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] subprocess / Replacing shell pipeline\noutput=$(dmesg | grep hda)\n\nbecomes:\n\np1 = Popen([\"dmesg\"], stdout=PIPE)\np2 = Popen([\"grep\", \"hda\"], stdin=p1.stdout, stdout=PIPE)\np1.stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.\noutput = p2.communicate()[0]\n\nThe p1.stdout.close() call after starting the p2 is important in order for\np1 to receive a SIGPIPE if p2 exits before p1.\n\nAlternatively, for trusted input, the shell's own pipeline support may still\nbe used directly:\n\noutput=$(dmesg | grep hda)\n\nbecomes:\n\noutput = check_output(\"dmesg | grep hda\", shell=True)\n\n[2] subprocess / Popen Constructor\nIt may not be obvious how to break a shell command into a sequence of arguments,\n   especially in complex cases. shlex.split can illustrate how to\n   determine the correct tokenization for *args*:\n\n      >>> import shlex, subprocess\n      >>> command_line = input()\n      /bin/vikings -input eggs.txt -output \"spam spam.txt\" -cmd \"echo '$MONEY'\"\n      >>> args = shlex.split(command_line)\n      >>> print(args)\n      ['/bin/vikings', '-input', 'eggs.txt', '-output', 'spam spam.txt', '-cmd', \"echo '$MONEY'\"]\n      >>> p = subprocess.Popen(args) # Success!\n\n   Note in particular that options (such as *-input*) and arguments (such\n   as *eggs.txt*) that are separated by whitespace in the shell go in separate\n   list elements, while arguments that need quoting or backslash escaping when\n   used in the shell (such as filenames containing spaces or the *echo* command\n   shown above) are single list elements.\n\nOn Windows, if *args* is a sequence, it will be converted to a string in a\nmanner described in converting-argument-sequence.  This is because\nthe underlying CreateProcess() operates on strings.\n\n3.6\n\n[3] subprocess / Replacing os.system\nsts = os.system(\"mycmd\" + \" myarg\")\n# becomes\nretcode = call(\"mycmd\" + \" myarg\", shell=True)\n\nNotes:\n\n* Calling the program through the shell is usually not required.\n* The call return value is encoded differently to that of\nos.system.\n\n* The os.system function ignores SIGINT and SIGQUIT signals while\nthe command is running, but the caller must do this separately when\nusing the subprocess module.\n\nA more realistic example would look like this:\n\ntry:\n    retcode = call(\"mycmd\" + \" myarg\", shell=True)\n    if retcode < 0:\n        print(\"Child was terminated by signal\", -retcode, file=sys.stderr)\n    else:\n        print(\"Child returned\", retcode, file=sys.stderr)\nexcept OSError as e:\n    print(\"Execution failed:\", e, file=sys.stderr)\n\n[4] subprocess / Frequently Used Arguments\nAdded the *text* parameter as an alias for *universal_newlines*.\n\n   The newlines attribute of the file objects Popen.stdin,\n   Popen.stdout and Popen.stderr are not updated by\n   the Popen.communicate method.\n\nIf *shell* is True, the specified command will be executed through\nthe shell.  This can be useful if you are using Python primarily for the\nenhanced control flow it offers over most system shells and still want\nconvenient access to other shell features such as shell pipes, filename\nwildcards, environment variable expansion, and expansion of ~ to a\nuser's home directory.  However, note that Python itself offers\nimplementations of many shell-like features (in particular, glob,\nfnmatch, os.walk, os.path.expandvars,\nos.path.expanduser, and shutil).\n\n3.3\n   When *universal_newlines* is True, the class uses the encoding\n   locale.getpreferredencoding(False)\n   instead of locale.getpreferredencoding().  See the\n   io.TextIOWrapper class for more information on this change.\n\n   Read the Security Considerations section before using shell=True.\n\nThese options, along with all of the other options, are described in more\ndetail in the Popen constructor documentation.\n\n[5] subprocess / Older high-level API\narguments) rather than using the parent's standard input file handle.\n\nBy default, this function will return the data as encoded bytes. The actual\nencoding of the output data may depend on the command being invoked, so the\ndecoding to text will often need to be handled at the application level.\n\nThis behaviour may be overridden by setting *text*, *encoding*, *errors*,\nor *universal_newlines* to True as described in\nfrequently-used-arguments and run.\n\nTo also capture standard error in the result, use\nstderr=subprocess.STDOUT:\n\n   >>> subprocess.check_output(\n   ...     \"ls non_existent_file; exit 0\",\n   ...     stderr=subprocess.STDOUT,\n   ...     shell=True)\n   'ls: non_existent_file: No such file or directory\\n'\n\n3.1\n\n3.3\n   *timeout* was added.\n\n3.4\n   Support for the *input* keyword argument was added.\n\n3.6\n   *encoding* and *errors* were added.  See run for details.\n\n3.7\n   *text* was added as a more readable alias for *universal_newlines*.\n\n3.12\n\n   Changed Windows shell search order for shell=True. The current\n   directory and %PATH% are replaced with %COMSPEC% and\n   %SystemRoot%\\System32\\cmd.exe. As a result, dropping a\n\nQuestion: How do I replace a shell pipeline like dmesg piped into grep?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "subprocess-54",
+      "doc": "subprocess",
+      "section": "Replacing shell pipeline",
+      "url": "https://docs.python.org/3.12/library/subprocess.html",
+      "text": "output=$(dmesg | grep hda)\n\nbecomes:\n\np1 = Popen([\"dmesg\"], stdout=PIPE)\np2 = Popen([\"grep\", \"hda\"], stdin=p1.stdout, stdout=PIPE)\np1.stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.\noutput = p2.communicate()[0]\n\nThe p1.stdout.close() call after starting the p2 is important in order for\np1 to receive a SIGPIPE if p2 exits before p1.\n\nAlternatively, for trusted input, the shell's own pipeline support may still\nbe used directly:\n\noutput=$(dmesg | grep hda)\n\nbecomes:\n\noutput = check_output(\"dmesg | grep hda\", shell=True)"
+    },
+    {
+      "n": 2,
+      "id": "subprocess-17",
+      "doc": "subprocess",
+      "section": "Popen Constructor",
+      "url": "https://docs.python.org/3.12/library/subprocess.html",
+      "text": "It may not be obvious how to break a shell command into a sequence of arguments,\n   especially in complex cases. shlex.split can illustrate how to\n   determine the correct tokenization for *args*:\n\n      >>> import shlex, subprocess\n      >>> command_line = input()\n      /bin/vikings -input eggs.txt -output \"spam spam.txt\" -cmd \"echo '$MONEY'\"\n      >>> args = shlex.split(command_line)\n      >>> print(args)\n      ['/bin/vikings', '-input', 'eggs.txt', '-output', 'spam spam.txt', '-cmd', \"echo '$MONEY'\"]\n      >>> p = subprocess.Popen(args) # Success!\n\n   Note in particular that options (such as *-input*) and arguments (such\n   as *eggs.txt*) that are separated by whitespace in the shell go in separate\n   list elements, while arguments that need quoting or backslash escaping when\n   used in the shell (such as filenames containing spaces or the *echo* command\n   shown above) are single list elements.\n\nOn Windows, if *args* is a sequence, it will be converted to a string in a\nmanner described in converting-argument-sequence.  This is because\nthe underlying CreateProcess() operates on strings.\n\n3.6"
+    },
+    {
+      "n": 3,
+      "id": "subprocess-55",
+      "doc": "subprocess",
+      "section": "Replacing os.system",
+      "url": "https://docs.python.org/3.12/library/subprocess.html",
+      "text": "sts = os.system(\"mycmd\" + \" myarg\")\n# becomes\nretcode = call(\"mycmd\" + \" myarg\", shell=True)\n\nNotes:\n\n* Calling the program through the shell is usually not required.\n* The call return value is encoded differently to that of\nos.system.\n\n* The os.system function ignores SIGINT and SIGQUIT signals while\nthe command is running, but the caller must do this separately when\nusing the subprocess module.\n\nA more realistic example would look like this:\n\ntry:\n    retcode = call(\"mycmd\" + \" myarg\", shell=True)\n    if retcode < 0:\n        print(\"Child was terminated by signal\", -retcode, file=sys.stderr)\n    else:\n        print(\"Child returned\", retcode, file=sys.stderr)\nexcept OSError as e:\n    print(\"Execution failed:\", e, file=sys.stderr)"
+    },
+    {
+      "n": 4,
+      "id": "subprocess-13",
+      "doc": "subprocess",
+      "section": "Frequently Used Arguments",
+      "url": "https://docs.python.org/3.12/library/subprocess.html",
+      "text": "Added the *text* parameter as an alias for *universal_newlines*.\n\n   The newlines attribute of the file objects Popen.stdin,\n   Popen.stdout and Popen.stderr are not updated by\n   the Popen.communicate method.\n\nIf *shell* is True, the specified command will be executed through\nthe shell.  This can be useful if you are using Python primarily for the\nenhanced control flow it offers over most system shells and still want\nconvenient access to other shell features such as shell pipes, filename\nwildcards, environment variable expansion, and expansion of ~ to a\nuser's home directory.  However, note that Python itself offers\nimplementations of many shell-like features (in particular, glob,\nfnmatch, os.walk, os.path.expandvars,\nos.path.expanduser, and shutil).\n\n3.3\n   When *universal_newlines* is True, the class uses the encoding\n   locale.getpreferredencoding(False)\n   instead of locale.getpreferredencoding().  See the\n   io.TextIOWrapper class for more information on this change.\n\n   Read the Security Considerations section before using shell=True.\n\nThese options, along with all of the other options, are described in more\ndetail in the Popen constructor documentation."
+    },
+    {
+      "n": 5,
+      "id": "subprocess-51",
+      "doc": "subprocess",
+      "section": "Older high-level API",
+      "url": "https://docs.python.org/3.12/library/subprocess.html",
+      "text": "arguments) rather than using the parent's standard input file handle.\n\nBy default, this function will return the data as encoded bytes. The actual\nencoding of the output data may depend on the command being invoked, so the\ndecoding to text will often need to be handled at the application level.\n\nThis behaviour may be overridden by setting *text*, *encoding*, *errors*,\nor *universal_newlines* to True as described in\nfrequently-used-arguments and run.\n\nTo also capture standard error in the result, use\nstderr=subprocess.STDOUT:\n\n   >>> subprocess.check_output(\n   ...     \"ls non_existent_file; exit 0\",\n   ...     stderr=subprocess.STDOUT,\n   ...     shell=True)\n   'ls: non_existent_file: No such file or directory\\n'\n\n3.1\n\n3.3\n   *timeout* was added.\n\n3.4\n   Support for the *input* keyword argument was added.\n\n3.6\n   *encoding* and *errors* were added.  See run for details.\n\n3.7\n   *text* was added as a more readable alias for *universal_newlines*.\n\n3.12\n\n   Changed Windows shell search order for shell=True. The current\n   directory and %PATH% are replaced with %COMSPEC% and\n   %SystemRoot%\\System32\\cmd.exe. As a result, dropping a"
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.483
+  },
+  "promptedAt": "2026-11-26T02:45:21.879Z",
+  "answer": "Start the first command with Popen and stdout=PIPE. [1]\nStart the second command with Popen and stdin=p1.stdout. [1]\nCall p1.stdout.close() after starting the second process. [1]\nThis lets the first process receive a SIGPIPE if the second one exits. [1]\nThen read the result with p2.communicate()[0]. [1]\nFor trusted input, you can instead call check_output(\"dmesg | grep hda\", shell=True). [1]",
+  "recordedAt": "2026-11-26T02:45:24.192Z",
+  "secondsToAnswer": 2
+}

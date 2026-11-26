@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q21",
+  "question": "How do I avoid SQL injection when inserting values into a query?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] sqlite3 / How to use placeholders to bind values in SQL queries\nSQL operations usually need to use values from Python variables. However,\nbeware of using Python's string operations to assemble queries, as they\nare vulnerable to SQL injection attacks. For example, an attacker can simply\nclose the single quote and inject OR TRUE to select all rows:\n\n>>> # Never do this -- insecure!\n>>> symbol = input()\n' OR TRUE; --\n>>> sql = \"SELECT * FROM stocks WHERE symbol = '%s'\" % symbol\n>>> print(sql)\nSELECT * FROM stocks WHERE symbol = '' OR TRUE; --'\n>>> cur.execute(sql)\n\nInstead, use the DB-API's parameter substitution. To insert a variable into a\nquery string, use a placeholder in the string, and substitute the actual values\ninto the query by providing them as a tuple of values to the second\nargument of the cursor's Cursor.execute method.\n\nAn SQL statement may use one of two kinds of placeholders:\nquestion marks (qmark style) or named placeholders (named style).\n\n[2] sqlite3 / Tutorial\nCall con.commit() on the connection object\nto commit the transaction:\n\ncon.commit()\n\nWe can verify that the data was inserted correctly\nby executing a SELECT query.\nUse the now-familiar cur.execute(...) to\nassign the result to res,\nand call res.fetchall() to return all resulting rows:\n\n>>> res = cur.execute(\"SELECT score FROM movie\")\n>>> res.fetchall()\n[(8.2,), (7.5,)]\n\nThe result is a list of two tuple\\s, one per row,\neach containing that row's score value.\n\nNow, insert three more rows by calling\ncur.executemany(...):\n\ndata = [\n    (\"Monty Python Live at the Hollywood Bowl\", 1982, 7.9),\n    (\"Monty Python's The Meaning of Life\", 1983, 7.5),\n    (\"Monty Python's Life of Brian\", 1979, 8.0),\n]\ncur.executemany(\"INSERT INTO movie VALUES(?, ?, ?)\", data)\ncon.commit()  # Remember to commit the transaction after executing INSERT.\n\nNotice that ? placeholders are used to bind data to the query.\nAlways use placeholders instead of string formatting\nto bind Python values to SQL statements,\nto avoid SQL injection attacks\n(see sqlite3-placeholders for more details).\n\n[3] sqlite3 / How to use placeholders to bind values in SQL queries\n{\"name\": \"Fortran\", \"year\": 1957},\n    {\"name\": \"Python\", \"year\": 1991},\n    {\"name\": \"Go\", \"year\": 2009},\n)\ncur.executemany(\"INSERT INTO lang VALUES(:name, :year)\", data)\n\n# This is the qmark style used in a SELECT query:\nparams = (1972,)\ncur.execute(\"SELECT * FROM lang WHERE first_appeared = ?\", params)\nprint(cur.fetchall())\ncon.close()\n\n[('C', 1972)]\n\n249 numeric placeholders are *not* supported.\nIf used, they will be interpreted as named placeholders.\n\n[4] sqlite3 / Tutorial\nNotice that ? placeholders are used to bind data to the query.\nAlways use placeholders instead of string formatting\nto bind Python values to SQL statements,\nto avoid SQL injection attacks\n(see sqlite3-placeholders for more details).\n\nWe can verify that the new rows were inserted\nby executing a SELECT query,\nthis time iterating over the results of the query:\n\n>>> for row in cur.execute(\"SELECT year, title FROM movie ORDER BY year\"):\n...     print(row)\n(1971, 'And Now for Something Completely Different')\n(1975, 'Monty Python and the Holy Grail')\n(1979, \"Monty Python's Life of Brian\")\n(1982, 'Monty Python Live at the Hollywood Bowl')\n(1983, \"Monty Python's The Meaning of Life\")\n\nEach row is a two-item tuple of (year, title),\nmatching the columns selected in the query.\n\nFinally, verify that the database has been written to disk\nby calling con.close()\nto close the existing connection, opening a new one,\ncreating a new cursor, then querying the database:\n\n>>> con.close()\n>>> new_con = sqlite3.connect(\"tutorial.db\")\n\n[5] sqlite3 / Tutorial\nand call res.fetchone() to fetch the resulting row:\n\n>>> res = cur.execute(\"SELECT name FROM sqlite_master\")\n>>> res.fetchone()\n('movie',)\n\nWe can see that the table has been created,\nas the query returns a tuple containing the table's name.\nIf we query sqlite_master for a non-existent table spam,\nres.fetchone will return None:\n\n>>> res = cur.execute(\"SELECT name FROM sqlite_master WHERE name='spam'\")\n>>> res.fetchone() is None\nTrue\n\nNow, add two rows of data supplied as SQL literals\nby executing an INSERT statement,\nonce again by calling cur.execute(...):\n\ncur.execute(\"\"\"\n    INSERT INTO movie VALUES\n        ('Monty Python and the Holy Grail', 1975, 8.2),\n        ('And Now for Something Completely Different', 1971, 7.5)\n\"\"\")\n\nThe INSERT statement implicitly opens a transaction,\nwhich needs to be committed before changes are saved in the database\n(see sqlite3-controlling-transactions for details).\nCall con.commit() on the connection object\nto commit the transaction:\n\ncon.commit()\n\nWe can verify that the data was inserted correctly\nby executing a SELECT query.\nUse the now-familiar cur.execute(...) to\n\nQuestion: How do I avoid SQL injection when inserting values into a query?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "sqlite3-63",
+      "doc": "sqlite3",
+      "section": "How to use placeholders to bind values in SQL queries",
+      "url": "https://docs.python.org/3.12/library/sqlite3.html",
+      "text": "SQL operations usually need to use values from Python variables. However,\nbeware of using Python's string operations to assemble queries, as they\nare vulnerable to SQL injection attacks. For example, an attacker can simply\nclose the single quote and inject OR TRUE to select all rows:\n\n>>> # Never do this -- insecure!\n>>> symbol = input()\n' OR TRUE; --\n>>> sql = \"SELECT * FROM stocks WHERE symbol = '%s'\" % symbol\n>>> print(sql)\nSELECT * FROM stocks WHERE symbol = '' OR TRUE; --'\n>>> cur.execute(sql)\n\nInstead, use the DB-API's parameter substitution. To insert a variable into a\nquery string, use a placeholder in the string, and substitute the actual values\ninto the query by providing them as a tuple of values to the second\nargument of the cursor's Cursor.execute method.\n\nAn SQL statement may use one of two kinds of placeholders:\nquestion marks (qmark style) or named placeholders (named style)."
+    },
+    {
+      "n": 2,
+      "id": "sqlite3-5",
+      "doc": "sqlite3",
+      "section": "Tutorial",
+      "url": "https://docs.python.org/3.12/library/sqlite3.html",
+      "text": "Call con.commit() on the connection object\nto commit the transaction:\n\ncon.commit()\n\nWe can verify that the data was inserted correctly\nby executing a SELECT query.\nUse the now-familiar cur.execute(...) to\nassign the result to res,\nand call res.fetchall() to return all resulting rows:\n\n>>> res = cur.execute(\"SELECT score FROM movie\")\n>>> res.fetchall()\n[(8.2,), (7.5,)]\n\nThe result is a list of two tuple\\s, one per row,\neach containing that row's score value.\n\nNow, insert three more rows by calling\ncur.executemany(...):\n\ndata = [\n    (\"Monty Python Live at the Hollywood Bowl\", 1982, 7.9),\n    (\"Monty Python's The Meaning of Life\", 1983, 7.5),\n    (\"Monty Python's Life of Brian\", 1979, 8.0),\n]\ncur.executemany(\"INSERT INTO movie VALUES(?, ?, ?)\", data)\ncon.commit()  # Remember to commit the transaction after executing INSERT.\n\nNotice that ? placeholders are used to bind data to the query.\nAlways use placeholders instead of string formatting\nto bind Python values to SQL statements,\nto avoid SQL injection attacks\n(see sqlite3-placeholders for more details)."
+    },
+    {
+      "n": 3,
+      "id": "sqlite3-65",
+      "doc": "sqlite3",
+      "section": "How to use placeholders to bind values in SQL queries",
+      "url": "https://docs.python.org/3.12/library/sqlite3.html",
+      "text": "{\"name\": \"Fortran\", \"year\": 1957},\n    {\"name\": \"Python\", \"year\": 1991},\n    {\"name\": \"Go\", \"year\": 2009},\n)\ncur.executemany(\"INSERT INTO lang VALUES(:name, :year)\", data)\n\n# This is the qmark style used in a SELECT query:\nparams = (1972,)\ncur.execute(\"SELECT * FROM lang WHERE first_appeared = ?\", params)\nprint(cur.fetchall())\ncon.close()\n\n[('C', 1972)]\n\n249 numeric placeholders are *not* supported.\nIf used, they will be interpreted as named placeholders."
+    },
+    {
+      "n": 4,
+      "id": "sqlite3-6",
+      "doc": "sqlite3",
+      "section": "Tutorial",
+      "url": "https://docs.python.org/3.12/library/sqlite3.html",
+      "text": "Notice that ? placeholders are used to bind data to the query.\nAlways use placeholders instead of string formatting\nto bind Python values to SQL statements,\nto avoid SQL injection attacks\n(see sqlite3-placeholders for more details).\n\nWe can verify that the new rows were inserted\nby executing a SELECT query,\nthis time iterating over the results of the query:\n\n>>> for row in cur.execute(\"SELECT year, title FROM movie ORDER BY year\"):\n...     print(row)\n(1971, 'And Now for Something Completely Different')\n(1975, 'Monty Python and the Holy Grail')\n(1979, \"Monty Python's Life of Brian\")\n(1982, 'Monty Python Live at the Hollywood Bowl')\n(1983, \"Monty Python's The Meaning of Life\")\n\nEach row is a two-item tuple of (year, title),\nmatching the columns selected in the query.\n\nFinally, verify that the database has been written to disk\nby calling con.close()\nto close the existing connection, opening a new one,\ncreating a new cursor, then querying the database:\n\n>>> con.close()\n>>> new_con = sqlite3.connect(\"tutorial.db\")"
+    },
+    {
+      "n": 5,
+      "id": "sqlite3-4",
+      "doc": "sqlite3",
+      "section": "Tutorial",
+      "url": "https://docs.python.org/3.12/library/sqlite3.html",
+      "text": "and call res.fetchone() to fetch the resulting row:\n\n>>> res = cur.execute(\"SELECT name FROM sqlite_master\")\n>>> res.fetchone()\n('movie',)\n\nWe can see that the table has been created,\nas the query returns a tuple containing the table's name.\nIf we query sqlite_master for a non-existent table spam,\nres.fetchone will return None:\n\n>>> res = cur.execute(\"SELECT name FROM sqlite_master WHERE name='spam'\")\n>>> res.fetchone() is None\nTrue\n\nNow, add two rows of data supplied as SQL literals\nby executing an INSERT statement,\nonce again by calling cur.execute(...):\n\ncur.execute(\"\"\"\n    INSERT INTO movie VALUES\n        ('Monty Python and the Holy Grail', 1975, 8.2),\n        ('And Now for Something Completely Different', 1971, 7.5)\n\"\"\")\n\nThe INSERT statement implicitly opens a transaction,\nwhich needs to be committed before changes are saved in the database\n(see sqlite3-controlling-transactions for details).\nCall con.commit() on the connection object\nto commit the transaction:\n\ncon.commit()\n\nWe can verify that the data was inserted correctly\nby executing a SELECT query.\nUse the now-familiar cur.execute(...) to"
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.514
+  },
+  "promptedAt": "2026-11-26T02:45:23.121Z",
+  "answer": "Do not build queries with Python string operations, because they are vulnerable to SQL injection. [1]\nUse the DB-API's parameter substitution instead. [1]\nPut a placeholder in the query string and pass the actual values as a tuple in the second argument of Cursor.execute. [1]\nAn SQL statement may use qmark style (question marks) or named style placeholders. [1]\nAlways use placeholders instead of string formatting to bind Python values to SQL statements. [2]",
+  "recordedAt": "2026-11-26T02:45:25.464Z",
+  "secondsToAnswer": 2
+}

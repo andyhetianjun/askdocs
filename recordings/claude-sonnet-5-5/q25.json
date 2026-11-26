@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q25",
+  "question": "Who won the football World Cup in 2018?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] random / Functions for sequences\nReturn a *k* length list of unique elements chosen from the population\nsequence.  Used for random sampling without replacement.\n\nReturns a new list containing elements from the population while leaving the\noriginal population unchanged.  The resulting list is in selection order so that\nall sub-slices will also be valid random samples.  This allows raffle winners\n(the sample) to be partitioned into grand prize and second place winners (the\nsubslices).\n\nMembers of the population need not be hashable or unique.  If the population\ncontains repeats, then each occurrence is a possible selection in the sample.\n\nRepeated elements can be specified one at a time or with the optional\nkeyword-only *counts* parameter.  For example, sample(['red', 'blue'],\ncounts=[4, 2], k=5) is equivalent to sample(['red', 'red', 'red', 'red',\n'blue', 'blue'], k=5).\n\nTo choose a sample from a range of integers, use a range object as an\nargument.  This is especially fast and space efficient for sampling from a large\npopulation:  sample(range(10000000), k=60).\n\n[2] tempfile / Examples\nHere are some examples of typical usage of the tempfile module:\n\n >>> import tempfile\n\n # create a temporary file and write some data to it\n >>> fp = tempfile.TemporaryFile()\n >>> fp.write(b'Hello world!')\n # read data from file\n >>> fp.seek(0)\n >>> fp.read()\n b'Hello world!'\n # close the file, it will be removed\n >>> fp.close()\n\n # create a temporary file using a context manager\n >>> with tempfile.TemporaryFile() as fp:\n ...     fp.write(b'Hello world!')\n ...     fp.seek(0)\n ...     fp.read()\n b'Hello world!'\n >>>\n # file is now closed and removed\n\n # create a temporary file using a context manager\n # close the file, use the name to open the file again\n >>> with tempfile.NamedTemporaryFile(delete_on_close=False) as fp:\n ...     fp.write(b'Hello world!')\n ...     fp.close()\n ... # the file is closed, but not removed\n ... # open the file again by using its name\n ...     with open(fp.name, mode='rb') as f:\n ...         f.read()\n b'Hello world!'\n >>>\n # file is now removed\n\n # create a temporary directory using the context manager\n\n[3] random / Alternative Generator\nOverride this method in subclasses to customise the\n   random.getrandbits behaviour of Random instances.\n\nSystemRandom([seed])\n\nClass that uses the os.urandom function for generating random numbers\nfrom sources provided by the operating system. Not available on all systems.\nDoes not rely on software state, and sequences are not reproducible. Accordingly,\nthe seed method has no effect and is ignored.\nThe getstate and setstate methods raise\nNotImplementedError if called.\n\n[4] textwrap / textwrap - Text wrapping and filling\nLines containing only whitespace are ignored in the input and normalized to a\nsingle newline character in the output.\n\nFor example:\n\n   def test():\n       # end first line with \\ to avoid the empty line!\n       s = '''hello\n         world\n       '''\n       print(repr(s))          # prints '    hello\\n      world\\n    '\n       print(repr(dedent(s)))  # prints 'hello\\n  world\\n'\n\nindent(text, prefix, predicate=None)\n\nAdd *prefix* to the beginning of selected lines in *text*.\n\nLines are separated by calling text.splitlines(True).\n\nBy default, *prefix* is added to all lines that do not consist\nsolely of whitespace (including any line endings).\n\nFor example:\n\n   >>> s = 'hello\\n\\n \\nworld'\n   >>> indent(s, '  ')\n   '  hello\\n\\n \\n  world'\n\nThe optional *predicate* argument can be used to control which lines\nare indented. For example, it is easy to add *prefix* to even empty\nand whitespace-only lines:\n\n   >>> print(indent(s, '+ ', lambda line: True))\n   + hello\n   +\n   +\n   + world\n\n3.3\n\nwrap, fill and shorten work by creating a\n\n[5] hashlib / Simple hashing\nTo calculate hash of some data, you should first construct a hash object by\ncalling the appropriate constructor function (blake2b or\nblake2s), then update it with the data by calling hash.update on the\nobject, and, finally, get the digest out of the object by calling\nhash.digest (or hash.hexdigest for hex-encoded string).\n\n >>> from hashlib import blake2b\n >>> h = blake2b()\n >>> h.update(b'Hello world')\n >>> h.hexdigest()\n '6ff843ba685842aa82031d3f53c48b66326df7639a63d128974c5c14f31a0f33343a8c65551134ed1ae0f2b0dd2bb495dc81039e3eeb0aa1bb0388bbeac29183'\n\nAs a shortcut, you can pass the first chunk of data to update directly to the\nconstructor as the positional argument:\n\n >>> from hashlib import blake2b\n >>> blake2b(b'Hello world').hexdigest()\n '6ff843ba685842aa82031d3f53c48b66326df7639a63d128974c5c14f31a0f33343a8c65551134ed1ae0f2b0dd2bb495dc81039e3eeb0aa1bb0388bbeac29183'\n\nYou can call hash.update as many times as you need to iteratively\nupdate the hash:\n\n >>> from hashlib import blake2b\n >>> items = [b'Hello', b' ', b'world']\n >>> h = blake2b()\n >>> for item in items:\n ...     h.update(item)\n ...\n >>> h.hexdigest()\n '6ff843ba685842aa82031d3f53c48b66326df7639a63d128974c5c14f31a0f33343a8c65551134ed1ae0f2b0dd2bb495dc81039e3eeb0aa1bb0388bbeac29183'\n\nQuestion: Who won the football World Cup in 2018?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "random-11",
+      "doc": "random",
+      "section": "Functions for sequences",
+      "url": "https://docs.python.org/3.12/library/random.html",
+      "text": "Return a *k* length list of unique elements chosen from the population\nsequence.  Used for random sampling without replacement.\n\nReturns a new list containing elements from the population while leaving the\noriginal population unchanged.  The resulting list is in selection order so that\nall sub-slices will also be valid random samples.  This allows raffle winners\n(the sample) to be partitioned into grand prize and second place winners (the\nsubslices).\n\nMembers of the population need not be hashable or unique.  If the population\ncontains repeats, then each occurrence is a possible selection in the sample.\n\nRepeated elements can be specified one at a time or with the optional\nkeyword-only *counts* parameter.  For example, sample(['red', 'blue'],\ncounts=[4, 2], k=5) is equivalent to sample(['red', 'red', 'red', 'red',\n'blue', 'blue'], k=5).\n\nTo choose a sample from a range of integers, use a range object as an\nargument.  This is especially fast and space efficient for sampling from a large\npopulation:  sample(range(10000000), k=60)."
+    },
+    {
+      "n": 2,
+      "id": "tempfile-18",
+      "doc": "tempfile",
+      "section": "Examples",
+      "url": "https://docs.python.org/3.12/library/tempfile.html",
+      "text": "Here are some examples of typical usage of the tempfile module:\n\n >>> import tempfile\n\n # create a temporary file and write some data to it\n >>> fp = tempfile.TemporaryFile()\n >>> fp.write(b'Hello world!')\n # read data from file\n >>> fp.seek(0)\n >>> fp.read()\n b'Hello world!'\n # close the file, it will be removed\n >>> fp.close()\n\n # create a temporary file using a context manager\n >>> with tempfile.TemporaryFile() as fp:\n ...     fp.write(b'Hello world!')\n ...     fp.seek(0)\n ...     fp.read()\n b'Hello world!'\n >>>\n # file is now closed and removed\n\n # create a temporary file using a context manager\n # close the file, use the name to open the file again\n >>> with tempfile.NamedTemporaryFile(delete_on_close=False) as fp:\n ...     fp.write(b'Hello world!')\n ...     fp.close()\n ... # the file is closed, but not removed\n ... # open the file again by using its name\n ...     with open(fp.name, mode='rb') as f:\n ...         f.read()\n b'Hello world!'\n >>>\n # file is now removed\n\n # create a temporary directory using the context manager"
+    },
+    {
+      "n": 3,
+      "id": "random-19",
+      "doc": "random",
+      "section": "Alternative Generator",
+      "url": "https://docs.python.org/3.12/library/random.html",
+      "text": "Override this method in subclasses to customise the\n   random.getrandbits behaviour of Random instances.\n\nSystemRandom([seed])\n\nClass that uses the os.urandom function for generating random numbers\nfrom sources provided by the operating system. Not available on all systems.\nDoes not rely on software state, and sequences are not reproducible. Accordingly,\nthe seed method has no effect and is ignored.\nThe getstate and setstate methods raise\nNotImplementedError if called."
+    },
+    {
+      "n": 4,
+      "id": "textwrap-3",
+      "doc": "textwrap",
+      "section": "textwrap - Text wrapping and filling",
+      "url": "https://docs.python.org/3.12/library/textwrap.html",
+      "text": "Lines containing only whitespace are ignored in the input and normalized to a\nsingle newline character in the output.\n\nFor example:\n\n   def test():\n       # end first line with \\ to avoid the empty line!\n       s = '''hello\n         world\n       '''\n       print(repr(s))          # prints '    hello\\n      world\\n    '\n       print(repr(dedent(s)))  # prints 'hello\\n  world\\n'\n\nindent(text, prefix, predicate=None)\n\nAdd *prefix* to the beginning of selected lines in *text*.\n\nLines are separated by calling text.splitlines(True).\n\nBy default, *prefix* is added to all lines that do not consist\nsolely of whitespace (including any line endings).\n\nFor example:\n\n   >>> s = 'hello\\n\\n \\nworld'\n   >>> indent(s, '  ')\n   '  hello\\n\\n \\n  world'\n\nThe optional *predicate* argument can be used to control which lines\nare indented. For example, it is easy to add *prefix* to even empty\nand whitespace-only lines:\n\n   >>> print(indent(s, '+ ', lambda line: True))\n   + hello\n   +\n   +\n   + world\n\n3.3\n\nwrap, fill and shorten work by creating a"
+    },
+    {
+      "n": 5,
+      "id": "hashlib-20",
+      "doc": "hashlib",
+      "section": "Simple hashing",
+      "url": "https://docs.python.org/3.12/library/hashlib.html",
+      "text": "To calculate hash of some data, you should first construct a hash object by\ncalling the appropriate constructor function (blake2b or\nblake2s), then update it with the data by calling hash.update on the\nobject, and, finally, get the digest out of the object by calling\nhash.digest (or hash.hexdigest for hex-encoded string).\n\n >>> from hashlib import blake2b\n >>> h = blake2b()\n >>> h.update(b'Hello world')\n >>> h.hexdigest()\n '6ff843ba685842aa82031d3f53c48b66326df7639a63d128974c5c14f31a0f33343a8c65551134ed1ae0f2b0dd2bb495dc81039e3eeb0aa1bb0388bbeac29183'\n\nAs a shortcut, you can pass the first chunk of data to update directly to the\nconstructor as the positional argument:\n\n >>> from hashlib import blake2b\n >>> blake2b(b'Hello world').hexdigest()\n '6ff843ba685842aa82031d3f53c48b66326df7639a63d128974c5c14f31a0f33343a8c65551134ed1ae0f2b0dd2bb495dc81039e3eeb0aa1bb0388bbeac29183'\n\nYou can call hash.update as many times as you need to iteratively\nupdate the hash:\n\n >>> from hashlib import blake2b\n >>> items = [b'Hello', b' ', b'world']\n >>> h = blake2b()\n >>> for item in items:\n ...     h.update(item)\n ...\n >>> h.hexdigest()\n '6ff843ba685842aa82031d3f53c48b66326df7639a63d128974c5c14f31a0f33343a8c65551134ed1ae0f2b0dd2bb495dc81039e3eeb0aa1bb0388bbeac29183'"
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.154
+  },
+  "promptedAt": "2026-11-26T02:45:28.743Z",
+  "answer": "I couldn't find this in the docs.",
+  "recordedAt": "2026-11-26T02:45:30.497Z",
+  "secondsToAnswer": 2
+}

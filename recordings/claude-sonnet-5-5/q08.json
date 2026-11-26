@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q08",
+  "question": "How do I find all the adverbs ending in ly in a sentence?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] re / Finding all Adverbs\nfindall matches *all* occurrences of a pattern, not just the first\none as search does.  For example, if a writer wanted to\nfind all of the adverbs in some text, they might use findall in\nthe following manner:\n\n>>> text = \"He was carefully disguised but captured quickly by police.\"\n>>> re.findall(r\"\\w+ly\\b\", text)\n['carefully', 'quickly']\n\n[2] re / Finding all Adverbs and their Positions\nIf one wants more information about all matches of a pattern than the matched\ntext, finditer is useful as it provides re.Match objects\ninstead of strings.  Continuing with the previous example, if a writer wanted\nto find all of the adverbs *and their positions* in some text, they would use\nfinditer in the following manner:\n\n>>> text = \"He was carefully disguised but captured quickly by police.\"\n>>> for m in re.finditer(r\"\\w+ly\\b\", text):\n...     print('%02d-%02d: %s' % (m.start(), m.end(), m.group(0)))\n07-16: carefully\n40-47: quickly\n\n[3] textwrap / textwrap - Text wrapping and filling\ntwo spaces.  This is generally desired for text in a monospaced font.\n   However, the sentence detection algorithm is imperfect: it assumes that a\n   sentence ending consists of a lowercase letter followed by one of '.',\n   '!', or '?', possibly followed by one of '\"' or \"'\",\n   followed by a space.  One problem with this algorithm is that it is\n   unable to detect the difference between \"Dr.\" in :\n\n      [...] Dr. Frankenstein's monster [...]\n\n   and \"Spot.\" in :\n\n      [...] See Spot. See Spot run [...]\n\n   fix_sentence_endings is false by default.\n\n   Since the sentence detection algorithm relies on string.lowercase for\n   the definition of \"lowercase letter\", and a convention of using two spaces\n   after a period to separate sentences on the same line, it is specific to\n   English-language texts.\n\nbreak_long_words\n\n   (default: True) If true, then words longer than width will be\n   broken in order to ensure that no lines are longer than width.  If\n\n[4] re / Text Munging\nsub replaces every occurrence of a pattern with a string or the\nresult of a function.  This example demonstrates using sub with\na function to \"munge\" text, or randomize the order of all the characters\nin each word of a sentence except for the first and last characters:\n\n>>> def repl(m):\n...     inner_word = list(m.group(2))\n...     random.shuffle(inner_word)\n...     return m.group(1) + \"\".join(inner_word) + m.group(3)\n...\n>>> text = \"Professor Abdolmalek, please report your absences promptly.\"\n>>> re.sub(r\"(\\w)(\\w+)(\\w)\", repl, text)\n'Poefsrosr Aealmlobdk, pslaee reorpt your abnseces plmrptoy.'\n>>> re.sub(r\"(\\w)(\\w+)(\\w)\", repl, text)\n'Pofsroser Aodlambelk, plasee reoprt yuor asnebces potlmrpy.'\n\n[5] textwrap / textwrap - Text wrapping and filling\n(default: True) If true, whitespace at the beginning and ending of\n   every line (after wrapping but before indenting) is dropped.\n   Whitespace at the beginning of the paragraph, however, is not dropped\n   if non-whitespace follows it.  If whitespace being dropped takes up an\n   entire line, the whole line is dropped.\n\ninitial_indent\n\n   (default: '') String that will be prepended to the first line of\n   wrapped output.  Counts towards the length of the first line.  The empty\n   string is not indented.\n\nsubsequent_indent\n\n   (default: '') String that will be prepended to all lines of wrapped\n   output except the first.  Counts towards the length of each line except\n   the first.\n\nfix_sentence_endings\n\n   (default: False) If true, TextWrapper attempts to detect\n   sentence endings and ensure that sentences are always separated by exactly\n   two spaces.  This is generally desired for text in a monospaced font.\n   However, the sentence detection algorithm is imperfect: it assumes that a\n   sentence ending consists of a lowercase letter followed by one of '.',\n\nQuestion: How do I find all the adverbs ending in ly in a sentence?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "re-77",
+      "doc": "re",
+      "section": "Finding all Adverbs",
+      "url": "https://docs.python.org/3.12/library/re.html",
+      "text": "findall matches *all* occurrences of a pattern, not just the first\none as search does.  For example, if a writer wanted to\nfind all of the adverbs in some text, they might use findall in\nthe following manner:\n\n>>> text = \"He was carefully disguised but captured quickly by police.\"\n>>> re.findall(r\"\\w+ly\\b\", text)\n['carefully', 'quickly']"
+    },
+    {
+      "n": 2,
+      "id": "re-78",
+      "doc": "re",
+      "section": "Finding all Adverbs and their Positions",
+      "url": "https://docs.python.org/3.12/library/re.html",
+      "text": "If one wants more information about all matches of a pattern than the matched\ntext, finditer is useful as it provides re.Match objects\ninstead of strings.  Continuing with the previous example, if a writer wanted\nto find all of the adverbs *and their positions* in some text, they would use\nfinditer in the following manner:\n\n>>> text = \"He was carefully disguised but captured quickly by police.\"\n>>> for m in re.finditer(r\"\\w+ly\\b\", text):\n...     print('%02d-%02d: %s' % (m.start(), m.end(), m.group(0)))\n07-16: carefully\n40-47: quickly"
+    },
+    {
+      "n": 3,
+      "id": "textwrap-8",
+      "doc": "textwrap",
+      "section": "textwrap - Text wrapping and filling",
+      "url": "https://docs.python.org/3.12/library/textwrap.html",
+      "text": "two spaces.  This is generally desired for text in a monospaced font.\n   However, the sentence detection algorithm is imperfect: it assumes that a\n   sentence ending consists of a lowercase letter followed by one of '.',\n   '!', or '?', possibly followed by one of '\"' or \"'\",\n   followed by a space.  One problem with this algorithm is that it is\n   unable to detect the difference between \"Dr.\" in :\n\n      [...] Dr. Frankenstein's monster [...]\n\n   and \"Spot.\" in :\n\n      [...] See Spot. See Spot run [...]\n\n   fix_sentence_endings is false by default.\n\n   Since the sentence detection algorithm relies on string.lowercase for\n   the definition of \"lowercase letter\", and a convention of using two spaces\n   after a period to separate sentences on the same line, it is specific to\n   English-language texts.\n\nbreak_long_words\n\n   (default: True) If true, then words longer than width will be\n   broken in order to ensure that no lines are longer than width.  If"
+    },
+    {
+      "n": 4,
+      "id": "re-76",
+      "doc": "re",
+      "section": "Text Munging",
+      "url": "https://docs.python.org/3.12/library/re.html",
+      "text": "sub replaces every occurrence of a pattern with a string or the\nresult of a function.  This example demonstrates using sub with\na function to \"munge\" text, or randomize the order of all the characters\nin each word of a sentence except for the first and last characters:\n\n>>> def repl(m):\n...     inner_word = list(m.group(2))\n...     random.shuffle(inner_word)\n...     return m.group(1) + \"\".join(inner_word) + m.group(3)\n...\n>>> text = \"Professor Abdolmalek, please report your absences promptly.\"\n>>> re.sub(r\"(\\w)(\\w+)(\\w)\", repl, text)\n'Poefsrosr Aealmlobdk, pslaee reorpt your abnseces plmrptoy.'\n>>> re.sub(r\"(\\w)(\\w+)(\\w)\", repl, text)\n'Pofsroser Aodlambelk, plasee reoprt yuor asnebces potlmrpy.'"
+    },
+    {
+      "n": 5,
+      "id": "textwrap-7",
+      "doc": "textwrap",
+      "section": "textwrap - Text wrapping and filling",
+      "url": "https://docs.python.org/3.12/library/textwrap.html",
+      "text": "(default: True) If true, whitespace at the beginning and ending of\n   every line (after wrapping but before indenting) is dropped.\n   Whitespace at the beginning of the paragraph, however, is not dropped\n   if non-whitespace follows it.  If whitespace being dropped takes up an\n   entire line, the whole line is dropped.\n\ninitial_indent\n\n   (default: '') String that will be prepended to the first line of\n   wrapped output.  Counts towards the length of the first line.  The empty\n   string is not indented.\n\nsubsequent_indent\n\n   (default: '') String that will be prepended to all lines of wrapped\n   output except the first.  Counts towards the length of each line except\n   the first.\n\nfix_sentence_endings\n\n   (default: False) If true, TextWrapper attempts to detect\n   sentence endings and ensure that sentences are always separated by exactly\n   two spaces.  This is generally desired for text in a monospaced font.\n   However, the sentence detection algorithm is imperfect: it assumes that a\n   sentence ending consists of a lowercase letter followed by one of '.',"
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.561
+  },
+  "promptedAt": "2026-11-26T02:45:04.833Z",
+  "answer": "Use re.findall with the pattern r\"\\w+ly\\b\" to get every adverb ending in ly. [1]\nFor the example sentence, it returns 'carefully' and 'quickly'. [1]\nUse re.finditer instead if you also want the position of each adverb. [2]",
+  "recordedAt": "2026-11-26T02:45:07.279Z",
+  "secondsToAnswer": 2
+}

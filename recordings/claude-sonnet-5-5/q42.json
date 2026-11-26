@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q42",
+  "question": "How can I make instances of a dataclass read-only?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] dataclasses / Module contents\nHere are the rules governing implicit creation of a __hash__\n  method.  Note that you cannot both have an explicit __hash__\n  method in your dataclass and set unsafe_hash=True; this will result\n  in a TypeError.\n\n  If *eq* and *frozen* are both true, by default @dataclass will\n  generate a __hash__ method for you.  If *eq* is true and\n  *frozen* is false, __hash__ will be set to None, marking it\n  unhashable (which it is, since it is mutable).  If *eq* is false,\n  __hash__ will be left untouched meaning the __hash__\n  method of the superclass will be used (if the superclass is\n  object, this means it will fall back to id-based hashing).\n\n- *frozen*: If true (the default is False), assigning to fields will\n  generate an exception.  This emulates read-only frozen instances.  If\n  object.__setattr__ or object.__delattr__ is defined in the class, then\n  TypeError is raised.  See the discussion below.\n\n- *match_args*: If true (the default is True), the\n\n[2] dataclasses / Module contents\nBe forewarned about how init=False fields work during a call to\nreplace.  They are not copied from the source object, but\nrather are initialized in __post_init__, if they're\ninitialized at all.  It is expected that init=False fields will\nbe rarely and judiciously used.  If they are used, it might be wise\nto have alternate class constructors, or perhaps a custom\nreplace (or similarly named) method which handles instance\ncopying.\n\nis_dataclass(obj)\n\nReturn True if its parameter is a dataclass (including subclasses of a\ndataclass) or an instance of one, otherwise return False.\n\nIf you need to know if a class is an instance of a dataclass (and\nnot a dataclass itself), then add a further check for not\nisinstance(obj, type):\n\n  def is_dataclass_instance(obj):\n      return is_dataclass(obj) and not isinstance(obj, type)\n\nMISSING\n\nA sentinel value signifying a missing default or default_factory.\n\nKW_ONLY\n\nA sentinel value used as a type annotation.  Any fields after a\npseudo-field with the type of KW_ONLY are marked as\n\n[3] dataclasses / Mutable default values\nThat is, two instances of class D that do not specify a value\nfor x when creating a class instance will share the same copy\nof x.  Because dataclasses just use normal Python class\ncreation they also share this behavior.  There is no general way\nfor Data Classes to detect this condition.  Instead, the\n@dataclass decorator will raise a ValueError if it\ndetects an unhashable default parameter.  The assumption is that if\na value is unhashable, it is mutable.  This is a partial solution,\nbut it does protect against many common errors.\n\nUsing default factory functions is a way to create new instances of\nmutable types as default values for fields:\n\n@dataclass\nclass D:\n   x: list = field(default_factory=list)\n\nassert D().x is not D().x\n\n3.11\nInstead of looking for and disallowing objects of type list,\ndict, or set, unhashable objects are now not allowed as\ndefault values.  Unhashability is used to approximate\nmutability.\n\n[4] dataclasses / Module contents\nA sentinel value signifying a missing default or default_factory.\n\nKW_ONLY\n\nA sentinel value used as a type annotation.  Any fields after a\npseudo-field with the type of KW_ONLY are marked as\nkeyword-only fields.  Note that a pseudo-field of type\nKW_ONLY is otherwise completely ignored.  This includes the\nname of such a field.  By convention, a name of _ is used for a\nKW_ONLY field.  Keyword-only fields signify\nobject.__init__ parameters that must be specified as keywords when\nthe class is instantiated.\n\nIn this example, the fields y and z will be marked as keyword-only fields:\n\n @dataclass\n class Point:\n     x: float\n     _: KW_ONLY\n     y: float\n     z: float\n\n p = Point(0, y=1.5, z=2.0)\n\nIn a single dataclass, it is an error to specify more than one\nfield whose type is KW_ONLY.\n\n3.10\n\nFrozenInstanceError\n\nRaised when an implicitly defined object.__setattr__ or\nobject.__delattr__ is called on a dataclass which was defined with\nfrozen=True. It is a subclass of AttributeError.\n\n[5] dataclasses / Init-only variables\nAnother place where @dataclass inspects a type annotation is to\ndetermine if a field is an init-only variable.  It does this by seeing\nif the type of a field is of type dataclasses.InitVar.  If a field\nis an InitVar, it is considered a pseudo-field called an init-only\nfield.  As it is not a true field, it is not returned by the\nmodule-level fields function.  Init-only fields are added as\nparameters to the generated object.__init__ method, and are passed to\nthe optional __post_init__ method.  They are not otherwise used\nby dataclasses.\n\nFor example, suppose a field will be initialized from a database, if a\nvalue is not provided when creating the class:\n\n@dataclass\nclass C:\n   i: int\n   j: int | None = None\n   database: InitVar[DatabaseType | None] = None\n\n   def __post_init__(self, database):\n       if self.j is None and database is not None:\n           self.j = database.lookup('j')\n\nc = C(10, database=my_database)\n\nIn this case, fields will return Field objects for i and\n\nQuestion: How can I make instances of a dataclass read-only?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "dataclasses-6",
+      "doc": "dataclasses",
+      "section": "Module contents",
+      "url": "https://docs.python.org/3.12/library/dataclasses.html",
+      "text": "Here are the rules governing implicit creation of a __hash__\n  method.  Note that you cannot both have an explicit __hash__\n  method in your dataclass and set unsafe_hash=True; this will result\n  in a TypeError.\n\n  If *eq* and *frozen* are both true, by default @dataclass will\n  generate a __hash__ method for you.  If *eq* is true and\n  *frozen* is false, __hash__ will be set to None, marking it\n  unhashable (which it is, since it is mutable).  If *eq* is false,\n  __hash__ will be left untouched meaning the __hash__\n  method of the superclass will be used (if the superclass is\n  object, this means it will fall back to id-based hashing).\n\n- *frozen*: If true (the default is False), assigning to fields will\n  generate an exception.  This emulates read-only frozen instances.  If\n  object.__setattr__ or object.__delattr__ is defined in the class, then\n  TypeError is raised.  See the discussion below.\n\n- *match_args*: If true (the default is True), the"
+    },
+    {
+      "n": 2,
+      "id": "dataclasses-21",
+      "doc": "dataclasses",
+      "section": "Module contents",
+      "url": "https://docs.python.org/3.12/library/dataclasses.html",
+      "text": "Be forewarned about how init=False fields work during a call to\nreplace.  They are not copied from the source object, but\nrather are initialized in __post_init__, if they're\ninitialized at all.  It is expected that init=False fields will\nbe rarely and judiciously used.  If they are used, it might be wise\nto have alternate class constructors, or perhaps a custom\nreplace (or similarly named) method which handles instance\ncopying.\n\nis_dataclass(obj)\n\nReturn True if its parameter is a dataclass (including subclasses of a\ndataclass) or an instance of one, otherwise return False.\n\nIf you need to know if a class is an instance of a dataclass (and\nnot a dataclass itself), then add a further check for not\nisinstance(obj, type):\n\n  def is_dataclass_instance(obj):\n      return is_dataclass(obj) and not isinstance(obj, type)\n\nMISSING\n\nA sentinel value signifying a missing default or default_factory.\n\nKW_ONLY\n\nA sentinel value used as a type annotation.  Any fields after a\npseudo-field with the type of KW_ONLY are marked as"
+    },
+    {
+      "n": 3,
+      "id": "dataclasses-34",
+      "doc": "dataclasses",
+      "section": "Mutable default values",
+      "url": "https://docs.python.org/3.12/library/dataclasses.html",
+      "text": "That is, two instances of class D that do not specify a value\nfor x when creating a class instance will share the same copy\nof x.  Because dataclasses just use normal Python class\ncreation they also share this behavior.  There is no general way\nfor Data Classes to detect this condition.  Instead, the\n@dataclass decorator will raise a ValueError if it\ndetects an unhashable default parameter.  The assumption is that if\na value is unhashable, it is mutable.  This is a partial solution,\nbut it does protect against many common errors.\n\nUsing default factory functions is a way to create new instances of\nmutable types as default values for fields:\n\n@dataclass\nclass D:\n   x: list = field(default_factory=list)\n\nassert D().x is not D().x\n\n3.11\nInstead of looking for and disallowing objects of type list,\ndict, or set, unhashable objects are now not allowed as\ndefault values.  Unhashability is used to approximate\nmutability."
+    },
+    {
+      "n": 4,
+      "id": "dataclasses-22",
+      "doc": "dataclasses",
+      "section": "Module contents",
+      "url": "https://docs.python.org/3.12/library/dataclasses.html",
+      "text": "A sentinel value signifying a missing default or default_factory.\n\nKW_ONLY\n\nA sentinel value used as a type annotation.  Any fields after a\npseudo-field with the type of KW_ONLY are marked as\nkeyword-only fields.  Note that a pseudo-field of type\nKW_ONLY is otherwise completely ignored.  This includes the\nname of such a field.  By convention, a name of _ is used for a\nKW_ONLY field.  Keyword-only fields signify\nobject.__init__ parameters that must be specified as keywords when\nthe class is instantiated.\n\nIn this example, the fields y and z will be marked as keyword-only fields:\n\n @dataclass\n class Point:\n     x: float\n     _: KW_ONLY\n     y: float\n     z: float\n\n p = Point(0, y=1.5, z=2.0)\n\nIn a single dataclass, it is an error to specify more than one\nfield whose type is KW_ONLY.\n\n3.10\n\nFrozenInstanceError\n\nRaised when an implicitly defined object.__setattr__ or\nobject.__delattr__ is called on a dataclass which was defined with\nfrozen=True. It is a subclass of AttributeError."
+    },
+    {
+      "n": 5,
+      "id": "dataclasses-26",
+      "doc": "dataclasses",
+      "section": "Init-only variables",
+      "url": "https://docs.python.org/3.12/library/dataclasses.html",
+      "text": "Another place where @dataclass inspects a type annotation is to\ndetermine if a field is an init-only variable.  It does this by seeing\nif the type of a field is of type dataclasses.InitVar.  If a field\nis an InitVar, it is considered a pseudo-field called an init-only\nfield.  As it is not a true field, it is not returned by the\nmodule-level fields function.  Init-only fields are added as\nparameters to the generated object.__init__ method, and are passed to\nthe optional __post_init__ method.  They are not otherwise used\nby dataclasses.\n\nFor example, suppose a field will be initialized from a database, if a\nvalue is not provided when creating the class:\n\n@dataclass\nclass C:\n   i: int\n   j: int | None = None\n   database: InitVar[DatabaseType | None] = None\n\n   def __post_init__(self, database):\n       if self.j is None and database is not None:\n           self.j = database.lookup('j')\n\nc = C(10, database=my_database)\n\nIn this case, fields will return Field objects for i and"
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.544
+  },
+  "promptedAt": "2026-11-26T02:45:48.796Z",
+  "answer": "Set frozen=True in the dataclass decorator to make instances read-only. [1]\nWith frozen=True, assigning to fields raises an exception. [1]\nFrozen instances emulate read-only behavior. [1]\nThe exception raised is FrozenInstanceError, a subclass of AttributeError. [4]",
+  "recordedAt": "2026-11-26T02:45:51.060Z",
+  "secondsToAnswer": 2
+}

@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q01",
+  "question": "How do I make a command line flag that stores True when it is given?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] argparse / The add_argument() method\nArgumentParser.add_argument(name or flags..., [action], [nargs], [const], [default], [type], [choices], [required], [help], [metavar], [dest])\n\nDefine how a single command-line argument should be parsed.  Each parameter\nhas its own more detailed description below, but in short they are:\n\n* name or flags - Either a name or a list of option strings, e.g. foo\n  or -f, --foo.\n\n* action_ - The basic type of action to be taken when this argument is\n  encountered at the command line.\n\n* nargs_ - The number of command-line arguments that should be consumed.\n\n* const_ - A constant value required by some action_ and nargs_ selections.\n\n* default_ - The value produced if the argument is absent from the\n  command line and if it is absent from the namespace object.\n\n* type_ - The type to which the command-line argument should be converted.\n\n* choices_ - A sequence of the allowable values for the argument.\n\n[2] argparse / required\nIn general, the argparse module assumes that flags like -f and --bar\nindicate *optional* arguments, which can always be omitted at the command line.\nTo make an option *required*, True can be specified for the required=\nkeyword argument to ArgumentParser.add_argument:\n\n>>> parser = argparse.ArgumentParser()\n>>> parser.add_argument('--foo', required=True)\n>>> parser.parse_args(['--foo', 'BAR'])\nNamespace(foo='BAR')\n>>> parser.parse_args([])\nusage: [-h] --foo FOO\n: error: the following arguments are required: --foo\n\nAs the example shows, if an option is marked as required,\nArgumentParser.parse_args will report an error if that option is not\npresent at the command line.\n\n Required options are generally considered bad form because users expect\n *options* to be *optional*, and thus they should be avoided when possible.\n\n[3] argparse / action\nArgumentParser objects associate command-line arguments with actions.  These\nactions can do just about anything with the command-line arguments associated with\nthem, though most actions simply add an attribute to the object returned by\nArgumentParser.parse_args.  The action keyword argument specifies\nhow the command-line arguments should be handled. The supplied actions are:\n\n* 'store' - This just stores the argument's value.  This is the default\naction. For example:\n\n >>> parser = argparse.ArgumentParser()\n >>> parser.add_argument('--foo')\n >>> parser.parse_args('--foo 1'.split())\n Namespace(foo='1')\n\n* 'store_const' - This stores the value specified by the const_ keyword\nargument; note that the const_ keyword argument defaults to None.  The\n'store_const' action is most commonly used with optional arguments that\nspecify some sort of flag.  For example:\n\n >>> parser = argparse.ArgumentParser()\n >>> parser.add_argument('--foo', action='store_const', const=42)\n >>> parser.parse_args(['--foo'])\n Namespace(foo=42)\n\n* 'store_true' and 'store_false' - These are special cases of\n'store_const' used for storing the values True and False\nrespectively.  In addition, they create default values of False and\nTrue respectively.  For example:\n\n[4] argparse / argparse - Parser for command-line options, arguments and sub-commands\n3.2\n\n**Source code:** Lib/argparse.py\n\n--------------\n\nThis page contains the API reference information. For a more gentle\nintroduction to Python command-line parsing, have a look at the\nargparse tutorial.\n\nThe argparse module makes it easy to write user-friendly command-line\ninterfaces. The program defines what arguments it requires, and argparse\nwill figure out how to parse those out of sys.argv.  The argparse\nmodule also automatically generates help and usage messages.  The module\nwill also issue errors when users give the program invalid arguments.\n\n[5] argparse / action\n* 'store_true' and 'store_false' - These are special cases of\n'store_const' used for storing the values True and False\nrespectively.  In addition, they create default values of False and\nTrue respectively.  For example:\n\n >>> parser = argparse.ArgumentParser()\n >>> parser.add_argument('--foo', action='store_true')\n >>> parser.add_argument('--bar', action='store_false')\n >>> parser.add_argument('--baz', action='store_false')\n >>> parser.parse_args('--foo --bar'.split())\n Namespace(foo=True, bar=False, baz=True)\n\n* 'append' - This stores a list, and appends each argument value to the\nlist. It is useful to allow an option to be specified multiple times.\nIf the default value is non-empty, the default elements will be present\nin the parsed value for the option, with any values from the\ncommand line appended after those default values. Example usage:\n\n >>> parser = argparse.ArgumentParser()\n >>> parser.add_argument('--foo', action='append')\n >>> parser.parse_args('--foo 1 --foo 2'.split())\n Namespace(foo=['1', '2'])\n\n* 'append_const' - This stores a list, and appends the value specified by\nthe const_ keyword argument to the list; note that the const_ keyword\nargument defaults to None. The 'append_const' action is typically\n\nQuestion: How do I make a command line flag that stores True when it is given?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "argparse-29",
+      "doc": "argparse",
+      "section": "The add_argument() method",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "ArgumentParser.add_argument(name or flags..., [action], [nargs], [const], [default], [type], [choices], [required], [help], [metavar], [dest])\n\nDefine how a single command-line argument should be parsed.  Each parameter\nhas its own more detailed description below, but in short they are:\n\n* name or flags - Either a name or a list of option strings, e.g. foo\n  or -f, --foo.\n\n* action_ - The basic type of action to be taken when this argument is\n  encountered at the command line.\n\n* nargs_ - The number of command-line arguments that should be consumed.\n\n* const_ - A constant value required by some action_ and nargs_ selections.\n\n* default_ - The value produced if the argument is absent from the\n  command line and if it is absent from the namespace object.\n\n* type_ - The type to which the command-line argument should be converted.\n\n* choices_ - A sequence of the allowable values for the argument."
+    },
+    {
+      "n": 2,
+      "id": "argparse-49",
+      "doc": "argparse",
+      "section": "required",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "In general, the argparse module assumes that flags like -f and --bar\nindicate *optional* arguments, which can always be omitted at the command line.\nTo make an option *required*, True can be specified for the required=\nkeyword argument to ArgumentParser.add_argument:\n\n>>> parser = argparse.ArgumentParser()\n>>> parser.add_argument('--foo', required=True)\n>>> parser.parse_args(['--foo', 'BAR'])\nNamespace(foo='BAR')\n>>> parser.parse_args([])\nusage: [-h] --foo FOO\n: error: the following arguments are required: --foo\n\nAs the example shows, if an option is marked as required,\nArgumentParser.parse_args will report an error if that option is not\npresent at the command line.\n\n Required options are generally considered bad form because users expect\n *options* to be *optional*, and thus they should be avoided when possible."
+    },
+    {
+      "n": 3,
+      "id": "argparse-32",
+      "doc": "argparse",
+      "section": "action",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "ArgumentParser objects associate command-line arguments with actions.  These\nactions can do just about anything with the command-line arguments associated with\nthem, though most actions simply add an attribute to the object returned by\nArgumentParser.parse_args.  The action keyword argument specifies\nhow the command-line arguments should be handled. The supplied actions are:\n\n* 'store' - This just stores the argument's value.  This is the default\naction. For example:\n\n >>> parser = argparse.ArgumentParser()\n >>> parser.add_argument('--foo')\n >>> parser.parse_args('--foo 1'.split())\n Namespace(foo='1')\n\n* 'store_const' - This stores the value specified by the const_ keyword\nargument; note that the const_ keyword argument defaults to None.  The\n'store_const' action is most commonly used with optional arguments that\nspecify some sort of flag.  For example:\n\n >>> parser = argparse.ArgumentParser()\n >>> parser.add_argument('--foo', action='store_const', const=42)\n >>> parser.parse_args(['--foo'])\n Namespace(foo=42)\n\n* 'store_true' and 'store_false' - These are special cases of\n'store_const' used for storing the values True and False\nrespectively.  In addition, they create default values of False and\nTrue respectively.  For example:"
+    },
+    {
+      "n": 4,
+      "id": "argparse-0",
+      "doc": "argparse",
+      "section": "argparse - Parser for command-line options, arguments and sub-commands",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "3.2\n\n**Source code:** Lib/argparse.py\n\n--------------\n\nThis page contains the API reference information. For a more gentle\nintroduction to Python command-line parsing, have a look at the\nargparse tutorial.\n\nThe argparse module makes it easy to write user-friendly command-line\ninterfaces. The program defines what arguments it requires, and argparse\nwill figure out how to parse those out of sys.argv.  The argparse\nmodule also automatically generates help and usage messages.  The module\nwill also issue errors when users give the program invalid arguments."
+    },
+    {
+      "n": 5,
+      "id": "argparse-33",
+      "doc": "argparse",
+      "section": "action",
+      "url": "https://docs.python.org/3.12/library/argparse.html",
+      "text": "* 'store_true' and 'store_false' - These are special cases of\n'store_const' used for storing the values True and False\nrespectively.  In addition, they create default values of False and\nTrue respectively.  For example:\n\n >>> parser = argparse.ArgumentParser()\n >>> parser.add_argument('--foo', action='store_true')\n >>> parser.add_argument('--bar', action='store_false')\n >>> parser.add_argument('--baz', action='store_false')\n >>> parser.parse_args('--foo --bar'.split())\n Namespace(foo=True, bar=False, baz=True)\n\n* 'append' - This stores a list, and appends each argument value to the\nlist. It is useful to allow an option to be specified multiple times.\nIf the default value is non-empty, the default elements will be present\nin the parsed value for the option, with any values from the\ncommand line appended after those default values. Example usage:\n\n >>> parser = argparse.ArgumentParser()\n >>> parser.add_argument('--foo', action='append')\n >>> parser.parse_args('--foo 1 --foo 2'.split())\n Namespace(foo=['1', '2'])\n\n* 'append_const' - This stores a list, and appends the value specified by\nthe const_ keyword argument to the list; note that the const_ keyword\nargument defaults to None. The 'append_const' action is typically"
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.425
+  },
+  "promptedAt": "2026-11-26T02:44:56.525Z",
+  "answer": "Use the 'store_true' action in add_argument. [5]\nThe 'store_true' action is a special case of 'store_const' that stores True. [5]\nIt also creates a default value of False when the flag is absent. [5]\nFor example, parser.add_argument('--foo', action='store_true') gives foo=True when --foo is passed. [5]",
+  "recordedAt": "2026-11-26T02:44:58.591Z",
+  "secondsToAnswer": 2
+}

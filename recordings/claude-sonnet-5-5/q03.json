@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q03",
+  "question": "Which exception is raised when a JSON document cannot be decoded?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] json / Exceptions\nJSONDecodeError(msg, doc, pos)\n\nSubclass of ValueError with the following additional attributes:\n\nmsg\n\n   The unformatted error message.\n\ndoc\n\n   The JSON document being parsed.\n\npos\n\n   The start index of *doc* where parsing failed.\n\nlineno\n\n   The line corresponding to *pos*.\n\ncolno\n\n   The column corresponding to *pos*.\n\n3.5\n\n[2] json / Encoders and Decoders\nfloat(num_str).  This can be used to use another datatype or parser for\nJSON floats (e.g. decimal.Decimal).\n\n*parse_int* is an optional function that will be called with the string of\nevery JSON int to be decoded.  By default, this is equivalent to\nint(num_str).  This can be used to use another datatype or parser for\nJSON integers (e.g. float).\n\n*parse_constant* is an optional function that will be called with one of the\nfollowing strings: '-Infinity', 'Infinity', 'NaN'.  This can be\nused to raise an exception if invalid JSON numbers are encountered.\n\nIf *strict* is false (True is the default), then control characters\nwill be allowed inside strings.  Control characters in this context are\nthose with character codes in the 0--31 range, including '\\t' (tab),\n'\\n', '\\r' and '\\0'.\n\nIf the data being deserialized is not a valid JSON document, a\nJSONDecodeError will be raised.\n\n3.6\n   All parameters are now keyword-only.\n\ndecode(s)\n\n   Return the Python representation of *s* (a str instance\n\n[3] json / Encoders and Decoders\nIf the data being deserialized is not a valid JSON document, a\nJSONDecodeError will be raised.\n\n3.6\n   All parameters are now keyword-only.\n\ndecode(s)\n\n   Return the Python representation of *s* (a str instance\n   containing a JSON document).\n\n   JSONDecodeError will be raised if the given JSON document is not\n   valid.\n\nraw_decode(s)\n\n   Decode a JSON document from *s* (a str beginning with a\n   JSON document) and return a 2-tuple of the Python representation\n   and the index in *s* where the document ended.\n\n   This can be used to decode a JSON document from a string that may have\n   extraneous data at the end.\n\nJSONEncoder(*, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, sort_keys=False, indent=None, separators=None, default=None)\n\nExtensible JSON encoder for Python data structures.\n\nSupports the following objects and types by default:\n\n+----------------------------------------+---------------+\n| Python                                 | JSON          |\n+========================================+===============+\n| dict                                   | object        |\n+----------------------------------------+---------------+\n| list, tuple                            | array         |\n+----------------------------------------+---------------+\n| str                                    | string        |\n+----------------------------------------+---------------+\n| int, float, int- & float-derived Enums | number        |\n+----------------------------------------+---------------+\n\n[4] json / Basic Usage\nUTF-8, UTF-16 or UTF-32.\n\nloads(s, *, cls=None, object_hook=None, parse_float=None, parse_int=None, parse_constant=None, object_pairs_hook=None, **kw)\n\nDeserialize *s* (a str, bytes or bytearray\ninstance containing a JSON document) to a Python object using this\nconversion table.\n\nThe other arguments have the same meaning as in load.\n\nIf the data being deserialized is not a valid JSON document, a\nJSONDecodeError will be raised.\n\n3.6\n   *s* can now be of type bytes or bytearray. The\n   input encoding should be UTF-8, UTF-16 or UTF-32.\n\n3.9\n   The keyword argument *encoding* has been removed.\n\n[5] json / Basic Usage\nthe integer string via the interpreter's integer string\n   conversion length limitation to help avoid denial\n   of service attacks.\n\n*parse_constant* is an optional function that will be called with one of the\nfollowing strings: '-Infinity', 'Infinity', 'NaN'.  This can be\nused to raise an exception if invalid JSON numbers are encountered.\n\n3.1\n   *parse_constant* doesn't get called on 'null', 'true', 'false' anymore.\n\nTo use a custom JSONDecoder subclass, specify it with the cls\nkwarg; otherwise JSONDecoder is used.  Additional keyword arguments\nwill be passed to the constructor of the class.\n\nIf the data being deserialized is not a valid JSON document, a\nJSONDecodeError will be raised.\n\n3.6\n   All optional parameters are now keyword-only.\n\n3.6\n   *fp* can now be a binary file. The input encoding should be\n   UTF-8, UTF-16 or UTF-32.\n\nloads(s, *, cls=None, object_hook=None, parse_float=None, parse_int=None, parse_constant=None, object_pairs_hook=None, **kw)\n\nDeserialize *s* (a str, bytes or bytearray\ninstance containing a JSON document) to a Python object using this\nconversion table.\n\nQuestion: Which exception is raised when a JSON document cannot be decoded?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "json-21",
+      "doc": "json",
+      "section": "Exceptions",
+      "url": "https://docs.python.org/3.12/library/json.html",
+      "text": "JSONDecodeError(msg, doc, pos)\n\nSubclass of ValueError with the following additional attributes:\n\nmsg\n\n   The unformatted error message.\n\ndoc\n\n   The JSON document being parsed.\n\npos\n\n   The start index of *doc* where parsing failed.\n\nlineno\n\n   The line corresponding to *pos*.\n\ncolno\n\n   The column corresponding to *pos*.\n\n3.5"
+    },
+    {
+      "n": 2,
+      "id": "json-14",
+      "doc": "json",
+      "section": "Encoders and Decoders",
+      "url": "https://docs.python.org/3.12/library/json.html",
+      "text": "float(num_str).  This can be used to use another datatype or parser for\nJSON floats (e.g. decimal.Decimal).\n\n*parse_int* is an optional function that will be called with the string of\nevery JSON int to be decoded.  By default, this is equivalent to\nint(num_str).  This can be used to use another datatype or parser for\nJSON integers (e.g. float).\n\n*parse_constant* is an optional function that will be called with one of the\nfollowing strings: '-Infinity', 'Infinity', 'NaN'.  This can be\nused to raise an exception if invalid JSON numbers are encountered.\n\nIf *strict* is false (True is the default), then control characters\nwill be allowed inside strings.  Control characters in this context are\nthose with character codes in the 0--31 range, including '\\t' (tab),\n'\\n', '\\r' and '\\0'.\n\nIf the data being deserialized is not a valid JSON document, a\nJSONDecodeError will be raised.\n\n3.6\n   All parameters are now keyword-only.\n\ndecode(s)\n\n   Return the Python representation of *s* (a str instance"
+    },
+    {
+      "n": 3,
+      "id": "json-15",
+      "doc": "json",
+      "section": "Encoders and Decoders",
+      "url": "https://docs.python.org/3.12/library/json.html",
+      "text": "If the data being deserialized is not a valid JSON document, a\nJSONDecodeError will be raised.\n\n3.6\n   All parameters are now keyword-only.\n\ndecode(s)\n\n   Return the Python representation of *s* (a str instance\n   containing a JSON document).\n\n   JSONDecodeError will be raised if the given JSON document is not\n   valid.\n\nraw_decode(s)\n\n   Decode a JSON document from *s* (a str beginning with a\n   JSON document) and return a 2-tuple of the Python representation\n   and the index in *s* where the document ended.\n\n   This can be used to decode a JSON document from a string that may have\n   extraneous data at the end.\n\nJSONEncoder(*, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, sort_keys=False, indent=None, separators=None, default=None)\n\nExtensible JSON encoder for Python data structures.\n\nSupports the following objects and types by default:\n\n+----------------------------------------+---------------+\n| Python                                 | JSON          |\n+========================================+===============+\n| dict                                   | object        |\n+----------------------------------------+---------------+\n| list, tuple                            | array         |\n+----------------------------------------+---------------+\n| str                                    | string        |\n+----------------------------------------+---------------+\n| int, float, int- & float-derived Enums | number        |\n+----------------------------------------+---------------+"
+    },
+    {
+      "n": 4,
+      "id": "json-11",
+      "doc": "json",
+      "section": "Basic Usage",
+      "url": "https://docs.python.org/3.12/library/json.html",
+      "text": "UTF-8, UTF-16 or UTF-32.\n\nloads(s, *, cls=None, object_hook=None, parse_float=None, parse_int=None, parse_constant=None, object_pairs_hook=None, **kw)\n\nDeserialize *s* (a str, bytes or bytearray\ninstance containing a JSON document) to a Python object using this\nconversion table.\n\nThe other arguments have the same meaning as in load.\n\nIf the data being deserialized is not a valid JSON document, a\nJSONDecodeError will be raised.\n\n3.6\n   *s* can now be of type bytes or bytearray. The\n   input encoding should be UTF-8, UTF-16 or UTF-32.\n\n3.9\n   The keyword argument *encoding* has been removed."
+    },
+    {
+      "n": 5,
+      "id": "json-10",
+      "doc": "json",
+      "section": "Basic Usage",
+      "url": "https://docs.python.org/3.12/library/json.html",
+      "text": "the integer string via the interpreter's integer string\n   conversion length limitation to help avoid denial\n   of service attacks.\n\n*parse_constant* is an optional function that will be called with one of the\nfollowing strings: '-Infinity', 'Infinity', 'NaN'.  This can be\nused to raise an exception if invalid JSON numbers are encountered.\n\n3.1\n   *parse_constant* doesn't get called on 'null', 'true', 'false' anymore.\n\nTo use a custom JSONDecoder subclass, specify it with the cls\nkwarg; otherwise JSONDecoder is used.  Additional keyword arguments\nwill be passed to the constructor of the class.\n\nIf the data being deserialized is not a valid JSON document, a\nJSONDecodeError will be raised.\n\n3.6\n   All optional parameters are now keyword-only.\n\n3.6\n   *fp* can now be a binary file. The input encoding should be\n   UTF-8, UTF-16 or UTF-32.\n\nloads(s, *, cls=None, object_hook=None, parse_float=None, parse_int=None, parse_constant=None, object_pairs_hook=None, **kw)\n\nDeserialize *s* (a str, bytes or bytearray\ninstance containing a JSON document) to a Python object using this\nconversion table."
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.568
+  },
+  "promptedAt": "2026-11-26T02:44:58.098Z",
+  "answer": "A JSONDecodeError is raised when the JSON document is not valid. [4]\nJSONDecodeError is a subclass of ValueError. [1]",
+  "recordedAt": "2026-11-26T02:44:59.957Z",
+  "secondsToAnswer": 2
+}

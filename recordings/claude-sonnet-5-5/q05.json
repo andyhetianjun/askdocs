@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q05",
+  "question": "How do I send an email with smtplib?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] hashlib / Hash Objects\nequivalent to m.update(a+b).\n\nhash.digest()\n\nReturn the digest of the data passed to the update method so far.\nThis is a bytes object of size digest_size which may contain bytes in\nthe whole range from 0 to 255.\n\nhash.hexdigest()\n\nLike digest except the digest is returned as a string object of\ndouble length, containing only hexadecimal digits.  This may be used to\nexchange the value safely in email or other non-binary environments.\n\nhash.copy()\n\nReturn a copy (\"clone\") of the hash object.  This can be used to efficiently\ncompute the digests of data sharing a common initial substring.\n\n[2] time / Functions\n|           | exists). Deprecated. [1]_                      |       |\n+-----------+------------------------------------------------+-------+\n| %%    | A literal '%' character.                   |       |\n+-----------+------------------------------------------------+-------+\n\nNotes:\n\n(1)\n    The %f format directive only applies to strptime,\n    not to strftime. However, see also datetime.datetime.strptime and\n    datetime.datetime.strftime where the %f format directive\n    applies to microseconds.\n\n(2)\n   When used with the strptime function, the %p directive only affects\n   the output hour field if the %I directive is used to parse the hour.\n\n(3)\n   The range really is 0 to 61; value 60 is valid in\n   timestamps representing leap seconds and value 61 is supported\n   for historical reasons.\n\n(4)\n   When used with the strptime function, %U and %W are only used in\n   calculations when the day of the week and the year are specified.\n\nHere is an example, a format for dates compatible with that specified  in the\n2822 Internet email standard.  [1]_ :\n\n   >>> from time import gmtime, strftime\n   >>> strftime(\"%a, %d %b %Y %H:%M:%S +0000\", gmtime())\n\n[3] time / Functions\nHere is an example, a format for dates compatible with that specified  in the\n2822 Internet email standard.  [1]_ :\n\n   >>> from time import gmtime, strftime\n   >>> strftime(\"%a, %d %b %Y %H:%M:%S +0000\", gmtime())\n   'Thu, 28 Jun 2001 14:17:15 +0000'\n\nAdditional directives may be supported on certain platforms, but only the\nones listed here have a meaning standardized by ANSI C.  To see the full set\nof format codes supported on your platform, consult the strftime(3)\ndocumentation.\n\nOn some platforms, an optional field width and precision specification can\nimmediately follow the initial '%' of a directive in the following order;\nthis is also not portable. The field width is normally 2 except for %j where\nit is 3.\n\nsingle: % (percent); datetime format\n\nstrptime(string[, format])\n\nParse a string representing a time according to a format.  The return value\nis a struct_time as returned by gmtime or\nlocaltime.\n\nThe *format* parameter uses the same directives as those used by\n\n[4] hashlib / SHAKE variable length digests\nshake_128([, data], *, usedforsecurity=True)\nshake_256([, data], *, usedforsecurity=True)\n\nThe shake_128 and shake_256 algorithms provide variable\nlength digests with length_in_bits//2 up to 128 or 256 bits of security.\nAs such, their digest methods require a length. Maximum length is not limited\nby the SHAKE algorithm.\n\nshake.digest(length)\n\nReturn the digest of the data passed to the hash.update method so far.\nThis is a bytes object of size *length* which may contain bytes in\nthe whole range from 0 to 255.\n\nshake.hexdigest(length)\n\nLike digest except the digest is returned as a string object of\ndouble length, containing only hexadecimal digits.  This may be used to\nexchange the value in email or other non-binary environments.\n\nExample use:\n\n>>> h = hashlib.shake_256(b'Nobody inspects the spammish repetition')\n>>> h.hexdigest(20)\n'44709d6fcb83d92a76dcb0b668c98e1b1d3dafe7'\n\n[5] logging / logging - Logging facility for Python\noften based on command-line arguments or application configuration. In most\ncases, like the one above, only the root logger needs to be so configured, since\nall the lower level loggers at module level eventually forward their messages to\nits handlers.  logging.basicConfig provides a quick way to configure\nthe root logger that handles many use cases.\n\nThe module provides a lot of functionality and flexibility.  If you are\nunfamiliar with logging, the best way to get to grips with it is to view the\ntutorials (**see the links above and on the right**).\n\nThe basic classes defined by the module, together with their attributes and\nmethods, are listed in the sections below.\n\n* Loggers expose the interface that application code directly uses.\n* Handlers send the log records (created by loggers) to the appropriate\ndestination.\n* Filters provide a finer grained facility for determining which log records\nto output.\n* Formatters specify the layout of log records in the final output.\n\nQuestion: How do I send an email with smtplib?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "hashlib-8",
+      "doc": "hashlib",
+      "section": "Hash Objects",
+      "url": "https://docs.python.org/3.12/library/hashlib.html",
+      "text": "equivalent to m.update(a+b).\n\nhash.digest()\n\nReturn the digest of the data passed to the update method so far.\nThis is a bytes object of size digest_size which may contain bytes in\nthe whole range from 0 to 255.\n\nhash.hexdigest()\n\nLike digest except the digest is returned as a string object of\ndouble length, containing only hexadecimal digits.  This may be used to\nexchange the value safely in email or other non-binary environments.\n\nhash.copy()\n\nReturn a copy (\"clone\") of the hash object.  This can be used to efficiently\ncompute the digests of data sharing a common initial substring."
+    },
+    {
+      "n": 2,
+      "id": "time-20",
+      "doc": "time",
+      "section": "Functions",
+      "url": "https://docs.python.org/3.12/library/time.html",
+      "text": "|           | exists). Deprecated. [1]_                      |       |\n+-----------+------------------------------------------------+-------+\n| %%    | A literal '%' character.                   |       |\n+-----------+------------------------------------------------+-------+\n\nNotes:\n\n(1)\n    The %f format directive only applies to strptime,\n    not to strftime. However, see also datetime.datetime.strptime and\n    datetime.datetime.strftime where the %f format directive\n    applies to microseconds.\n\n(2)\n   When used with the strptime function, the %p directive only affects\n   the output hour field if the %I directive is used to parse the hour.\n\n(3)\n   The range really is 0 to 61; value 60 is valid in\n   timestamps representing leap seconds and value 61 is supported\n   for historical reasons.\n\n(4)\n   When used with the strptime function, %U and %W are only used in\n   calculations when the day of the week and the year are specified.\n\nHere is an example, a format for dates compatible with that specified  in the\n2822 Internet email standard.  [1]_ :\n\n   >>> from time import gmtime, strftime\n   >>> strftime(\"%a, %d %b %Y %H:%M:%S +0000\", gmtime())"
+    },
+    {
+      "n": 3,
+      "id": "time-21",
+      "doc": "time",
+      "section": "Functions",
+      "url": "https://docs.python.org/3.12/library/time.html",
+      "text": "Here is an example, a format for dates compatible with that specified  in the\n2822 Internet email standard.  [1]_ :\n\n   >>> from time import gmtime, strftime\n   >>> strftime(\"%a, %d %b %Y %H:%M:%S +0000\", gmtime())\n   'Thu, 28 Jun 2001 14:17:15 +0000'\n\nAdditional directives may be supported on certain platforms, but only the\nones listed here have a meaning standardized by ANSI C.  To see the full set\nof format codes supported on your platform, consult the strftime(3)\ndocumentation.\n\nOn some platforms, an optional field width and precision specification can\nimmediately follow the initial '%' of a directive in the following order;\nthis is also not portable. The field width is normally 2 except for %j where\nit is 3.\n\nsingle: % (percent); datetime format\n\nstrptime(string[, format])\n\nParse a string representing a time according to a format.  The return value\nis a struct_time as returned by gmtime or\nlocaltime.\n\nThe *format* parameter uses the same directives as those used by"
+    },
+    {
+      "n": 4,
+      "id": "hashlib-9",
+      "doc": "hashlib",
+      "section": "SHAKE variable length digests",
+      "url": "https://docs.python.org/3.12/library/hashlib.html",
+      "text": "shake_128([, data], *, usedforsecurity=True)\nshake_256([, data], *, usedforsecurity=True)\n\nThe shake_128 and shake_256 algorithms provide variable\nlength digests with length_in_bits//2 up to 128 or 256 bits of security.\nAs such, their digest methods require a length. Maximum length is not limited\nby the SHAKE algorithm.\n\nshake.digest(length)\n\nReturn the digest of the data passed to the hash.update method so far.\nThis is a bytes object of size *length* which may contain bytes in\nthe whole range from 0 to 255.\n\nshake.hexdigest(length)\n\nLike digest except the digest is returned as a string object of\ndouble length, containing only hexadecimal digits.  This may be used to\nexchange the value in email or other non-binary environments.\n\nExample use:\n\n>>> h = hashlib.shake_256(b'Nobody inspects the spammish repetition')\n>>> h.hexdigest(20)\n'44709d6fcb83d92a76dcb0b668c98e1b1d3dafe7'"
+    },
+    {
+      "n": 5,
+      "id": "logging-2",
+      "doc": "logging",
+      "section": "logging - Logging facility for Python",
+      "url": "https://docs.python.org/3.12/library/logging.html",
+      "text": "often based on command-line arguments or application configuration. In most\ncases, like the one above, only the root logger needs to be so configured, since\nall the lower level loggers at module level eventually forward their messages to\nits handlers.  logging.basicConfig provides a quick way to configure\nthe root logger that handles many use cases.\n\nThe module provides a lot of functionality and flexibility.  If you are\nunfamiliar with logging, the best way to get to grips with it is to view the\ntutorials (**see the links above and on the right**).\n\nThe basic classes defined by the module, together with their attributes and\nmethods, are listed in the sections below.\n\n* Loggers expose the interface that application code directly uses.\n* Handlers send the log records (created by loggers) to the appropriate\ndestination.\n* Filters provide a finer grained facility for determining which log records\nto output.\n* Formatters specify the layout of log records in the final output."
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.351
+  },
+  "promptedAt": "2026-11-26T02:45:00.483Z",
+  "answer": "I couldn't find this in the docs.",
+  "recordedAt": "2026-11-26T02:45:02.934Z",
+  "secondsToAnswer": 2
+}

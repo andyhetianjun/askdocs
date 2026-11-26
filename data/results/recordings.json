@@ -1,0 +1,1421 @@
+{
+  "summary": {
+    "model": "claude-sonnet-5-5",
+    "verifier": "lexical overlap",
+    "recorded": 42,
+    "totalCases": 42,
+    "answerable": {
+      "recorded": 30,
+      "answered": 28,
+      "refused": 2,
+      "sentences": 134,
+      "supported": 107,
+      "allSupported": 12,
+      "citationsKept": 107,
+      "citationsKeptRightDoc": 106
+    },
+    "unanswerable": {
+      "recorded": 12,
+      "refused": 12,
+      "answered": 0,
+      "answeredWithSupportedSentence": 0
+    }
+  },
+  "cases": [
+    {
+      "caseId": "q01",
+      "question": "How do I make a command line flag that stores True when it is given?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use the 'store_true' action in add_argument.",
+          "cited": [
+            5
+          ],
+          "status": "supported",
+          "score": 0.75
+        },
+        {
+          "text": "The 'store_true' action is a special case of 'store_const' that stores True.",
+          "cited": [
+            5
+          ],
+          "status": "supported",
+          "score": 0.8333333333333334
+        },
+        {
+          "text": "It also creates a default value of False when the flag is absent.",
+          "cited": [
+            5
+          ],
+          "status": "supported",
+          "score": 0.5535714285714286
+        },
+        {
+          "text": "For example, parser.add_argument('--foo', action='store_true') gives foo=True when --foo is passed.",
+          "cited": [
+            5
+          ],
+          "status": "supported",
+          "score": 0.7636363636363637
+        }
+      ]
+    },
+    {
+      "caseId": "q02",
+      "question": "How do I find the time difference between two dates?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Subtract one date from the other.",
+          "cited": [
+            2
+          ],
+          "status": "unsupported",
+          "score": 0.1875
+        },
+        {
+          "text": "The result of date1 - date2 is a timedelta.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.9166666666666666
+        },
+        {
+          "text": "A timedelta represents a duration, the difference between two datetime or date instances.",
+          "cited": [
+            5
+          ],
+          "status": "supported",
+          "score": 0.96875
+        }
+      ]
+    },
+    {
+      "caseId": "q03",
+      "question": "Which exception is raised when a JSON document cannot be decoded?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "A JSONDecodeError is raised when the JSON document is not valid.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.9
+        },
+        {
+          "text": "JSONDecodeError is a subclass of ValueError.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.875
+        }
+      ]
+    },
+    {
+      "caseId": "q04",
+      "question": "How do I run coroutines at the same time with asyncio.gather?",
+      "answerable": false,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q05",
+      "question": "How do I send an email with smtplib?",
+      "answerable": false,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q06",
+      "question": "How do I limit an argument to a fixed set of allowed values?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Pass a sequence as the choices keyword argument to add_argument.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.725
+        },
+        {
+          "text": "The parser then checks each value against that sequence.",
+          "cited": [
+            4
+          ],
+          "status": "unsupported",
+          "score": 0.375
+        },
+        {
+          "text": "It shows an error if the value is not one of the allowed choices.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.5773809523809523
+        },
+        {
+          "text": "For example, choices=['rock', 'paper', 'scissors'] allows only those three moves.",
+          "cited": [
+            4
+          ],
+          "status": "unsupported",
+          "score": 0.4583333333333333
+        },
+        {
+          "text": "The choices check runs after any type conversion.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.5773809523809523
+        },
+        {
+          "text": "So the type of the choices should match the type you set.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.8
+        }
+      ]
+    },
+    {
+      "caseId": "q07",
+      "question": "How do I make an HTTP GET request with urllib?",
+      "answerable": false,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q08",
+      "question": "How do I find all the adverbs ending in ly in a sentence?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use re.findall with the pattern r\"\\w+ly\\b\" to get every adverb ending in ly.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.53125
+        },
+        {
+          "text": "For the example sentence, it returns 'carefully' and 'quickly'.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.5125
+        },
+        {
+          "text": "Use re.finditer instead if you also want the position of each adverb.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.5982142857142857
+        }
+      ]
+    },
+    {
+      "caseId": "q09",
+      "question": "How can one thread wait until another thread signals that something happened?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "One thread can signal an event and other threads wait for it.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "An event manages an internal flag that starts out false.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.6607142857142857
+        },
+        {
+          "text": "The Event.wait method blocks until the flag is true.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "The Event.set method sets the flag to true and wakes all waiting threads.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.7861111111111112
+        },
+        {
+          "text": "A thread can also use a condition variable and call Condition.wait.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.8333333333333334
+        },
+        {
+          "text": "Condition.wait blocks until another thread calls notify or notify_all.",
+          "cited": [
+            3
+          ],
+          "status": "unsupported",
+          "score": 0.84375
+        },
+        {
+          "text": "The waiting thread must hold the condition's lock when it calls wait.",
+          "cited": [
+            3
+          ],
+          "status": "unsupported",
+          "score": 0.46875
+        }
+      ]
+    },
+    {
+      "caseId": "q10",
+      "question": "Which command line options does python -m json.tool accept?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "It accepts an optional infile argument, which is the JSON file to validate or pretty-print.",
+          "cited": [
+            2
+          ],
+          "status": "unsupported",
+          "score": 0.3645833333333333
+        },
+        {
+          "text": "It accepts an optional outfile argument, which is where the output is written.",
+          "cited": [
+            2
+          ],
+          "status": "unsupported",
+          "score": 0.25
+        },
+        {
+          "text": "Without infile it reads from sys.stdin.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.7250000000000001
+        },
+        {
+          "text": "Without outfile it writes to sys.stdout.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.7875000000000001
+        },
+        {
+          "text": "The --sort-keys option sorts dictionary output alphabetically by key.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.8214285714285714
+        },
+        {
+          "text": "The --no-ensure-ascii option disables escaping of non-ascii characters.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.9375
+        },
+        {
+          "text": "The --json-lines option parses every input line as a separate JSON object.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.9444444444444444
+        },
+        {
+          "text": "The --indent, --tab, --no-indent and --compact options are mutually exclusive whitespace controls.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.9166666666666666
+        },
+        {
+          "text": "The -h and --help options show the help message.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.875
+        }
+      ]
+    },
+    {
+      "caseId": "q11",
+      "question": "Which format code gives the day of the year as a zero-padded number?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "The %j format code gives the day of the year as a zero-padded decimal number.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.625
+        }
+      ]
+    },
+    {
+      "caseId": "q12",
+      "question": "How do I turn a Python dict into a JSON string with indentation?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "JSONEncoder takes an indent parameter, which defaults to None.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.675
+        },
+        {
+          "text": "The encode method returns a JSON string for a Python data structure.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.8928571428571428
+        },
+        {
+          "text": "A Python dict is encoded as a JSON object.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.6000000000000001
+        }
+      ]
+    },
+    {
+      "caseId": "q13",
+      "question": "How do I stop two threads from changing shared data at the same moment?",
+      "answerable": true,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q14",
+      "question": "How do I create a window with a button using tkinter?",
+      "answerable": false,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q15",
+      "question": "How do I get the file extension and the stem from a path object?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use the suffix property to get the file extension of the final path component.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.7053571428571428
+        },
+        {
+          "text": "For example, PurePosixPath('my/library/setup.py').suffix gives '.py'.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.7395833333333334
+        },
+        {
+          "text": "Use the stem property to get the final path component without its suffix.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.7053571428571428
+        },
+        {
+          "text": "For example, PurePosixPath('my/library.tar').stem gives 'library'.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.7053571428571428
+        },
+        {
+          "text": "Zip file Path objects also have suffix and stem properties, added in 3.11.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.6204545454545454
+        }
+      ]
+    },
+    {
+      "caseId": "q16",
+      "question": "How can I count how many times each item appears in a list?",
+      "answerable": true,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q17",
+      "question": "How do I get a dictionary that creates a default value for missing keys?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use collections.defaultdict.",
+          "cited": [
+            4
+          ],
+          "status": "unsupported",
+          "score": 0.375
+        },
+        {
+          "text": "It is a dictionary-like subclass of the built-in dict.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.9375
+        },
+        {
+          "text": "Its first argument sets the default_factory attribute.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.7250000000000001
+        },
+        {
+          "text": "If default_factory is not None, it is called without arguments to provide a default value for a missing key.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.8818181818181818
+        },
+        {
+          "text": "That value is inserted in the dictionary for the key and returned.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "For example, defaultdict(set) builds a dictionary of sets.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.6
+        }
+      ]
+    },
+    {
+      "caseId": "q18",
+      "question": "How do I set the rounding mode for exact decimal arithmetic?",
+      "answerable": false,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q19",
+      "question": "What are the numeric values of the standard logging levels?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "NOTSET has the numeric value 0.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.6458333333333334
+        },
+        {
+          "text": "DEBUG has the numeric value 10.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.6625000000000001
+        },
+        {
+          "text": "INFO has the numeric value 20.",
+          "cited": [
+            5
+          ],
+          "status": "supported",
+          "score": 0.6625000000000001
+        }
+      ]
+    },
+    {
+      "caseId": "q20",
+      "question": "How do I replace a shell pipeline like dmesg piped into grep?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Start the first command with Popen and stdout=PIPE.",
+          "cited": [
+            1
+          ],
+          "status": "unsupported",
+          "score": 0.425
+        },
+        {
+          "text": "Start the second command with Popen and stdin=p1.stdout.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.5119047619047619
+        },
+        {
+          "text": "Call p1.stdout.close() after starting the second process.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.6696428571428571
+        },
+        {
+          "text": "This lets the first process receive a SIGPIPE if the second one exits.",
+          "cited": [
+            1
+          ],
+          "status": "unsupported",
+          "score": 0.3169642857142857
+        },
+        {
+          "text": "Then read the result with p2.communicate().",
+          "cited": [
+            0,
+            1
+          ],
+          "status": "bad_citation",
+          "score": 0
+        },
+        {
+          "text": "For trusted input, you can instead call check_output(\"dmesg | grep hda\", shell=True).",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.8416666666666667
+        }
+      ]
+    },
+    {
+      "caseId": "q21",
+      "question": "How do I avoid SQL injection when inserting values into a query?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Do not build queries with Python string operations, because they are vulnerable to SQL injection.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.6361111111111111
+        },
+        {
+          "text": "Use the DB-API's parameter substitution instead.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.9375
+        },
+        {
+          "text": "Put a placeholder in the query string and pass the actual values as a tuple in the second argument of Cursor.execute.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.7386363636363636
+        },
+        {
+          "text": "An SQL statement may use qmark style (question marks) or named style placeholders.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.8888888888888888
+        },
+        {
+          "text": "Always use placeholders instead of string formatting to bind Python values to SQL statements.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "caseId": "q22",
+      "question": "How do I parse an XML file with ElementTree?",
+      "answerable": false,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q23",
+      "question": "How do I create a tuple subclass whose fields have names?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use the namedtuple factory function from collections.",
+          "cited": [
+            1
+          ],
+          "status": "unsupported",
+          "score": 0.1875
+        },
+        {
+          "text": "It returns a new tuple subclass with the name you give it.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.775
+        },
+        {
+          "text": "Its fields can be read by attribute lookup as well as by index.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.725
+        },
+        {
+          "text": "You pass the field names as a sequence of strings such as ['x', 'y'].",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.775
+        },
+        {
+          "text": "You can also pass them as one string separated by spaces or commas, such as 'x y'.",
+          "cited": [
+            1
+          ],
+          "status": "unsupported",
+          "score": 0.4166666666666667
+        }
+      ]
+    },
+    {
+      "caseId": "q24",
+      "question": "How do I give a dataclass field a list as its default value?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use field with default_factory set to list.",
+          "cited": [
+            3
+          ],
+          "status": "supported",
+          "score": 0.6458333333333334
+        },
+        {
+          "text": "For example, write mylist: list = field(default_factory=list).",
+          "cited": [
+            3
+          ],
+          "status": "supported",
+          "score": 0.8095238095238094
+        },
+        {
+          "text": "The default_factory must be a zero-argument callable that is called when a default value is needed.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.96875
+        },
+        {
+          "text": "Each new instance then gets its own list.",
+          "cited": [
+            4
+          ],
+          "status": "unsupported",
+          "score": 0.425
+        },
+        {
+          "text": "Do not assign a bare list as the default, because unhashable defaults are not allowed.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.6555555555555557
+        }
+      ]
+    },
+    {
+      "caseId": "q25",
+      "question": "Who won the football World Cup in 2018?",
+      "answerable": false,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q26",
+      "question": "How can an argument accept several values on the command line?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use the nargs keyword argument of add_argument().",
+          "cited": [
+            3
+          ],
+          "status": "supported",
+          "score": 0.9166666666666666
+        },
+        {
+          "text": "It associates a different number of command-line arguments with a single action.",
+          "cited": [
+            3
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "Setting nargs to an integer N gathers N arguments into a list.",
+          "cited": [
+            3
+          ],
+          "status": "supported",
+          "score": 0.5
+        },
+        {
+          "text": "For example, nargs=2 on --foo produced foo=['a', 'b'].",
+          "cited": [
+            3
+          ],
+          "status": "supported",
+          "score": 0.75
+        }
+      ]
+    },
+    {
+      "caseId": "q27",
+      "question": "What is the best way to keep a priority queue with a heap when tasks have equal priority?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Store each entry as a 3-element list of the priority, an entry count, and the task.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.8229166666666666
+        },
+        {
+          "text": "The entry count is a tie-breaker, so tasks with the same priority come out in the order they were added.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.7613636363636364
+        },
+        {
+          "text": "Entry counts are never equal, so the comparison never has to compare two tasks directly.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.7136363636363636
+        },
+        {
+          "text": "A wrapper class that compares only the priority field is another solution for tasks that cannot be compared.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.6886363636363636
+        }
+      ]
+    },
+    {
+      "caseId": "q28",
+      "question": "How do I map a function over a list using a multiprocessing pool?",
+      "answerable": false,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q29",
+      "question": "How do I open a TCP connection to a server with a socket?",
+      "answerable": false,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q30",
+      "question": "How do I run an external program and capture what it prints?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use subprocess.run with capture_output=True to capture what the program prints.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.6190476190476191
+        },
+        {
+          "text": "The result is a CompletedProcess whose stdout holds the output.",
+          "cited": [
+            3
+          ],
+          "status": "unsupported",
+          "score": 0.375
+        },
+        {
+          "text": "By default the output is bytes.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.75
+        },
+        {
+          "text": "Set text to true to get text instead.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.55
+        },
+        {
+          "text": "The check_output function also returns encoded bytes by default.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.7916666666666666
+        },
+        {
+          "text": "To capture standard error too, pass stderr=subprocess.STDOUT.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.7053571428571428
+        }
+      ]
+    },
+    {
+      "caseId": "q31",
+      "question": "What does the VERBOSE flag change in a regular expression?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "The VERBOSE flag lets you write regular expressions that look nicer and are more readable.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.8694444444444445
+        },
+        {
+          "text": "It lets you visually separate logical sections of the pattern and add comments.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.8705357142857143
+        },
+        {
+          "text": "Whitespace within the pattern is ignored.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "The exception is whitespace in a character class, or preceded by an unescaped backslash.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.8095238095238094
+        }
+      ]
+    },
+    {
+      "caseId": "q32",
+      "question": "How do I build a path by joining a directory and a file name with the slash operator?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use the slash operator to join a path object and a child name.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.7261904761904762
+        },
+        {
+          "text": "It works like os.path.join.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.7875000000000001
+        },
+        {
+          "text": "For example, PurePath('/etc') / 'init.d' / 'apache2' gives PurePosixPath('/etc/init.d/apache2').",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.8416666666666667
+        },
+        {
+          "text": "If the right-hand part is an absolute path, the previous path is ignored.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.6116071428571428
+        }
+      ]
+    },
+    {
+      "caseId": "q33",
+      "question": "How do I limit a deque to the last few items?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Pass a maxlen argument when you create the deque.",
+          "cited": [
+            3
+          ],
+          "status": "unsupported",
+          "score": 0.30000000000000004
+        },
+        {
+          "text": "If maxlen is not specified or is None, the deque may grow to an arbitrary length.",
+          "cited": [
+            3
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "Otherwise, the deque is bounded to the specified maximum length.",
+          "cited": [
+            3
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "Once a bounded deque is full, adding new items discards a corresponding number of items from the opposite end.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.7596153846153846
+        },
+        {
+          "text": "This keeps only the most recent items.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.7250000000000001
+        }
+      ]
+    },
+    {
+      "caseId": "q34",
+      "question": "How can I fix some arguments of a function in advance and get a new callable?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use functools.partial to fix some arguments in advance.",
+          "cited": [
+            1
+          ],
+          "status": "unsupported",
+          "score": 0.5
+        },
+        {
+          "text": "It returns a new partial object that behaves like the function called with the frozen positional and keyword arguments.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.8011363636363636
+        },
+        {
+          "text": "Extra arguments given at call time are appended to the frozen positional arguments.",
+          "cited": [
+            1
+          ],
+          "status": "unsupported",
+          "score": 0.4479166666666667
+        },
+        {
+          "text": "Extra keyword arguments extend and override the frozen keywords.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.6190476190476191
+        },
+        {
+          "text": "For example, partial(int, base=2) makes a callable that converts base 2 strings to integers.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.7388888888888889
+        }
+      ]
+    },
+    {
+      "caseId": "q35",
+      "question": "What is a good recipe for banana bread?",
+      "answerable": false,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q36",
+      "question": "What is the capital of Australia?",
+      "answerable": false,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q37",
+      "question": "How do I recursively copy a whole directory tree?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use shutil.copytree(src, dst) to recursively copy a whole directory tree.",
+          "cited": [
+            1
+          ],
+          "status": "unsupported",
+          "score": 0.7916666666666666
+        },
+        {
+          "text": "It copies the tree rooted at src to a directory named dst and returns the destination directory.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.9722222222222222
+        },
+        {
+          "text": "All intermediate directories needed to contain dst are also created by default.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "Individual files are copied using shutil.copy2.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "If dirs_exist_ok is false (the default) and dst already exists, a FileExistsError is raised.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "If dirs_exist_ok is true, copying continues into existing directories and overwrites files in the dst tree.",
+          "cited": [
+            2
+          ],
+          "status": "supported",
+          "score": 0.7861111111111112
+        },
+        {
+          "text": "You can pass an ignore callable to skip some names, and ignore_patterns can build one from glob-style patterns.",
+          "cited": [
+            2
+          ],
+          "status": "unsupported",
+          "score": 0.48295454545454547
+        }
+      ]
+    },
+    {
+      "caseId": "q38",
+      "question": "How do I read the rows of a CSV file as dictionaries keyed by the header?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use the DictReader class to read rows as dictionaries.",
+          "cited": [
+            3
+          ],
+          "status": "unsupported",
+          "score": 0.44999999999999996
+        },
+        {
+          "text": "It maps the information in each row to a dict.",
+          "cited": [
+            5
+          ],
+          "status": "supported",
+          "score": 0.7875000000000001
+        },
+        {
+          "text": "If you omit the fieldnames parameter, the values in the first row are used as the fieldnames.",
+          "cited": [
+            5
+          ],
+          "status": "supported",
+          "score": 0.7678571428571428
+        },
+        {
+          "text": "Those header values are left out of the results.",
+          "cited": [
+            5
+          ],
+          "status": "unsupported",
+          "score": 0.25
+        },
+        {
+          "text": "You can loop over the reader and index each row by header name, such as row['first_name'].",
+          "cited": [
+            1
+          ],
+          "status": "unsupported",
+          "score": 0.3659090909090909
+        }
+      ]
+    },
+    {
+      "caseId": "q39",
+      "question": "How do I parse command line arguments with getopt?",
+      "answerable": false,
+      "abstained": true,
+      "sentences": []
+    },
+    {
+      "caseId": "q40",
+      "question": "How do I compute the SHA-256 digest of a large file in chunks?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use sha256 to create a SHA-256 hash object.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "You can feed that object with bytes using the update method.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "Calling update more than once is equivalent to hashing the joined data.",
+          "cited": [
+            5
+          ],
+          "status": "unsupported",
+          "score": 0.28125
+        },
+        {
+          "text": "Ask for the result with digest() or hexdigest() when you are done.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.5125
+        },
+        {
+          "text": "hexdigest() returns the digest as a string of hexadecimal digits.",
+          "cited": [
+            5
+          ],
+          "status": "supported",
+          "score": 0.85
+        },
+        {
+          "text": "Alternatively, file_digest(fileobj, \"sha256\") returns a digest object updated with the contents of a binary file.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.7818181818181817
+        },
+        {
+          "text": "The fileobj must be opened for reading in binary mode.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "caseId": "q41",
+      "question": "How do I list the files in a folder that match a glob pattern?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Use Path.glob with a relative pattern.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.9166666666666666
+        },
+        {
+          "text": "It yields all matching files of any kind in the directory.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.9166666666666666
+        },
+        {
+          "text": "For example, Path('.').glob('*.py') matches Python files in the current directory.",
+          "cited": [
+            1
+          ],
+          "status": "unsupported",
+          "score": 0.4791666666666667
+        },
+        {
+          "text": "Patterns are the same as for fnmatch.",
+          "cited": [
+            3
+          ],
+          "status": "supported",
+          "score": 1
+        },
+        {
+          "text": "The \"**\" pattern also matches subdirectories recursively.",
+          "cited": [
+            3
+          ],
+          "status": "supported",
+          "score": 0.6625000000000001
+        },
+        {
+          "text": "Path.rglob searches recursively, as if \"**/\" were added in front of the pattern.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.6696428571428571
+        }
+      ]
+    },
+    {
+      "caseId": "q42",
+      "question": "How can I make instances of a dataclass read-only?",
+      "answerable": true,
+      "abstained": false,
+      "sentences": [
+        {
+          "text": "Set frozen=True in the dataclass decorator to make instances read-only.",
+          "cited": [
+            1
+          ],
+          "status": "unsupported",
+          "score": 0.6458333333333334
+        },
+        {
+          "text": "With frozen=True, assigning to fields raises an exception.",
+          "cited": [
+            1
+          ],
+          "status": "unsupported",
+          "score": 0.725
+        },
+        {
+          "text": "Frozen instances emulate read-only behavior.",
+          "cited": [
+            1
+          ],
+          "status": "supported",
+          "score": 0.775
+        },
+        {
+          "text": "The exception raised is FrozenInstanceError, a subclass of AttributeError.",
+          "cited": [
+            4
+          ],
+          "status": "supported",
+          "score": 0.6625000000000001
+        }
+      ]
+    }
+  ]
+}

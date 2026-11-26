@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q35",
+  "question": "What is a good recipe for banana bread?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] contextlib / Examples and Recipes\nThis section describes some examples and recipes for making effective use of\nthe tools provided by contextlib.\n\n[2] sqlite3 / Connection objects\n# disable extension loading again\n      con.enable_load_extension(False)\n\n      # example from SQLite wiki\n      con.execute(\"CREATE VIRTUAL TABLE recipe USING fts3(name, ingredients)\")\n      con.executescript(\"\"\"\n          INSERT INTO recipe (name, ingredients) VALUES('broccoli stew', 'broccoli peppers cheese tomatoes');\n          INSERT INTO recipe (name, ingredients) VALUES('pumpkin stew', 'pumpkin onions garlic celery');\n          INSERT INTO recipe (name, ingredients) VALUES('broccoli pie', 'broccoli cheese onions flour');\n          INSERT INTO recipe (name, ingredients) VALUES('pumpkin pie', 'pumpkin sugar flour butter');\n          \"\"\")\n      for row in con.execute(\"SELECT rowid, name, ingredients FROM recipe WHERE name MATCH 'pie'\"):\n          print(row)\n\nload_extension(path, /, *, entrypoint=None)\n\n   Load an SQLite extension from a shared library.\n   Enable extension loading with enable_load_extension before\n   calling this method.\n\n   :param str path:\n\n      The path to the SQLite extension.\n\n   :param entrypoint:\n\n      Entry point name.\n      If None (the default),\n      SQLite will come up with an entry point name of its own;\n      see the SQLite docs Loading an Extension for details.\n\n   :type entrypoint: str | None\n\n3.2\n\n3.10\n      Added the sqlite3.load_extension auditing event.\n\n3.12\n      Added the *entrypoint* parameter.\n\niterdump\n\n[3] itertools / Itertools Recipes\n['A', 'B', 'C', 'D', 'A', 'B']\n >>> list(unique_justseen('ABBCcAD', str.casefold))\n ['A', 'B', 'C', 'A', 'D']\n >>> list(unique_justseen('ABBcCAD', str.casefold))\n ['A', 'B', 'c', 'A', 'D']\n >>> # Verify that the input is consumed lazily\n >>> input_iterator = iter('AAAABBBCCDAABBB')\n >>> output_iterator = unique_justseen(input_iterator)\n >>> next(output_iterator)\n 'A'\n >>> ''.join(input_iterator)\n 'AAABBBCCDAABBB'\n\n >>> list(unique([[1, 2], [3, 4], [1, 2]]))\n [[1, 2], [3, 4]]\n >>> list(unique('ABBcCAD', str.casefold))\n ['A', 'B', 'c', 'D']\n >>> list(unique('ABBcCAD', str.casefold, reverse=True))\n ['D', 'c', 'B', 'A']\n\n >>> d = dict(a=1, b=2, c=3)\n >>> it = iter_except(d.popitem, KeyError)\n >>> d['d'] = 4\n >>> next(it)\n ('d', 4)\n >>> next(it)\n ('c', 3)\n >>> next(it)\n ('b', 2)\n >>> d['e'] = 5\n >>> next(it)\n ('e', 5)\n >>> next(it)\n ('a', 1)\n >>> next(it, 'empty')\n 'empty'\n\n >>> first_true('ABC0DEF1', '9', str.isdigit)\n '0'\n >>> # Verify that inputs are consumed lazily\n >>> it = iter('ABC0DEF1')\n >>> first_true(it, predicate=str.isdigit)\n '0'\n >>> ''.join(it)\n 'DEF1'\n\n # Old recipes and their tests which are guaranteed to continue to work.\n\n def sumprod(vec1, vec2):\n     \"Compute a sum of products.\"\n\n[4] itertools / Itertools Recipes\nNow, we test all of the itertool recipes\n\n >>> take(10, count())\n [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n >>> # Verify that the input is consumed lazily\n >>> it = iter('abcdef')\n >>> take(3, it)\n ['a', 'b', 'c']\n >>> list(it)\n ['d', 'e', 'f']\n\n >>> list(prepend(1, [2, 3, 4]))\n [1, 2, 3, 4]\n\n >>> list(enumerate('abc'))\n [(0, 'a'), (1, 'b'), (2, 'c')]\n\n >>> list(islice(tabulate(lambda x: 2*x), 4))\n [0, 2, 4, 6]\n\n >>> list(tail(3, 'ABCDEFG'))\n ['E', 'F', 'G']\n >>> # Verify the input is consumed greedily\n >>> input_iterator = iter('ABCDEFG')\n >>> output_iterator = tail(3, input_iterator)\n >>> list(input_iterator)\n []\n\n >>> it = iter(range(10))\n >>> consume(it, 3)\n >>> # Verify the input is consumed lazily\n >>> next(it)\n 3\n >>> # Verify the input is consumed completely\n >>> consume(it)\n >>> next(it, 'Done')\n 'Done'\n\n >>> nth('abcde', 3)\n 'd'\n >>> nth('abcde', 9) is None\n True\n >>> # Verify that the input is consumed lazily\n >>> it = iter('abcde')\n >>> nth(it, 2)\n 'c'\n >>> list(it)\n ['d', 'e']\n\n[5] itertools / Itertools Recipes\n[('a', 'b', 'c'), ('d', 'e', 'f')]\n\n >>> list(sliding_window('ABCDEFG', 1))\n [('A',), ('B',), ('C',), ('D',), ('E',), ('F',), ('G',)]\n >>> list(sliding_window('ABCDEFG', 2))\n [('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'E'), ('E', 'F'), ('F', 'G')]\n >>> list(sliding_window('ABCDEFG', 3))\n [('A', 'B', 'C'), ('B', 'C', 'D'), ('C', 'D', 'E'), ('D', 'E', 'F'), ('E', 'F', 'G')]\n >>> list(sliding_window('ABCDEFG', 4))\n [('A', 'B', 'C', 'D'), ('B', 'C', 'D', 'E'), ('C', 'D', 'E', 'F'), ('D', 'E', 'F', 'G')]\n >>> list(sliding_window('ABCDEFG', 5))\n [('A', 'B', 'C', 'D', 'E'), ('B', 'C', 'D', 'E', 'F'), ('C', 'D', 'E', 'F', 'G')]\n >>> list(sliding_window('ABCDEFG', 6))\n [('A', 'B', 'C', 'D', 'E', 'F'), ('B', 'C', 'D', 'E', 'F', 'G')]\n >>> list(sliding_window('ABCDEFG', 7))\n [('A', 'B', 'C', 'D', 'E', 'F', 'G')]\n >>> list(sliding_window('ABCDEFG', 8))\n []\n >>> try:\n ...     list(sliding_window('ABCDEFG', -1))\n ... except ValueError:\n ...     'zero or negative n not supported'\n ...\n 'zero or negative n not supported'\n >>> try:\n ...     list(sliding_window('ABCDEFG', 0))\n ... except ValueError:\n ...     'zero or negative n not supported'\n ...\n 'zero or negative n not supported'\n\nQuestion: What is a good recipe for banana bread?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "contextlib-23",
+      "doc": "contextlib",
+      "section": "Examples and Recipes",
+      "url": "https://docs.python.org/3.12/library/contextlib.html",
+      "text": "This section describes some examples and recipes for making effective use of\nthe tools provided by contextlib."
+    },
+    {
+      "n": 2,
+      "id": "sqlite3-33",
+      "doc": "sqlite3",
+      "section": "Connection objects",
+      "url": "https://docs.python.org/3.12/library/sqlite3.html",
+      "text": "# disable extension loading again\n      con.enable_load_extension(False)\n\n      # example from SQLite wiki\n      con.execute(\"CREATE VIRTUAL TABLE recipe USING fts3(name, ingredients)\")\n      con.executescript(\"\"\"\n          INSERT INTO recipe (name, ingredients) VALUES('broccoli stew', 'broccoli peppers cheese tomatoes');\n          INSERT INTO recipe (name, ingredients) VALUES('pumpkin stew', 'pumpkin onions garlic celery');\n          INSERT INTO recipe (name, ingredients) VALUES('broccoli pie', 'broccoli cheese onions flour');\n          INSERT INTO recipe (name, ingredients) VALUES('pumpkin pie', 'pumpkin sugar flour butter');\n          \"\"\")\n      for row in con.execute(\"SELECT rowid, name, ingredients FROM recipe WHERE name MATCH 'pie'\"):\n          print(row)\n\nload_extension(path, /, *, entrypoint=None)\n\n   Load an SQLite extension from a shared library.\n   Enable extension loading with enable_load_extension before\n   calling this method.\n\n   :param str path:\n\n      The path to the SQLite extension.\n\n   :param entrypoint:\n\n      Entry point name.\n      If None (the default),\n      SQLite will come up with an entry point name of its own;\n      see the SQLite docs Loading an Extension for details.\n\n   :type entrypoint: str | None\n\n3.2\n\n3.10\n      Added the sqlite3.load_extension auditing event.\n\n3.12\n      Added the *entrypoint* parameter.\n\niterdump"
+    },
+    {
+      "n": 3,
+      "id": "itertools-58",
+      "doc": "itertools",
+      "section": "Itertools Recipes",
+      "url": "https://docs.python.org/3.12/library/itertools.html",
+      "text": "['A', 'B', 'C', 'D', 'A', 'B']\n >>> list(unique_justseen('ABBCcAD', str.casefold))\n ['A', 'B', 'C', 'A', 'D']\n >>> list(unique_justseen('ABBcCAD', str.casefold))\n ['A', 'B', 'c', 'A', 'D']\n >>> # Verify that the input is consumed lazily\n >>> input_iterator = iter('AAAABBBCCDAABBB')\n >>> output_iterator = unique_justseen(input_iterator)\n >>> next(output_iterator)\n 'A'\n >>> ''.join(input_iterator)\n 'AAABBBCCDAABBB'\n\n >>> list(unique([[1, 2], [3, 4], [1, 2]]))\n [[1, 2], [3, 4]]\n >>> list(unique('ABBcCAD', str.casefold))\n ['A', 'B', 'c', 'D']\n >>> list(unique('ABBcCAD', str.casefold, reverse=True))\n ['D', 'c', 'B', 'A']\n\n >>> d = dict(a=1, b=2, c=3)\n >>> it = iter_except(d.popitem, KeyError)\n >>> d['d'] = 4\n >>> next(it)\n ('d', 4)\n >>> next(it)\n ('c', 3)\n >>> next(it)\n ('b', 2)\n >>> d['e'] = 5\n >>> next(it)\n ('e', 5)\n >>> next(it)\n ('a', 1)\n >>> next(it, 'empty')\n 'empty'\n\n >>> first_true('ABC0DEF1', '9', str.isdigit)\n '0'\n >>> # Verify that inputs are consumed lazily\n >>> it = iter('ABC0DEF1')\n >>> first_true(it, predicate=str.isdigit)\n '0'\n >>> ''.join(it)\n 'DEF1'\n\n # Old recipes and their tests which are guaranteed to continue to work.\n\n def sumprod(vec1, vec2):\n     \"Compute a sum of products.\""
+    },
+    {
+      "n": 4,
+      "id": "itertools-42",
+      "doc": "itertools",
+      "section": "Itertools Recipes",
+      "url": "https://docs.python.org/3.12/library/itertools.html",
+      "text": "Now, we test all of the itertool recipes\n\n >>> take(10, count())\n [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n >>> # Verify that the input is consumed lazily\n >>> it = iter('abcdef')\n >>> take(3, it)\n ['a', 'b', 'c']\n >>> list(it)\n ['d', 'e', 'f']\n\n >>> list(prepend(1, [2, 3, 4]))\n [1, 2, 3, 4]\n\n >>> list(enumerate('abc'))\n [(0, 'a'), (1, 'b'), (2, 'c')]\n\n >>> list(islice(tabulate(lambda x: 2*x), 4))\n [0, 2, 4, 6]\n\n >>> list(tail(3, 'ABCDEFG'))\n ['E', 'F', 'G']\n >>> # Verify the input is consumed greedily\n >>> input_iterator = iter('ABCDEFG')\n >>> output_iterator = tail(3, input_iterator)\n >>> list(input_iterator)\n []\n\n >>> it = iter(range(10))\n >>> consume(it, 3)\n >>> # Verify the input is consumed lazily\n >>> next(it)\n 3\n >>> # Verify the input is consumed completely\n >>> consume(it)\n >>> next(it, 'Done')\n 'Done'\n\n >>> nth('abcde', 3)\n 'd'\n >>> nth('abcde', 9) is None\n True\n >>> # Verify that the input is consumed lazily\n >>> it = iter('abcde')\n >>> nth(it, 2)\n 'c'\n >>> list(it)\n ['d', 'e']"
+    },
+    {
+      "n": 5,
+      "id": "itertools-55",
+      "doc": "itertools",
+      "section": "Itertools Recipes",
+      "url": "https://docs.python.org/3.12/library/itertools.html",
+      "text": "[('a', 'b', 'c'), ('d', 'e', 'f')]\n\n >>> list(sliding_window('ABCDEFG', 1))\n [('A',), ('B',), ('C',), ('D',), ('E',), ('F',), ('G',)]\n >>> list(sliding_window('ABCDEFG', 2))\n [('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'E'), ('E', 'F'), ('F', 'G')]\n >>> list(sliding_window('ABCDEFG', 3))\n [('A', 'B', 'C'), ('B', 'C', 'D'), ('C', 'D', 'E'), ('D', 'E', 'F'), ('E', 'F', 'G')]\n >>> list(sliding_window('ABCDEFG', 4))\n [('A', 'B', 'C', 'D'), ('B', 'C', 'D', 'E'), ('C', 'D', 'E', 'F'), ('D', 'E', 'F', 'G')]\n >>> list(sliding_window('ABCDEFG', 5))\n [('A', 'B', 'C', 'D', 'E'), ('B', 'C', 'D', 'E', 'F'), ('C', 'D', 'E', 'F', 'G')]\n >>> list(sliding_window('ABCDEFG', 6))\n [('A', 'B', 'C', 'D', 'E', 'F'), ('B', 'C', 'D', 'E', 'F', 'G')]\n >>> list(sliding_window('ABCDEFG', 7))\n [('A', 'B', 'C', 'D', 'E', 'F', 'G')]\n >>> list(sliding_window('ABCDEFG', 8))\n []\n >>> try:\n ...     list(sliding_window('ABCDEFG', -1))\n ... except ValueError:\n ...     'zero or negative n not supported'\n ...\n 'zero or negative n not supported'\n >>> try:\n ...     list(sliding_window('ABCDEFG', 0))\n ... except ValueError:\n ...     'zero or negative n not supported'\n ...\n 'zero or negative n not supported'"
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.201
+  },
+  "promptedAt": "2026-11-26T02:45:40.716Z",
+  "answer": "I couldn't find this in the docs.",
+  "recordedAt": "2026-11-26T02:45:42.331Z",
+  "secondsToAnswer": 2
+}

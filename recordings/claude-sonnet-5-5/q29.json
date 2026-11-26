@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q29",
+  "question": "How do I open a TCP connection to a server with a socket?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] threading / Barrier Objects\n3.2\n\nThis class provides a simple synchronization primitive for use by a fixed number\nof threads that need to wait for each other.  Each of the threads tries to pass\nthe barrier by calling the Barrier.wait method and will block until\nall of the threads have made their Barrier.wait calls. At this point,\nthe threads are released simultaneously.\n\nThe barrier can be reused any number of times for the same number of threads.\n\nAs an example, here is a simple way to synchronize a client and server thread:\n\nb = Barrier(2, timeout=5)\n\ndef server():\n    start_server()\n    b.wait()\n    while True:\n        connection = accept_connection()\n        process_server_connection(connection)\n\ndef client():\n    b.wait()\n    while True:\n        connection = make_connection()\n        process_client_connection(connection)\n\nBarrier(parties, action=None, timeout=None)\n\nCreate a barrier object for *parties* number of threads.  An *action*, when\nprovided, is a callable to be called by one of the threads when they are\nreleased.  *timeout* is the default timeout value if none is specified for\nthe wait method.\n\nwait(timeout=None)\n\n[2] threading / Semaphore Example\nSemaphores are often used to guard resources with limited capacity, for example,\na database server.  In any situation where the size of the resource is fixed,\nyou should use a bounded semaphore.  Before spawning any worker threads, your\nmain thread would initialize the semaphore:\n\nmaxconnections = 5\n# ...\npool_sema = BoundedSemaphore(value=maxconnections)\n\nOnce spawned, worker threads call the semaphore's acquire and release methods\nwhen they need to connect to the server:\n\nwith pool_sema:\n    conn = connectdb()\n    try:\n        # ... use connection ...\n    finally:\n        conn.close()\n\nThe use of a bounded semaphore reduces the chance that a programming error which\ncauses the semaphore to be released more than it's acquired will go undetected.\n\n[3] sqlite3 / How to use the connection context manager\nA Connection object can be used as a context manager that\nautomatically commits or rolls back open transactions when leaving the body of\nthe context manager.\nIf the body of the with statement finishes without exceptions,\nthe transaction is committed.\nIf this commit fails,\nor if the body of the with statement raises an uncaught exception,\nthe transaction is rolled back.\nIf Connection.autocommit is False,\na new transaction is implicitly opened after committing or rolling back.\n\nIf there is no open transaction upon leaving the body of the with statement,\nor if Connection.autocommit is True,\nthe context manager does nothing.\n\nThe context manager neither implicitly opens a new transaction\nnor closes the connection. If you need a closing context manager, consider\nusing contextlib.closing.\n\ncon = sqlite3.connect(\":memory:\")\ncon.execute(\"CREATE TABLE lang(id INTEGER PRIMARY KEY, name VARCHAR UNIQUE)\")\n\n# Successful, con.commit() is called automatically afterwards\nwith con:\n    con.execute(\"INSERT INTO lang(name) VALUES(?)\", (\"Python\",))\n\n[4] sqlite3 / Module functions\nconnect(database, timeout=5.0, detect_types=0, isolation_level=\"DEFERRED\", check_same_thread=True, factory=sqlite3.Connection, cached_statements=128, uri=False, *, autocommit=sqlite3.LEGACY_TRANSACTION_CONTROL)\n\nOpen a connection to an SQLite database.\n\n:param database:\n    The path to the database file to be opened.\n    You can pass \":memory:\" to create an SQLite database existing only\n    in memory, and open a connection\n    to it.\n:type database: path-like object\n\n:param float timeout:\n    How many seconds the connection should wait before raising\n    an OperationalError when a table is locked.\n    If another connection opens a transaction to modify a table,\n    that table will be locked until the transaction is committed.\n    Default five seconds.\n\n:param int detect_types:\n    Control whether and how data types not\n    natively supported by SQLite\n    are looked up to be converted to Python types,\n    using the converters registered with register_converter.\n    Set it to any combination (using |, bitwise or) of\n    PARSE_DECLTYPES and PARSE_COLNAMES\n    to enable this.\n    Column names takes precedence over declared types if both flags are set.\n    Types cannot be detected for generated fields (for example max(data)),\n\n[5] sqlite3 / How to use the connection context manager\nnor closes the connection. If you need a closing context manager, consider\nusing contextlib.closing.\n\ncon = sqlite3.connect(\":memory:\")\ncon.execute(\"CREATE TABLE lang(id INTEGER PRIMARY KEY, name VARCHAR UNIQUE)\")\n\n# Successful, con.commit() is called automatically afterwards\nwith con:\n    con.execute(\"INSERT INTO lang(name) VALUES(?)\", (\"Python\",))\n\n# con.rollback() is called after the with block finishes with an exception,\n# the exception is still raised and must be caught\ntry:\n    with con:\n        con.execute(\"INSERT INTO lang(name) VALUES(?)\", (\"Python\",))\nexcept sqlite3.IntegrityError:\n    print(\"couldn't add Python twice\")\n\n# Connection object used as context manager only commits or rollbacks transactions,\n# so the connection object should be closed manually\ncon.close()\n\ncouldn't add Python twice\n\nQuestion: How do I open a TCP connection to a server with a socket?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "threading-46",
+      "doc": "threading",
+      "section": "Barrier Objects",
+      "url": "https://docs.python.org/3.12/library/threading.html",
+      "text": "3.2\n\nThis class provides a simple synchronization primitive for use by a fixed number\nof threads that need to wait for each other.  Each of the threads tries to pass\nthe barrier by calling the Barrier.wait method and will block until\nall of the threads have made their Barrier.wait calls. At this point,\nthe threads are released simultaneously.\n\nThe barrier can be reused any number of times for the same number of threads.\n\nAs an example, here is a simple way to synchronize a client and server thread:\n\nb = Barrier(2, timeout=5)\n\ndef server():\n    start_server()\n    b.wait()\n    while True:\n        connection = accept_connection()\n        process_server_connection(connection)\n\ndef client():\n    b.wait()\n    while True:\n        connection = make_connection()\n        process_client_connection(connection)\n\nBarrier(parties, action=None, timeout=None)\n\nCreate a barrier object for *parties* number of threads.  An *action*, when\nprovided, is a callable to be called by one of the threads when they are\nreleased.  *timeout* is the default timeout value if none is specified for\nthe wait method.\n\nwait(timeout=None)"
+    },
+    {
+      "n": 2,
+      "id": "threading-41",
+      "doc": "threading",
+      "section": "Semaphore Example",
+      "url": "https://docs.python.org/3.12/library/threading.html",
+      "text": "Semaphores are often used to guard resources with limited capacity, for example,\na database server.  In any situation where the size of the resource is fixed,\nyou should use a bounded semaphore.  Before spawning any worker threads, your\nmain thread would initialize the semaphore:\n\nmaxconnections = 5\n# ...\npool_sema = BoundedSemaphore(value=maxconnections)\n\nOnce spawned, worker threads call the semaphore's acquire and release methods\nwhen they need to connect to the server:\n\nwith pool_sema:\n    conn = connectdb()\n    try:\n        # ... use connection ...\n    finally:\n        conn.close()\n\nThe use of a bounded semaphore reduces the chance that a programming error which\ncauses the semaphore to be released more than it's acquired will go undetected."
+    },
+    {
+      "n": 3,
+      "id": "sqlite3-73",
+      "doc": "sqlite3",
+      "section": "How to use the connection context manager",
+      "url": "https://docs.python.org/3.12/library/sqlite3.html",
+      "text": "A Connection object can be used as a context manager that\nautomatically commits or rolls back open transactions when leaving the body of\nthe context manager.\nIf the body of the with statement finishes without exceptions,\nthe transaction is committed.\nIf this commit fails,\nor if the body of the with statement raises an uncaught exception,\nthe transaction is rolled back.\nIf Connection.autocommit is False,\na new transaction is implicitly opened after committing or rolling back.\n\nIf there is no open transaction upon leaving the body of the with statement,\nor if Connection.autocommit is True,\nthe context manager does nothing.\n\nThe context manager neither implicitly opens a new transaction\nnor closes the connection. If you need a closing context manager, consider\nusing contextlib.closing.\n\ncon = sqlite3.connect(\":memory:\")\ncon.execute(\"CREATE TABLE lang(id INTEGER PRIMARY KEY, name VARCHAR UNIQUE)\")\n\n# Successful, con.commit() is called automatically afterwards\nwith con:\n    con.execute(\"INSERT INTO lang(name) VALUES(?)\", (\"Python\",))"
+    },
+    {
+      "n": 4,
+      "id": "sqlite3-8",
+      "doc": "sqlite3",
+      "section": "Module functions",
+      "url": "https://docs.python.org/3.12/library/sqlite3.html",
+      "text": "connect(database, timeout=5.0, detect_types=0, isolation_level=\"DEFERRED\", check_same_thread=True, factory=sqlite3.Connection, cached_statements=128, uri=False, *, autocommit=sqlite3.LEGACY_TRANSACTION_CONTROL)\n\nOpen a connection to an SQLite database.\n\n:param database:\n    The path to the database file to be opened.\n    You can pass \":memory:\" to create an SQLite database existing only\n    in memory, and open a connection\n    to it.\n:type database: path-like object\n\n:param float timeout:\n    How many seconds the connection should wait before raising\n    an OperationalError when a table is locked.\n    If another connection opens a transaction to modify a table,\n    that table will be locked until the transaction is committed.\n    Default five seconds.\n\n:param int detect_types:\n    Control whether and how data types not\n    natively supported by SQLite\n    are looked up to be converted to Python types,\n    using the converters registered with register_converter.\n    Set it to any combination (using |, bitwise or) of\n    PARSE_DECLTYPES and PARSE_COLNAMES\n    to enable this.\n    Column names takes precedence over declared types if both flags are set.\n    Types cannot be detected for generated fields (for example max(data)),"
+    },
+    {
+      "n": 5,
+      "id": "sqlite3-74",
+      "doc": "sqlite3",
+      "section": "How to use the connection context manager",
+      "url": "https://docs.python.org/3.12/library/sqlite3.html",
+      "text": "nor closes the connection. If you need a closing context manager, consider\nusing contextlib.closing.\n\ncon = sqlite3.connect(\":memory:\")\ncon.execute(\"CREATE TABLE lang(id INTEGER PRIMARY KEY, name VARCHAR UNIQUE)\")\n\n# Successful, con.commit() is called automatically afterwards\nwith con:\n    con.execute(\"INSERT INTO lang(name) VALUES(?)\", (\"Python\",))\n\n# con.rollback() is called after the with block finishes with an exception,\n# the exception is still raised and must be caught\ntry:\n    with con:\n        con.execute(\"INSERT INTO lang(name) VALUES(?)\", (\"Python\",))\nexcept sqlite3.IntegrityError:\n    print(\"couldn't add Python twice\")\n\n# Connection object used as context manager only commits or rollbacks transactions,\n# so the connection object should be closed manually\ncon.close()\n\ncouldn't add Python twice"
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.335
+  },
+  "promptedAt": "2026-11-26T02:45:33.630Z",
+  "answer": "I couldn't find this in the docs.",
+  "recordedAt": "2026-11-26T02:45:35.435Z",
+  "secondsToAnswer": 2
+}

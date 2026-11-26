@@ -1,0 +1,62 @@
+{
+  "harness": "askdocs-record/1",
+  "model": "claude-sonnet-5-5",
+  "caseId": "q27",
+  "question": "What is the best way to keep a priority queue with a heap when tasks have equal priority?",
+  "prompt": {
+    "system": "You answer questions about the Python standard library using only the numbered passages you are given. Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: I couldn't find this in the docs.",
+    "user": "Passages:\n\n[1] heapq / Priority Queue Implementation Notes\nA priority queue is common use\nfor a heap, and it presents several implementation challenges:\n\n* Sort stability:  how do you get two tasks with equal priorities to be returned\nin the order they were originally added?\n\n* Tuple comparison breaks for (priority, task) pairs if the priorities are equal\nand the tasks do not have a default comparison order.\n\n* If the priority of a task changes, how do you move it to a new position in\nthe heap?\n\n* Or if a pending task needs to be deleted, how do you find it and remove it\nfrom the queue?\n\nA solution to the first two challenges is to store entries as 3-element list\nincluding the priority, an entry count, and the task.  The entry count serves as\na tie-breaker so that two tasks with the same priority are returned in the order\nthey were added. And since no two entry counts are the same, the tuple\n\n[2] heapq / Priority Queue Implementation Notes\nincluding the priority, an entry count, and the task.  The entry count serves as\na tie-breaker so that two tasks with the same priority are returned in the order\nthey were added. And since no two entry counts are the same, the tuple\ncomparison will never attempt to directly compare two tasks.\n\nAnother solution to the problem of non-comparable tasks is to create a wrapper\nclass that ignores the task item and only compares the priority field:\n\n from dataclasses import dataclass, field\n from typing import Any\n\n @dataclass(order=True)\n class PrioritizedItem:\n     priority: int\n     item: Any=field(compare=False)\n\nThe remaining challenges revolve around finding a pending task and making\nchanges to its priority or removing it entirely.  Finding a task can be done\nwith a dictionary pointing to an entry in the queue.\n\nRemoving the entry or changing its priority is more difficult because it would\nbreak the heap structure invariants.  So, a possible solution is to mark the\n\n[3] heapq / Priority Queue Implementation Notes\nwith a dictionary pointing to an entry in the queue.\n\nRemoving the entry or changing its priority is more difficult because it would\nbreak the heap structure invariants.  So, a possible solution is to mark the\nentry as removed and add a new entry with the revised priority:\n\n pq = []                         # list of entries arranged in a heap\n entry_finder = {}               # mapping of tasks to entries\n REMOVED = '<removed-task>'      # placeholder for a removed task\n counter = itertools.count()     # unique sequence count\n\n def add_task(task, priority=0):\n     'Add a new task or update the priority of an existing task'\n     if task in entry_finder:\n         remove_task(task)\n     count = next(counter)\n     entry = [priority, count, task]\n     entry_finder[task] = entry\n     heappush(pq, entry)\n\n def remove_task(task):\n     'Mark an existing task as REMOVED.  Raise KeyError if not found.'\n     entry = entry_finder.pop(task)\n     entry[-1] = REMOVED\n\n def pop_task():\n     'Remove and return the lowest priority task. Raise KeyError if empty.'\n     while pq:\n         priority, count, task = heappop(pq)\n\n[4] heapq / Priority Queue Implementation Notes\n'Mark an existing task as REMOVED.  Raise KeyError if not found.'\n     entry = entry_finder.pop(task)\n     entry[-1] = REMOVED\n\n def pop_task():\n     'Remove and return the lowest priority task. Raise KeyError if empty.'\n     while pq:\n         priority, count, task = heappop(pq)\n         if task is not REMOVED:\n             del entry_finder[task]\n             return task\n     raise KeyError('pop from an empty priority queue')\n\n[5] queue / queue - A synchronized queue class\none that would be returned by min(entries)).  A typical pattern for\nentries is a tuple in the form: (priority_number, data).\n\nIf the *data* elements are not comparable, the data can be wrapped in a class\nthat ignores the data item and only compares the priority number:\n\n     from dataclasses import dataclass, field\n     from typing import Any\n\n     @dataclass(order=True)\n     class PrioritizedItem:\n         priority: int\n         item: Any=field(compare=False)\n\nSimpleQueue()\n\nConstructor for an unbounded FIFO (first-in, first-out) queue.\nSimple queues lack advanced functionality such as task tracking.\n\n3.7\n\nEmpty\n\nException raised when non-blocking Queue.get (or\nQueue.get_nowait) is called\non a Queue object which is empty.\n\nFull\n\nException raised when non-blocking Queue.put (or\nQueue.put_nowait) is called\non a Queue object which is full.\n\nQuestion: What is the best way to keep a priority queue with a heap when tasks have equal priority?"
+  },
+  "passages": [
+    {
+      "n": 1,
+      "id": "heapq-7",
+      "doc": "heapq",
+      "section": "Priority Queue Implementation Notes",
+      "url": "https://docs.python.org/3.12/library/heapq.html",
+      "text": "A priority queue is common use\nfor a heap, and it presents several implementation challenges:\n\n* Sort stability:  how do you get two tasks with equal priorities to be returned\nin the order they were originally added?\n\n* Tuple comparison breaks for (priority, task) pairs if the priorities are equal\nand the tasks do not have a default comparison order.\n\n* If the priority of a task changes, how do you move it to a new position in\nthe heap?\n\n* Or if a pending task needs to be deleted, how do you find it and remove it\nfrom the queue?\n\nA solution to the first two challenges is to store entries as 3-element list\nincluding the priority, an entry count, and the task.  The entry count serves as\na tie-breaker so that two tasks with the same priority are returned in the order\nthey were added. And since no two entry counts are the same, the tuple"
+    },
+    {
+      "n": 2,
+      "id": "heapq-8",
+      "doc": "heapq",
+      "section": "Priority Queue Implementation Notes",
+      "url": "https://docs.python.org/3.12/library/heapq.html",
+      "text": "including the priority, an entry count, and the task.  The entry count serves as\na tie-breaker so that two tasks with the same priority are returned in the order\nthey were added. And since no two entry counts are the same, the tuple\ncomparison will never attempt to directly compare two tasks.\n\nAnother solution to the problem of non-comparable tasks is to create a wrapper\nclass that ignores the task item and only compares the priority field:\n\n from dataclasses import dataclass, field\n from typing import Any\n\n @dataclass(order=True)\n class PrioritizedItem:\n     priority: int\n     item: Any=field(compare=False)\n\nThe remaining challenges revolve around finding a pending task and making\nchanges to its priority or removing it entirely.  Finding a task can be done\nwith a dictionary pointing to an entry in the queue.\n\nRemoving the entry or changing its priority is more difficult because it would\nbreak the heap structure invariants.  So, a possible solution is to mark the"
+    },
+    {
+      "n": 3,
+      "id": "heapq-9",
+      "doc": "heapq",
+      "section": "Priority Queue Implementation Notes",
+      "url": "https://docs.python.org/3.12/library/heapq.html",
+      "text": "with a dictionary pointing to an entry in the queue.\n\nRemoving the entry or changing its priority is more difficult because it would\nbreak the heap structure invariants.  So, a possible solution is to mark the\nentry as removed and add a new entry with the revised priority:\n\n pq = []                         # list of entries arranged in a heap\n entry_finder = {}               # mapping of tasks to entries\n REMOVED = '<removed-task>'      # placeholder for a removed task\n counter = itertools.count()     # unique sequence count\n\n def add_task(task, priority=0):\n     'Add a new task or update the priority of an existing task'\n     if task in entry_finder:\n         remove_task(task)\n     count = next(counter)\n     entry = [priority, count, task]\n     entry_finder[task] = entry\n     heappush(pq, entry)\n\n def remove_task(task):\n     'Mark an existing task as REMOVED.  Raise KeyError if not found.'\n     entry = entry_finder.pop(task)\n     entry[-1] = REMOVED\n\n def pop_task():\n     'Remove and return the lowest priority task. Raise KeyError if empty.'\n     while pq:\n         priority, count, task = heappop(pq)"
+    },
+    {
+      "n": 4,
+      "id": "heapq-10",
+      "doc": "heapq",
+      "section": "Priority Queue Implementation Notes",
+      "url": "https://docs.python.org/3.12/library/heapq.html",
+      "text": "'Mark an existing task as REMOVED.  Raise KeyError if not found.'\n     entry = entry_finder.pop(task)\n     entry[-1] = REMOVED\n\n def pop_task():\n     'Remove and return the lowest priority task. Raise KeyError if empty.'\n     while pq:\n         priority, count, task = heappop(pq)\n         if task is not REMOVED:\n             del entry_finder[task]\n             return task\n     raise KeyError('pop from an empty priority queue')"
+    },
+    {
+      "n": 5,
+      "id": "queue-3",
+      "doc": "queue",
+      "section": "queue - A synchronized queue class",
+      "url": "https://docs.python.org/3.12/library/queue.html",
+      "text": "one that would be returned by min(entries)).  A typical pattern for\nentries is a tuple in the form: (priority_number, data).\n\nIf the *data* elements are not comparable, the data can be wrapped in a class\nthat ignores the data item and only compares the priority number:\n\n     from dataclasses import dataclass, field\n     from typing import Any\n\n     @dataclass(order=True)\n     class PrioritizedItem:\n         priority: int\n         item: Any=field(compare=False)\n\nSimpleQueue()\n\nConstructor for an unbounded FIFO (first-in, first-out) queue.\nSimple queues lack advanced functionality such as task tracking.\n\n3.7\n\nEmpty\n\nException raised when non-blocking Queue.get (or\nQueue.get_nowait) is called\non a Queue object which is empty.\n\nFull\n\nException raised when non-blocking Queue.put (or\nQueue.put_nowait) is called\non a Queue object which is full."
+    }
+  ],
+  "retrieval": {
+    "mode": "hybrid",
+    "k": 5,
+    "embedder": "Xenova/all-MiniLM-L6-v2",
+    "topSimilarity": 0.817
+  },
+  "promptedAt": "2026-11-26T02:45:30.555Z",
+  "answer": "Store each entry as a 3-element list of the priority, an entry count, and the task. [1]\nThe entry count is a tie-breaker, so tasks with the same priority come out in the order they were added. [1]\nEntry counts are never equal, so the comparison never has to compare two tasks directly. [2]\nA wrapper class that compares only the priority field is another solution for tasks that cannot be compared. [2]",
+  "recordedAt": "2026-11-26T02:45:32.953Z",
+  "secondsToAnswer": 2
+}
