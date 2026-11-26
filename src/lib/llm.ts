@@ -1,6 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { ModelVerifier, LexicalVerifier, type CitationVerifier } from "./citations";
 import { tokenize } from "./tokenize";
+import { SpanKind } from "@opentelemetry/api";
+import { withSpan } from "./tracing";
 import type { Hit } from "./types";
 
 export const MODEL = "claude-sonnet-5-5";
@@ -13,6 +15,9 @@ export interface Generation {
 }
 
 export interface Generator {
+  /** The name of the model, and who runs it, for trace attributes. */
+  readonly model?: string;
+  readonly provider?: string;
   generate(question: string, hits: Hit[]): Promise<Generation>;
 }
 
@@ -30,6 +35,8 @@ export function buildPrompt(question: string, hits: Hit[]): string {
 }
 
 export class AnthropicGenerator implements Generator {
+  readonly model = MODEL;
+  readonly provider = "anthropic";
   private readonly client: Anthropic;
 
   constructor(apiKey: string) {
@@ -54,6 +61,8 @@ export class AnthropicGenerator implements Generator {
  * Used by tests, the questionnaire without a key, and the offline numbers in the docs.
  */
 export class ScriptedGenerator implements Generator {
+  readonly model = "scripted";
+  readonly provider = "askdocs.offline";
   async generate(question: string, hits: Hit[]): Promise<Generation> {
     const wanted = new Set(tokenize(question));
     const candidates = hits.slice(0, 3).flatMap((h, i) =>
@@ -104,11 +113,27 @@ export function createVerifier(env: NodeJS.ProcessEnv = process.env): CitationVe
   if (!env.ANTHROPIC_API_KEY || env.ASKDOCS_VERIFIER === "lexical") return new LexicalVerifier();
   const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
   return new ModelVerifier(async (prompt) => {
-    const res = await client.messages.create({
-      model: MODEL,
-      max_tokens: 10,
-      messages: [{ role: "user", content: prompt }],
-    });
-    return res.content.map((b) => (b.type === "text" ? b.text : "")).join("");
+    return withSpan(
+      `chat ${MODEL}`,
+      {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.provider.name": "anthropic",
+        "gen_ai.request.model": MODEL,
+        "gen_ai.request.max_tokens": 10,
+        "askdocs.purpose": "citation_check",
+      },
+      async (span) => {
+        const res = await client.messages.create({
+          model: MODEL,
+          max_tokens: 10,
+          messages: [{ role: "user", content: prompt }],
+        });
+        span.setAttribute("gen_ai.usage.input_tokens", res.usage.input_tokens);
+        span.setAttribute("gen_ai.usage.output_tokens", res.usage.output_tokens);
+        if (res.stop_reason) span.setAttribute("gen_ai.response.finish_reasons", [res.stop_reason]);
+        return res.content.map((b) => (b.type === "text" ? b.text : "")).join("");
+      },
+      SpanKind.CLIENT,
+    );
   });
 }

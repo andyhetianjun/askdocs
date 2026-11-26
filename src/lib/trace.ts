@@ -17,6 +17,8 @@ export interface Trace {
   citedSentences?: number;
   droppedSentences?: number;
   error?: string;
+  /** The OpenTelemetry trace id, when tracing was on, to find this request in a trace viewer. */
+  otelTraceId?: string;
 }
 
 export interface TraceStore {

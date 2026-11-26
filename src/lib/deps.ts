@@ -5,6 +5,7 @@ import { MemoryStore } from "./memory-store";
 import type { Deps } from "./pipeline";
 import { PgStore } from "./pg-store";
 import { JsonlTraceStore } from "./trace";
+import { setupFromEnv } from "./tracing";
 import type { Embedder, Store } from "./types";
 
 export const INDEX_FILE = path.join(process.cwd(), "data", "index.json");
@@ -24,6 +25,7 @@ export function getDeps(): Promise<Deps> {
 }
 
 async function build(): Promise<Deps> {
+  setupFromEnv(); // OpenTelemetry tracing, only when ASKDOCS_TRACE is set
   let store: Store;
   let embedder: Embedder;
   if (process.env.DATABASE_URL) {
