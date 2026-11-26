@@ -1,5 +1,5 @@
 // Runs the labeled questions through keyword, vector and hybrid retrieval and prints the scores.
-import { readFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { INDEX_FILE } from "../src/lib/deps";
 import { HashEmbedder, TransformersEmbedder } from "../src/lib/embed";
@@ -34,6 +34,13 @@ async function main() {
     console.log(formatTable(scores, "section"));
     console.log("\nDoc level (right doc only)\n");
     console.log(formatTable(scores, "doc"));
+    if (!process.env.DATABASE_URL) {
+      await mkdir(path.join(process.cwd(), "data", "results"), { recursive: true });
+      await writeFile(
+        path.join(process.cwd(), "data", "results", "retrieval.json"),
+        JSON.stringify({ questions: questions.length, chunks: await store.count(), embedder: embedder.name, scores }, null, 2) + "\n",
+      );
+    }
   } finally {
     await store.close?.();
   }

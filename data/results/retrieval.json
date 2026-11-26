@@ -1,0 +1,49 @@
+{
+  "questions": 30,
+  "chunks": 1268,
+  "embedder": "Xenova/all-MiniLM-L6-v2",
+  "scores": [
+    {
+      "mode": "keyword",
+      "level": "section",
+      "recallAt5": 0.7,
+      "mrr": 0.585079365079365,
+      "avgMs": 0.17557363333333645
+    },
+    {
+      "mode": "keyword",
+      "level": "doc",
+      "recallAt5": 1,
+      "mrr": 0.8722222222222221,
+      "avgMs": 0.17557363333333645
+    },
+    {
+      "mode": "vector",
+      "level": "section",
+      "recallAt5": 0.8666666666666667,
+      "mrr": 0.6836507936507935,
+      "avgMs": 2.4712458333333283
+    },
+    {
+      "mode": "vector",
+      "level": "doc",
+      "recallAt5": 1,
+      "mrr": 0.9833333333333333,
+      "avgMs": 2.4712458333333283
+    },
+    {
+      "mode": "hybrid",
+      "level": "section",
+      "recallAt5": 0.9,
+      "mrr": 0.7034126984126984,
+      "avgMs": 2.151604000000001
+    },
+    {
+      "mode": "hybrid",
+      "level": "doc",
+      "recallAt5": 1,
+      "mrr": 1,
+      "avgMs": 2.151604000000001
+    }
+  ]
+}

@@ -2,8 +2,19 @@
 
 ![CI](https://github.com/andyhetianjun/askdocs/actions/workflows/ci.yml/badge.svg)
 
+**Try it:** https://andyhetianjun.github.io/askdocs/ (search runs in your browser, no server and no key)
+
+![The demo page](docs/img/demo.png)
+
 I built a small web app that answers questions about Python's standard library docs because I wanted to understand how "ask your docs" search actually finds the right passage, and how to measure whether it does. I picked Python's docs because I read them anyway.
 
+
+## Features
+
+- [Checking that answers are backed by the docs](docs/trustworthy-answers.md): every answer sentence must cite a passage that really says it, and the app says "I couldn't find this in the docs" when the docs do not cover the question.
+- [Questionnaire mode](docs/questionnaire-mode.md): paste or upload a list of questions, get a drafted answer for each, labelled confident or needs review, as a filled CSV. Near-duplicate questions get the same answer.
+- [Connectors and incremental sync](docs/connectors-and-sync.md): read Markdown folders, Notion exports and Slack exports, and re-embed only what changed (about 45 ms for a one word edit, against about 18 s for a full rebuild).
+- [The browser demo](docs/demo.md): the search runs entirely in the page, plus the measured results.
 
 ## What it does
 
@@ -26,16 +37,16 @@ Right doc and right section:
 | Search | recall@5 | MRR | avg ms per query |
 |---|---|---|---|
 | keyword (BM25) | 0.700 | 0.585 | 0.2 |
-| vector | 0.867 | 0.684 | 2.9 |
-| hybrid (RRF) | 0.900 | 0.703 | 2.7 |
+| vector | 0.867 | 0.684 | 2.5 |
+| hybrid (RRF) | 0.900 | 0.703 | 2.2 |
 
 Right doc only:
 
 | Search | recall@5 | MRR | avg ms per query |
 |---|---|---|---|
 | keyword (BM25) | 1.000 | 0.872 | 0.2 |
-| vector | 1.000 | 0.983 | 2.9 |
-| hybrid (RRF) | 1.000 | 1.000 | 2.7 |
+| vector | 1.000 | 0.983 | 2.5 |
+| hybrid (RRF) | 1.000 | 1.000 | 2.2 |
 
 Reproduce with `npm run eval`. It uses the in-memory index on one laptop CPU. Timings include embedding the question but not loading the model.
 
@@ -61,8 +72,13 @@ Optional:
 
 ```bash
 export ANTHROPIC_API_KEY=...     # written answers with citations
-npm run ingest                   # rebuild data/index.json from data/corpus
+npm run ingest                   # bring data/index.json up to date (only changed docs are re-embedded)
 npm run eval                     # the tables above
+npm run eval:trust               # citation check and "I couldn't find this" numbers
+npm run eval:questionnaire       # questionnaire labels and answer reuse numbers
+npm run bench:sync               # incremental sync timings
+npm run questionnaire -- examples/questionnaire.csv --out filled.csv
+npm run build:demo               # the static browser demo in demo/out
 
 docker compose up -d db          # Postgres with pgvector
 export DATABASE_URL=postgres://askdocs:askdocs@localhost:5432/askdocs
@@ -85,12 +101,12 @@ More detail and the file layout are in [docs/design.md](docs/design.md).
 ## Tests and CI
 
 ```bash
-npm test             # 30 tests pass, 1 skipped (needs DATABASE_URL)
+npm test             # 77 tests pass, 1 skipped (needs DATABASE_URL)
 npm run lint
 npm run typecheck
 ```
 
-The tests cover the chunker, the RRF merge, the eval metrics, BM25, the RST reader, and the `/api/ask` and `/api/traces` routes. They use a deterministic hash-based embedder, so they need no downloads, database or key. The Postgres test runs when `DATABASE_URL` is set. GitHub Actions runs lint, typecheck, tests and a production build, runs the Postgres test against a pgvector service, and builds the Dockerfile. The Docker build has not run yet, since I have no Docker daemon here.
+The tests cover the chunker, the RRF merge, the eval metrics, BM25, the RST reader, the citation check, questionnaire drafting and answer reuse, the Markdown, Notion and Slack readers, incremental sync, and the `/api/ask`, `/api/questionnaire` and `/api/traces` routes. They use a deterministic hash-based embedder, so they need no downloads, database or key. The Postgres test runs when `DATABASE_URL` is set. GitHub Actions runs lint, typecheck, tests and a production build, deploys the demo to GitHub Pages, runs the Postgres test against a pgvector service, and builds the Dockerfile. The Docker build has not run yet, since I have no Docker daemon here.
 
 ## Data
 
@@ -101,7 +117,8 @@ The docs are the Python 3.12 standard library reference (`Doc/library/*.rst`, ta
 - Run the Postgres path end to end and add its numbers to the tables.
 - Write more questions, including some where the answer is spread over two sections, and label a set of acceptable sections instead of one.
 - Try a reranker on the top 20 and see whether it changes MRR.
-- Check that cited passages really support each sentence of the answer.
+- Run the model-based citation check against a real model. Only the offline word-overlap version has been measured so far.
+- Try a reranker to catch the unanswerable questions that sit close to a module in the index (`getopt` next to `argparse`).
 
 ## License
 

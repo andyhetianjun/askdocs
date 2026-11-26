@@ -17,7 +17,8 @@
     "eval:trust": "tsx scripts/eval-trust.ts",
     "questionnaire": "tsx scripts/questionnaire.ts",
     "eval:questionnaire": "tsx scripts/eval-questionnaire.ts",
-    "bench:sync": "tsx scripts/bench-sync.ts"
+    "bench:sync": "tsx scripts/bench-sync.ts",
+    "build:demo": "tsx scripts/build-demo.ts"
   },
   "engines": {
     "node": ">=20"

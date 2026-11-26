@@ -7,3 +7,7 @@ node_modules/
 data/traces.jsonl
 .DS_Store
 data/answer-bank.json
+demo/out/
+demo/.next/
+demo/public/data/
+demo/next-env.d.ts
