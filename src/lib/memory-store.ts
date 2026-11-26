@@ -37,7 +37,14 @@ export class MemoryStore implements Store {
   }
 
   static fromIndex(index: IndexFile): MemoryStore {
-    const chunks = index.chunks.map(({ embedding: _embedding, ...c }) => c);
+    const chunks = index.chunks.map((c) => ({
+      id: c.id,
+      doc: c.doc,
+      section: c.section,
+      url: c.url,
+      ordinal: c.ordinal,
+      text: c.text,
+    }));
     return new MemoryStore(chunks, index.chunks.map((c) => decodeVector(c.embedding)));
   }
 
