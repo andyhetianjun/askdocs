@@ -43,3 +43,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx vitest run tests/pg-store.test.ts
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t askdocs .
