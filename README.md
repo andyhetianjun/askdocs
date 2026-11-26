@@ -40,6 +40,7 @@ Three cases that show what the numbers mean:
 - [Questionnaire mode](docs/questionnaire-mode.md): paste or upload a list of questions, get a drafted answer for each, labelled confident or needs review, as a filled CSV. Near-duplicate questions get the same answer.
 - [Connectors and incremental sync](docs/connectors-and-sync.md): read Markdown folders, Notion exports and Slack exports, and re-embed only what changed (about 45 ms for a one word edit, against about 18 s for a full rebuild).
 - [Recorded model runs](RECORDING.md): a small harness that shows a model each question with its retrieved passages, saves the answer it writes, and scores it with the citation check and the refusal check. The demo has a section for these recordings.
+- [Tracing](docs/tracing.md): OpenTelemetry traces of each question (retrieval, embedding, model call, citation check, with tokens when known) written to a local file or sent to Jaeger, and a waterfall viewer on the demo site.
 - [The browser demo](docs/demo.md): the search runs entirely in the page, plus the measured results.
 
 ## What it does
