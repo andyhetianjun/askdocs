@@ -9,6 +9,12 @@ import { PgStore } from "../src/lib/pg-store";
 import type { Embedder, Store } from "../src/lib/types";
 
 async function main() {
+  const from = process.argv.indexOf("--from-recordings");
+  if (from > -1) {
+    const { evalRecordings } = await import("./eval-recordings");
+    await evalRecordings(process.argv[from + 1] ?? "recordings/claude-sonnet-5-5");
+    return;
+  }
   const questions = JSON.parse(
     await readFile(path.join(process.cwd(), "data", "eval-questions.json"), "utf8"),
   ) as LabeledQuestion[];

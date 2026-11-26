@@ -14,6 +14,8 @@
     "fetch": "tsx scripts/fetch-corpus.ts",
     "ingest": "tsx scripts/ingest.ts",
     "eval": "tsx scripts/eval.ts",
+    "eval:recordings": "tsx scripts/eval-recordings.ts",
+    "record": "tsx scripts/record.ts",
     "eval:trust": "tsx scripts/eval-trust.ts",
     "questionnaire": "tsx scripts/questionnaire.ts",
     "eval:questionnaire": "tsx scripts/eval-questionnaire.ts",

@@ -16,7 +16,7 @@ export interface Generator {
   generate(question: string, hits: Hit[]): Promise<Generation>;
 }
 
-const SYSTEM =
+export const SYSTEM =
   "You answer questions about the Python standard library using only the numbered passages you are given. " +
   "Write short sentences. Every sentence must make one claim and end with the number of the passage that backs it, like [1] or [2]. " +
   "Do not write a sentence you cannot back with a passage. If the passages do not contain the answer, reply with exactly: " +

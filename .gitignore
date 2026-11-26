@@ -11,3 +11,4 @@ demo/out/
 demo/.next/
 demo/public/data/
 demo/next-env.d.ts
+recordings/**/.pending/
