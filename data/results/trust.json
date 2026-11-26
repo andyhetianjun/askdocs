@@ -87,9 +87,9 @@
     "answerableTotal": 30,
     "unanswerableRefused": 8,
     "unanswerableTotal": 12,
-    "citationPrecisionBeforeCheck": 0.9444444444444444,
-    "citationPrecisionAfterCheck": 0.9444444444444444,
+    "citationPrecisionBeforeCheck": 0.8518518518518519,
+    "citationPrecisionAfterCheck": 0.8653846153846154,
     "citationsBeforeCheck": 54,
-    "citationsAfterCheck": 54
+    "citationsAfterCheck": 52
   }
 }

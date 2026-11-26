@@ -1,0 +1,13 @@
+id,question
+1,How do I turn a Python dict into a JSON string with indentation?
+2,How do I limit a deque to the last few items?
+3,How can I keep only the most recent few items in a deque?
+4,"Which exception is raised when a JSON document cannot be decoded, and where is it defined?"
+5,How can I prevent two threads from modifying the same data at once?
+6,How do I stop two threads from changing shared data at the same moment?
+7,How do I make a dataclass immutable?
+8,How do I send an email with smtplib?
+9,How do I run an external program and capture what it prints?
+10,What is the capital of Australia?
+11,How do I read a JSON string back into a Python dict?
+12,How do I find the time difference between two dates?

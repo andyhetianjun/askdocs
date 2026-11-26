@@ -93,7 +93,7 @@ At the default, 8 of the 12 unanswerable questions were refused and 27 of 30 ans
 
 ### The whole pipeline, offline
 
-With the quoting generator, 94.4% of 54 citations pointed at a passage from the right doc, both before and after the check. The check removed nothing because a generator that quotes passages can't write an unsupported sentence. This line says the plumbing works, not that the check is good; the table above is the real test of the check.
+With the offline generator (it quotes the sentences of the top passages that share the most words with the question), 85.2% of 54 citations pointed at a passage from the labeled doc before the check and 86.5% of the 52 that survived did after it. So the check dropped 2 citations and both were wrong-doc ones. The generator only quotes, so it cannot invent anything, and this line shows the plumbing works more than it shows the check is good. The table above is the real test of the check.
 
 ## Limits
 

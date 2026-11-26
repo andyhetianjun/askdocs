@@ -1,0 +1,86 @@
+{
+ "paraphrases": [
+  {
+   "of": 0,
+   "question": "What is the way to dump a dict as pretty-printed JSON text?"
+  },
+  {
+   "of": 5,
+   "question": "How can I keep only the most recent few items in a deque?"
+  },
+  {
+   "of": 6,
+   "question": "Is there a dict type that fills in a default for keys that are not there yet?"
+  },
+  {
+   "of": 10,
+   "question": "How can I get all files in a directory that fit a glob pattern?"
+  },
+  {
+   "of": 12,
+   "question": "How do I add a command line option that is True when passed?"
+  },
+  {
+   "of": 16,
+   "question": "How can I work out the difference between two dates?"
+  },
+  {
+   "of": 18,
+   "question": "How can I run another program and get its output?"
+  },
+  {
+   "of": 20,
+   "question": "How do I copy an entire folder and everything under it?"
+  },
+  {
+   "of": 21,
+   "question": "How can I prevent two threads from modifying the same data at once?"
+  },
+  {
+   "of": 25,
+   "question": "How do I get the SHA-256 hash of a big file by reading it piece by piece?"
+  },
+  {
+   "of": 27,
+   "question": "How do I make a dataclass immutable?"
+  },
+  {
+   "of": 28,
+   "question": "How do I safely put values into an SQL statement so they can't be injected?"
+  }
+ ],
+ "different": [
+  {
+   "near": 5,
+   "question": "How do I rotate the items of a deque to the right?"
+  },
+  {
+   "near": 0,
+   "question": "How do I read a JSON string back into a Python dict?"
+  },
+  {
+   "near": 12,
+   "question": "How do I make a command line flag that counts how many times it is given?"
+  },
+  {
+   "near": 16,
+   "question": "How do I add a number of days to a date?"
+  },
+  {
+   "near": 20,
+   "question": "How do I move a directory to a new place?"
+  },
+  {
+   "near": 21,
+   "question": "How do I limit how many threads can use a resource at once?"
+  },
+  {
+   "near": 27,
+   "question": "How do I compare two dataclass instances for ordering?"
+  },
+  {
+   "near": 25,
+   "question": "How do I compute the MD5 hash of a short string?"
+  }
+ ]
+}

@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { ModelVerifier, LexicalVerifier, type CitationVerifier } from "./citations";
+import { tokenize } from "./tokenize";
 import type { Hit } from "./types";
 
 export const MODEL = "claude-sonnet-5-5";
@@ -47,16 +48,42 @@ export class AnthropicGenerator implements Generator {
   }
 }
 
-/** Offline stand-in: quotes the first sentence of the best passages. Used by tests and the no-key demo. */
+/**
+ * Offline stand-in: quotes the sentences of the top passages that share the most words with the question.
+ * It writes nothing of its own, so every sentence it returns is supported by the passage it cites.
+ * Used by tests, the questionnaire without a key, and the offline numbers in the docs.
+ */
 export class ScriptedGenerator implements Generator {
-  async generate(_question: string, hits: Hit[]): Promise<Generation> {
-    const parts = hits.slice(0, 2).map((h, i) => {
-      const sentence = h.chunk.text.replace(/\s+/g, " ").split(/(?<=\.)\s/)[0] ?? "";
-      return `${sentence} [${i + 1}]`;
-    });
-    const text = parts.length ? parts.join(" ") : "No passages were found.";
+  async generate(question: string, hits: Hit[]): Promise<Generation> {
+    const wanted = new Set(tokenize(question));
+    const candidates = hits.slice(0, 3).flatMap((h, i) =>
+      sentencesOf(h.chunk.text).map((sentence) => {
+        const tokens = tokenize(sentence);
+        const overlap = tokens.filter((t) => wanted.has(t)).length;
+        return { sentence, n: i + 1, score: overlap / Math.sqrt(Math.max(tokens.length, 1)) };
+      }),
+    );
+    candidates.sort((a, b) => b.score - a.score || a.n - b.n);
+    const picked = candidates.filter((c) => c.score > 0).slice(0, 2);
+    const text = picked.length ? picked.map((c) => `${c.sentence.replace(/\.$/, "")} [${c.n}].`).join(" ") : "No passages were found.";
     return { text, model: "scripted", inputTokens: 0, outputTokens: text.split(/\s+/).length };
   }
+}
+
+/** Prose sentences of a passage: code lines, tables and very short or very long fragments are skipped. */
+function sentencesOf(text: string): string[] {
+  const prose = text
+    .split("\n")
+    .filter((l) => !/^\s*(>>>|\.\.\.|\$|[{}\[\]|=+-]{2,})/.test(l))
+    .join(" ")
+    .replace(/\s+/g, " ");
+  return prose
+    .split(/(?<=[.!?])\s+(?=[A-Za-z*`])/)
+    .map((s) => s.trim())
+    .filter((s) => {
+      const words = s.split(" ").length;
+      return words >= 6 && words <= 45 && /[.!?]$/.test(s) && !/[{}]|=>|>>>/.test(s);
+    });
 }
 
 /**

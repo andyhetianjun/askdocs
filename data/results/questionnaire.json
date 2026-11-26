@@ -1,0 +1,115 @@
+{
+  "embedder": "Xenova/all-MiniLM-L6-v2",
+  "defaults": {
+    "confidentAbove": 0.55,
+    "answerCoversAtLeast": 0.3,
+    "reuseAbove": 0.65,
+    "trustReuseAbove": 0.85
+  },
+  "grid": [
+    {
+      "confidentAbove": 0.5,
+      "answerCoversAtLeast": 0,
+      "confident": 17,
+      "right": 16,
+      "review": 13,
+      "unanswerableConfident": 1
+    },
+    {
+      "confidentAbove": 0.5,
+      "answerCoversAtLeast": 0.3,
+      "confident": 15,
+      "right": 14,
+      "review": 15,
+      "unanswerableConfident": 1
+    },
+    {
+      "confidentAbove": 0.5,
+      "answerCoversAtLeast": 0.5,
+      "confident": 10,
+      "right": 10,
+      "review": 20,
+      "unanswerableConfident": 1
+    },
+    {
+      "confidentAbove": 0.55,
+      "answerCoversAtLeast": 0,
+      "confident": 14,
+      "right": 13,
+      "review": 16,
+      "unanswerableConfident": 1
+    },
+    {
+      "confidentAbove": 0.55,
+      "answerCoversAtLeast": 0.3,
+      "confident": 12,
+      "right": 11,
+      "review": 18,
+      "unanswerableConfident": 1
+    },
+    {
+      "confidentAbove": 0.55,
+      "answerCoversAtLeast": 0.5,
+      "confident": 8,
+      "right": 8,
+      "review": 22,
+      "unanswerableConfident": 1
+    },
+    {
+      "confidentAbove": 0.6,
+      "answerCoversAtLeast": 0,
+      "confident": 9,
+      "right": 9,
+      "review": 21,
+      "unanswerableConfident": 1
+    },
+    {
+      "confidentAbove": 0.6,
+      "answerCoversAtLeast": 0.3,
+      "confident": 8,
+      "right": 8,
+      "review": 22,
+      "unanswerableConfident": 1
+    },
+    {
+      "confidentAbove": 0.6,
+      "answerCoversAtLeast": 0.5,
+      "confident": 5,
+      "right": 5,
+      "review": 25,
+      "unanswerableConfident": 1
+    }
+  ],
+  "reuse": [
+    {
+      "reuseAbove": 0.6,
+      "matched": 12,
+      "wronglyMatched": 2
+    },
+    {
+      "reuseAbove": 0.65,
+      "matched": 12,
+      "wronglyMatched": 1
+    },
+    {
+      "reuseAbove": 0.7,
+      "matched": 10,
+      "wronglyMatched": 1
+    },
+    {
+      "reuseAbove": 0.75,
+      "matched": 8,
+      "wronglyMatched": 1
+    },
+    {
+      "reuseAbove": 0.8,
+      "matched": 6,
+      "wronglyMatched": 1
+    },
+    {
+      "reuseAbove": 0.85,
+      "matched": 4,
+      "wronglyMatched": 0
+    }
+  ]
+}
