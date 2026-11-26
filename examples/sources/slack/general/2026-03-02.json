@@ -1,0 +1,4 @@
+[
+  { "type": "message", "subtype": "channel_join", "user": "U02", "text": "<@U02> has joined the channel", "ts": "1772452700.000100" },
+  { "type": "message", "user": "U01", "text": "Reminder: the release checklist lives in the wiki, please read it before you tag anything, and tell <@U02> if a step is unclear.", "ts": "1772452800.000200" }
+]

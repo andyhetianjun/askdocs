@@ -1,0 +1,5 @@
+[
+  { "type": "message", "user": "U02", "text": "Does anyone know how to stop two threads from changing the same dictionary at the same time? I keep getting odd results in the worker.", "ts": "1772539200.000100", "thread_ts": "1772539200.000100" },
+  { "type": "message", "user": "U01", "text": "Use a threading.Lock around the part that touches the dictionary, and hold it with a with statement so it is always released. See <https://docs.python.org/3/library/threading.html|the threading docs>.", "ts": "1772539320.000200", "thread_ts": "1772539200.000100" },
+  { "type": "message", "user": "U02", "text": "That fixed it, thanks. The lock only needs to cover the update, not the whole function.", "ts": "1772539380.000300", "thread_ts": "1772539200.000100" }
+]

@@ -5,6 +5,10 @@ import type { Chunk, Hit, Store } from "./types";
 export interface IndexFile {
   embedder: { name: string; dims: number };
   chunks: (Chunk & { embedding: string })[]; // embedding is base64 of a Float32Array
+  /** Content hash of every document that was indexed. Used to find what changed. Missing in older index files. */
+  docs?: Record<string, string>;
+  /** Fingerprint of the embedding model and chunk settings the vectors were made with. */
+  config?: string;
 }
 
 /** Text that is searched: the title parts help short chunks match the right topic. */

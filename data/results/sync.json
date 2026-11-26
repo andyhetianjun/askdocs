@@ -1,0 +1,54 @@
+{
+  "embedder": "Xenova/all-MiniLM-L6-v2",
+  "rows": [
+    {
+      "step": "full build",
+      "docs": "37 added, 0 changed, 0 deleted",
+      "embedded": 1279,
+      "reused": 0,
+      "ms": 17964.767417
+    },
+    {
+      "step": "nothing changed",
+      "docs": "0 added, 0 changed, 0 deleted",
+      "embedded": 0,
+      "reused": 1279,
+      "ms": 33.54183400000329
+    },
+    {
+      "step": "one word edited in one doc",
+      "docs": "0 added, 1 changed, 0 deleted",
+      "embedded": 1,
+      "reused": 1278,
+      "ms": 44.808750000000146
+    },
+    {
+      "step": "a paragraph appended to one doc",
+      "docs": "0 added, 1 changed, 0 deleted",
+      "embedded": 1,
+      "reused": 1279,
+      "ms": 31.321374999999534
+    },
+    {
+      "step": "one new Markdown file",
+      "docs": "1 added, 0 changed, 0 deleted",
+      "embedded": 1,
+      "reused": 1280,
+      "ms": 29.655374999998457
+    },
+    {
+      "step": "one doc deleted",
+      "docs": "0 added, 0 changed, 1 deleted",
+      "embedded": 0,
+      "reused": 1270,
+      "ms": 27.47308300000077
+    },
+    {
+      "step": "full build again (for comparison)",
+      "docs": "37 added, 0 changed, 0 deleted",
+      "embedded": 1270,
+      "reused": 0,
+      "ms": 16263.776457999997
+    }
+  ]
+}
